@@ -1,0 +1,53 @@
+{{ 'https://cdn.binderpos.com/eventCalendar.css' | stylesheet_tag }}
+{{ 'https://cdn.binderpos.com/eventCalendar.js' | script_tag }}
+<script>
+  document.addEventListener("shopify:section:load", function() {      
+  $.getScript("https://binderpos-big-calendar-1490e.web.app/static/js/runtime-main.js");
+      $.getScript("https://binderpos-big-calendar-1490e.web.app/static/js/main.chunk.js");
+      $.getScript("https://binderpos-big-calendar-1490e.web.app/static/js/2.chunk.js");
+      $.getScript("https://cdn.binderpos.com/eventCalendar.js");
+      var options = {
+    fullNames : false
+  };
+  var myCalendar = new Calendar(document.getElementById('binderpos-calendar'), options, "{{ settings.binderkey }}"); 
+});
+</script>
+<section class="calendar-container"> 
+  <div class="calendar-contents" {% if section.settings.bg_image != null %}style="background-size:cover !important; background:url({{ section.settings.bg_image | img_url: 'master'  }})"{% else %}style="background:url('')"{% endif %}>
+    <div class="container">
+      <h3>{{ section.settings.title }}</h3>
+      <div class="calendar-inner-container">
+        <div id="binderpos-calendar"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+var binderPosCalendar;
+
+document.addEventListener("DOMContentLoaded", function() {
+  var options = {
+    fullNames : false
+  };
+  var myCalendar = new Calendar(document.getElementById('binderpos-calendar'), options, "{{ settings.binderkey }}"); 
+  console.log(myCalendar);
+});
+</script>
+
+<style>
+  .calendar-container .calendar-contents:before {
+    display: none;
+}
+.calendar-contents .container {
+    width: 100%;
+    margin: 0 31px;
+    font-family: {{ settings.type_base_font.family }};
+}
+
+.calendar-contents h3 {
+    text-align: center;
+    color: {{ settings.color_border }};
+}
+</style>
+

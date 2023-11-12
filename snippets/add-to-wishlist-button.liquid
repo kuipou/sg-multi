@@ -1,0 +1,114 @@
+{% style %}
+  .add-to-wishlist-button {
+    background-color: #fff;
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 2em;
+    padding-top: 0.25em;
+    top: 0.25em;
+    position: relative;
+    margin-left: 0.25em;
+  }
+
+  .add-to-wishlist-button > svg {
+    fill: #BDBDBD;
+  }
+
+  .add-to-wishlist-button #middle  {
+    fill: none;
+  }
+
+  .add-to-wishlist-button.added #middle,
+  .add-to-wishlist-button:hover > svg {
+    fill: {{ settings.color_theme_primary }};
+  }
+
+  .add-to-wishlist-button > svg > path {
+    fill-rule: inherit;
+  }
+{% endstyle %}
+
+{% if settings.enable_wishlist and customer %} 
+  <script>
+    if (binderWishlist === null) {
+      // Put some value in whilst loading
+      binderWishlist = true;
+      wishlistItem(
+        "{{ shop.permanent_domain }}",
+        "{{ customer.id }}", 
+        setWishlistItems
+      );
+    }
+
+    function updateWishlistStatus(id, addToWishList) {
+      const wishlistButtons = document.querySelectorAll(
+        `button.add-to-wishlist-button[data-id="${id}"]`
+      );
+      wishlistButtons.forEach(instance => {
+        if (addToWishList) {
+          instance.classList.add("added")
+        } else {
+        instance.classList.remove("added");
+        }
+      });  
+    }
+
+    function setWishlistItems(data) {
+      binderWishlist = data.map(
+        item => item.variants && item.variants[0].shopifyId
+      );
+      binderWishlist.forEach(id => {
+        updateWishlistStatus(id, true);
+      });
+    }
+
+    function toggleAddToWishList(target) {
+      const addedToWishlist = target.classList.contains("added");
+      if (addedToWishlist) {
+        removeFromWishList(target);
+      } else {
+        addToWishlist(target);
+      }
+    }
+
+    function addToWishlist(target) {
+      const id = target.dataset.id;
+      wishlistAdd(
+        id, 
+        "{{ customer.id }}", 
+        "{{ shop.permanent_domain }}", 
+        1, 
+        function(data) { completeAddToWishlist(target, data)}
+      );
+    }
+
+    function completeAddToWishlist(target, success) {
+      if (success) {
+        updateWishlistStatus(target.getAttribute("data-id"), true);
+      }
+    }
+
+    function removeFromWishList(target) {
+      const id = target.dataset.id;
+      wishlistRemove(
+        id, 
+        "{{ customer.id }}", 
+        "{{ shop.permanent_domain }}", 
+        function(data) { completeRemoveFromWishlist(target, data)}
+      );
+    }
+
+    function completeRemoveFromWishlist(target, success) {
+      if (success) {
+        updateWishlistStatus(target.getAttribute("data-id"), false);
+      }
+    }
+  </script>
+
+  <button aria-label="Add to Wishlist" title="Add to Wishlist" class="add-to-wishlist-button" onclick="toggleAddToWishList(this)" data-id="{{ product.selected_or_first_available_variant.id }}">
+    <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path clip-rule="evenodd" d="M5.47207 12.8069L4.25553 19.8999L10.6254 16.5511L16.9953 19.8999L15.7788 12.8069L20.9321 7.78366L13.8104 6.74881L10.6254 0.29541L7.44047 6.74881L0.318726 7.78366L5.47207 12.8069ZM13.8792 12.1898L14.6473 16.6682L10.6255 14.5538L6.60364 16.6682L7.37174 12.1898L4.11802 9.0182L8.61455 8.36481L10.6255 4.29026L12.6364 8.36481L17.1329 9.0182L13.8792 12.1898Z" />
+      <path id="middle" d="m10.625,3c0,0 2.75,4.6875 2.74999,4.6875c0.00001,0 5.25,0.75 5.25,0.8125c0,0.0625 -3.5625,4.0625 -3.625,4.125c-0.0625,0.0625 0.75,5.625 0.74999,5.625c0.00001,0 -4.99999,-2.3125 -5,-2.3125c0,0 -5.18749,2.25 -5.1875,2.25c0,0 0.75,-5.6875 0.75,-5.6875c0,0 -3.43749,-3.75 -3.43749,-3.75c0,0 5.375,-1.0625 5.37499,-1.0625c0,0 2.375,-4.6875 2.375,-4.6875z" />
+    </svg>
+  </button>
+{% endif %}

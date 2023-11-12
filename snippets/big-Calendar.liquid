@@ -1,0 +1,62 @@
+<section id="big-calendar" {% if section.settings.bg_image !=null %} style="background:url({{ section.settings.bg_image | file_url | replace: '/files/files', '/files' }})" {% endif %}>
+</section>
+{% assign url = "https://binderpos-big-calendar-1490e.web.app" %}
+<script src="{{url}}/static/js/runtime-main.js"></script>
+<script src="{{url}}/static/js/2.chunk.js"></script>
+<script src="{{url}}/static/js/main.chunk.js"></script>
+<link rel="stylesheet" href="{{url}}/static/css/2.chunk.css">
+<link rel="stylesheet" href="{{url}}/static/css/main.chunk.css">
+
+<script>
+  document.addEventListener("shopify:section:load", function () {
+    $.getScript("https://binderpos-big-calendar-1490e.web.app/static/js/runtime-main.js");
+    $.getScript("https://binderpos-big-calendar-1490e.web.app/static/js/main.chunk.js");
+    $.getScript("https://binderpos-big-calendar-1490e.web.app/static/js/2.chunk.js");
+    $.getScript("https://cdn.binderpos.com/eventCalendar.js");
+    var options = {
+      fullNames: false
+    };
+    var myCalendar = new Calendar(document.getElementById('binderpos-calendar'), options, "{{ settings.binderkey }}");
+  });
+</script>
+
+<style>
+  .react-calendar__navigation__label__labelText {
+    font-size: 15px;
+  }
+
+  .schedule {
+    font-family: {{ settings.type_base_font.family }};
+  }
+
+  section#big-calendar h1 {
+    display: none;
+  }
+
+  .react-calendar button {
+    margin-bottom: 12px;
+  }
+
+  .react-calendar__tile--active,
+  .react-calendar__tile--active:focus,
+  .react-calendar__tile--active:hover,
+  .react-calendar__tile:focus,
+  .react-calendar__tile:hover {
+    background: {{ settings.color_theme_primary }} !important;
+  }
+
+  .react-calendar__tile--now {
+    color: {{ settings.color_theme_primary }};
+  }
+
+  .calendar-button {
+    background: {{ settings.color_theme_primary }} !important;
+  }
+
+  @media screen and(max-width: 899px) {
+    .calendar {
+      grid-template-columns: 1fr;
+      margin: 24px 0;
+    }
+  }
+</style>

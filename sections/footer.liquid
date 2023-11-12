@@ -1,0 +1,351 @@
+<footer class="footer o-globalFooter" data-section-type="footer">
+  <div class="m-footerMain">
+    <div class="m-footerMain__col">
+      <img loading="lazy" data-src="{{ section.settings.footer_logo | img_url: 'master' }}" alt="" class="a-footerMain__logo lazy">
+      <h5>{{ section.settings.about_title }}</h5>
+      <p>{{ section.settings.about_text }}</p>
+      <ul>
+        {% for link in linklists[section.settings.about_links].links %}
+        <li class="a-footer__link">
+          <a href="{{ link.url }}">
+            {{ link.title }}
+            <i class="fal fa-long-arrow-right"></i>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% if section.blocks.size > 0 %}
+    {% for block in section.blocks %}
+    {% case block.type %}
+    {% when 'menu' %}
+    {% assign menuLinks = block.settings.link_list %}
+    <div class="m-footerMain__col">
+      {% if block.settings.title == "" %}
+      {% assign title = linklists[menuLinks].title %}
+      {% else %}
+      {% assign title = block.settings.title %}
+      {% endif %}
+      <h5 class="a-footer__title">{{ title }}</h5>
+      <hr class="footerMenu__hr">
+      <ul>
+        {% for link in linklists[menuLinks].links %}
+        <li class="a-footer__link"><a href="{{link.url}}">{{link.title}}<i class="fal fa-long-arrow-right"></i></a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% when 'richtext' %}
+    <div class="m-footerMain__col">
+      <h5 class="a-footer__title">{{ block.settings.title}}</h5>
+      <hr class="footerMenu__hr">
+      <ul>
+        {{ block.settings.richtext}}
+      </ul>
+    </div>
+    {% endcase %}
+    {% endfor %}
+    {% endif %}
+  </div>
+  <div class="m-footerBelow">
+    <div class="m-footerBelow__col">
+      <h5 class="a-footer__title">{{section.settings.follow_us}}</h5>
+      {% include 'social-media.liquid' %}
+    </div>
+    <div class="m-footerBelow__col">
+      <h5 class="a-footer__title">{{section.settings.we_accept}}</h5>
+      {%- unless shop.enabled_payment_types == empty -%}
+      <span class="visuallyhidden">Supported payment methods</span>
+
+      <ul class="m-paymentIcons">
+        {%- for type in shop.enabled_payment_types -%}
+        <li>
+          {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+        </li>
+        {%- endfor -%}
+      </ul>
+      {%- endunless -%}
+    </div>
+  </div>
+  <div class="m-subFooter">
+    <hr class="a-subFooter__hr">
+    {%- capture copyright_info -%}© {{ 'now' | date: '%Y' }}{%- endcapture -%}
+    <p>{{ copyright_info }} {{ shop.domain }}, All Rights Reserved
+      <span class="powered-by-binderpos">
+        - Integrated with
+        <a href="https://binderpos.com">BinderPOS</a>
+      </span>
+    </p>
+  </div>
+
+  {%- if section.settings.show_cookie_bar -%}
+    {% include 'cookie-bar',
+      text: section.settings.text,
+      accept_button: section.settings.accept_button,
+      background_color: section.settings.cookie_bar_background_color,
+      border_color: section.settings.cookie_bar_border_color,
+      text_color: section.settings.cookie_bar_text_color
+    %}
+  {%- endif -%}
+</footer>
+
+<style>
+  .a-footer__title,
+  .a-footer__link a,
+  .m-footerMain__col h5,
+  .m-footerMain__col p,
+  .m-footerMain__col {
+    color: {{ section.settings.color_footer_text }};
+  }
+
+  .m-footerBelow__col .a-socialIcons a {
+    color: {{ section.settings.color_footer_icons }};
+  }
+
+  .o-globalFooter {
+    background-color: {{ section.settings.color_footer_bg }};
+  }
+
+  .icon {
+    width: 3.125em;
+  }
+
+  .visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    white-space: nowrap;
+  }
+
+  .m-footerTop {
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 0.5fr;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .m-footerMain {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    column-gap: 40px;
+    border-top: 1px solid #BDBDBD;
+    margin: 0px 40px;
+    padding: 24px 0px;
+  }
+
+  .a-footerMain__logo {
+    max-width: 100%;
+    margin-bottom: 16px;
+    width: 324px;
+  }
+
+  .m-footerMain__col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .a-footer__title {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 21px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .a-footer__link {
+    margin-bottom: 12px;
+  }
+
+  .a-footer__link:last-child {
+    margin-bottom: 0;
+  }
+
+  .m-footerBelow {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 40px;
+    padding: 0 40px;
+  }
+
+  .m-footerBelow__col select {
+    border: 1px solid #BDBDBD;
+  }
+
+  .m-paymentIcons {
+    display: flex;
+  }
+
+  .a-paymentIcon {
+    padding-right: 8px;
+  }
+
+  .a-paymentIcon:last-child {
+    padding-right: 0;
+  }
+
+  .m-subFooter {
+    margin: 16px 40px 0px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .a-subFooter__hr {
+    margin-bottom: 16px;
+    width: 100%;
+  }
+</style>
+
+{% schema %}
+{
+   "name":"Footer",
+   "max_blocks":4,
+   "blocks":[
+      {
+         "type":"menu",
+         "name":"Menu Links",
+         "settings":[
+            {
+               "type":"text",
+               "id":"title",
+               "label":"Menu Title"
+            },
+            {
+               "type":"link_list",
+               "id":"link_list",
+               "label":"Menu"
+            }
+         ]
+      },
+      {
+         "type":"richtext",
+         "name":"Rich Text",
+         "settings":[
+            {
+               "type":"text",
+               "id":"title",
+               "label":"Block Title"
+            },
+            {
+               "type":"richtext",
+               "id":"richtext",
+               "label":"Rich Text (Inc HTML)"
+            }
+         ]
+      }
+   ],
+   "settings":[
+      {
+         "type":"header",
+         "content":"Colors",
+         "info":"The colors for the footer."
+      },
+      {
+         "type":"color",
+         "id":"color_footer_bg",
+         "label":"Footer Background",
+         "default":"#F2F2F2"
+      },
+      {
+         "type":"color",
+         "id":"color_footer_text",
+         "label":"Footer Text",
+         "default":"#333745"
+      },
+      {
+         "type":"color",
+         "id":"color_footer_icons",
+         "label":"Footer Icons",
+         "default":"#EB7C00"
+      },
+      {
+         "type":"header",
+         "content":"About Column",
+         "info":"The first column in the footer, positioned on the far left."
+      },
+      {
+         "type":"image_picker",
+         "id":"footer_logo",
+         "label":"Footer Logo"
+      },
+      {
+         "type":"text",
+         "id":"about_title",
+         "placeholder":"About us",
+         "default":"About Us",
+         "info":"The title for the About Column",
+         "label":"About Title"
+      },
+      {
+         "type":"textarea",
+         "id":"about_text",
+         "default":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
+         "info":"The about us text display in the About Column",
+         "label":"About Text"
+      },
+      {
+         "type":"link_list",
+         "id":"about_links",
+         "info":"The links that will appear in the About Column sub-menu",
+         "label":"About Links"
+      },
+      {
+         "type":"text",
+         "id":"follow_us",
+         "label":"Follow us",
+         "default":"Follow Us"
+      },
+      {
+         "type":"text",
+         "id":"we_accept",
+         "label":"We accept",
+         "default":"We Accept"
+      },
+    {
+      "type": "header",
+      "content": "Cookie bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cookie_bar",
+      "label": "Show cookie bar",
+      "default": false
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Replace this text with information about your cookie policy.</p>"
+    },
+    {
+      "type": "text",
+      "id": "accept_button",
+      "label": "Accept button",
+      "default": "Accept"
+    },
+    {
+      "type": "color",
+      "id": "cookie_bar_background_color",
+      "label": "Cookie Bar Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "cookie_bar_border_color",
+      "label": "Cookie Bar Border Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "cookie_bar_text_color",
+      "label": "Cookie Bar Text Color",
+      "default": "#000000"
+    }
+   ]
+}
+{% endschema %}

@@ -1,0 +1,131 @@
+<div class="o-contactRow">
+    {% for block in section.blocks %}
+        <div class="m-contactRow__col">
+            <a href="{{ block.settings.url }}" class="m-contactRow__wrap">
+                <div class="m-contactRow__left">
+                  <i class="{{ block.settings.icon }}"></i>
+                </div>
+                <div class="m-contactRow__right">
+                  <p class="a-contactRow_title">{{ block.settings.title }}</p>
+                  <p class="a-contactRow_subText">{{ block.settings.sub_text }}</p>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+    <div class="m-contactRow__col">
+        <a href="{{ section.settings.url }}" class="m-contactRow__wrap--end">
+            <p class="a-contactRow__p mb16">{{section.settings.text}}</p>
+            <div class="button">{{ section.settings.button }}&nbsp;<i class="fal fa-long-arrow-right"></i></div>
+        </a>
+    </div>
+</div>
+<style>
+  #shopify-section-contact-row
+  {
+    background-color: {{section.settings.color_contact_row_bg}};
+  }
+  .a-contactRow_title,
+  .a-contactRow_subText,
+  .a-contactRow__p
+  {
+    color: {{section.settings.color_contact_row_text}};
+  }
+  .m-contactRow__left i
+  {
+    color: {{section.settings.color_contact_row_icon}};
+    font-size: 40px;
+  }
+  .m-contactRow__col
+  {
+    border-right: 1px solid {{section.settings.color_contact_row_text}}24;
+  }
+</style>
+{% schema %}
+{
+  "name": "Contact row",
+  "tag": "section",
+  "max_blocks": 3,
+  "settings": [
+    {
+        "type": "header",
+        "content": "Colors",
+        "info": "The colors for this section."
+    },
+    {
+        "type": "color",
+        "id": "color_contact_row_bg",
+        "label": "Background Color",
+        "default": "#003049"
+    },
+    {
+      "type": "color",
+      "id": "color_contact_row_icon",
+      "label": "Icon Color",
+      "default": "#EB7C00"
+    },
+    {
+        "type": "color",
+        "id": "color_contact_row_text",
+        "label": "Text Color",
+        "default": "#FFFFFF"
+    },
+    {
+        "type": "header",
+        "content": "Settings",
+        "info": "The settings for this section."
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "default": "Need help? Have a question?",
+      "info": "The text for the block at the end of the row",
+      "label": "End block text"
+    },
+    {
+      "type": "text",
+      "id": "button",
+      "default": "Contact us",
+      "info": "The text for the button on the end of the row",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "url",
+      "info": "The link for the button on the end of the row",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Block",
+      "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "info": "The title of this block",
+            "label": "Block title"
+        },
+        {
+            "type": "text",
+            "id": "sub_text",
+            "info": "The text below the title of this block",
+            "label": "Sub text"
+        },
+        {
+            "type": "url",
+            "id": "url",
+            "info": "The link for this block",
+            "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Font Awesome Icon",
+          "info": "Paste in the string of a Font Awesome icon. For example, 'fas fa-ticket-alt'."
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

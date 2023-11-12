@@ -1,0 +1,184 @@
+{% if section.blocks.size > 0 %}
+<section class="o-blockMenu">
+  {% for block in section.blocks %}
+  {% case block.type %}
+  {% when '@app' %}
+  {% render block %}
+  {% endcase %}
+  <div class="m-blockMenu__item" {%if block.settings.block_image and block.settings.image_type=="background" %}style="background-size: cover; background-image: URL('{{ block.settings.block_image | image_url }}')" {% endif %}>
+    <div class="m-blockMenu__inner">
+      <div class="m-blockMenu__content">
+        <h3>{{block.settings.title}}</h3>
+        <p>{{block.settings.paragraph}}</p>
+        <a class="button" href="{{block.settings.button_url}}">
+          {{block.settings.button_text}}&nbsp;<i class="fal fa-long-arrow-right"></i>
+        </a>
+      </div>
+      {%if block.settings.block_image and block.settings.image_type == "corner"%}<img loading="lazy" class="a-blockMenu__img lazy" data-src="{{ block.settings.block_image | image_url }}" alt="{{block.settings.block_alt}}">{% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</section>
+{% else %}
+<p style="text-align: center;  padding-top: 15px; margin-bottom: -23px;">SAMPLE PREVIEW BELOW - PLEASE EDIT THE SECTION</p>
+<section class="o-blockMenu">
+  {%include 'block-menu-sample' %}
+  {%include 'block-menu-sample' %}
+  {%include 'block-menu-sample' %}
+</section>
+{% endif %}
+
+<style>
+  .m-blockMenu__item {
+    background-color: {{ section.settings.color_card_bg }};
+    border: 1px solid {{ section.settings.color_card_border }};
+  }
+
+  .m-blockMenu__inner h3,
+  .m-blockMenu__inner p {
+    color: {{ section.settings.color_card_text }};
+  }
+
+  .o-blockMenu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(392px, 1fr));
+    grid-gap: 40px;
+  }
+
+  .m-blockMenu__item {
+    border-radius: 4px;
+    border: 1px solid;
+  }
+
+  .m-blockMenu__inner {
+    position: relative;
+  }
+
+  .m-blockMenu__content {
+    padding: 40px;
+    padding-right: 16px;
+  }
+
+  .m-blockMenu__content h3 {
+    margin-bottom: 16px;
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: 700;
+  }
+
+  .m-blockMenu__content p {
+    margin-bottom: 16px;
+  }
+
+  .a-blockMenu__img {
+    position: absolute;
+    bottom: -1px;
+    right: 0px;
+  }
+
+  .m-blockMenu__content a.button {
+    background: var(--color-gradient);
+    background-image: var(--color-gradient);
+  }
+</style>
+
+{% schema %}
+{
+"name": "Infomation Panels",
+"settings": [
+{
+"type": "header",
+"content": "Colors",
+"info": "The colors for this section."
+},
+{
+"type": "color",
+"id": "color_card_bg",
+"label": "Card Background Color",
+"default": "#F2F2F2"
+},
+{
+"type": "color",
+"id": "color_card_border",
+"label": "Card Border Color",
+"default": "#BDBDBD"
+},
+{
+"type": "color",
+"id": "color_card_text",
+"label": "Card Text Color",
+"default": "#333745"
+}
+],
+"blocks": [
+{
+"type": "@app"
+},
+{
+"type": "blocks",
+"name": "Blocks",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Title",
+"default": "MTG Singles"
+},
+{
+"type": "textarea",
+"id": "paragraph",
+"label": "Paragraph",
+"default": "I am a paragraph about MTG Singles."
+},
+{
+"type": "header",
+"content": "Button"
+},
+{
+"type": "text",
+"id": "button_text",
+"label": "Text",
+"default": "View cards"
+},
+{
+"type": "url",
+"id": "button_url",
+"label": "URL"
+},
+{
+"type": "image_picker",
+"id": "block_image",
+"label": "Block image"
+},
+{
+"type": "text",
+"id": "block_alt",
+"label": "Block image alt text"
+},
+{
+"type": "select",
+"id": "image_type",
+"label": "Image Use",
+"default": "background",
+"options": [
+{
+"value": "background",
+"label": "Use as Background"
+},
+{
+"value": "corner",
+"label": "Right-Hand Image"
+}
+]
+}
+]
+}
+],
+"presets": [
+{
+"name": "Infomation Panels",
+"category": "Premium Theme 1 Modules"
+}
+]
+}
+{% endschema %}

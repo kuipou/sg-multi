@@ -1,0 +1,454 @@
+{% style %}
+.slider-nav__link {
+    background-color: {{ section.settings.menu_background_color }};
+    color: {{ section.settings.menu_text_color }};
+}
+.slider-nav__nav {
+    background-color: {{ section.settings.menu_background_color }};
+}
+.slider-nav__slider  {
+    color: {{ section.settings.menu_text_color }};
+    text-shadow: rgba(127,127,127,.3) 1px 1px;
+}
+.slider-nav__slider  h3 {
+    color: {{ section.settings.menu_text_color }};
+    text-shadow: rgba(127,127,127,.3) 1px 1px;
+}
+.slider-nav__slider .dot.is-selected {
+    background-color: {{ section.settings.menu_text_color }};
+}
+.slider-nav__nav .mm-btn_next:after,
+.slider-nav__nav .mm-btn_prev:before {
+    border-color: {{ section.settings.menu_text_color }} !important;
+}
+.slider-nav .mm-navbar__title,
+.slider-nav__nav .mm-counter {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: {{ section.settings.menu_text_color }} !important;
+}
+.slider-nav .mm-menu {
+    {% assign rootMenu = section.settings.link_list %}
+    {% assign count = linklists[rootMenu].links.size %}
+    {% if section.settings.show_advanced_search %}
+        {% assign count = count | plus: 1 %}
+    {% endif %}
+    {% if section.settings.show_multi_card_search %}
+        {% assign count = count | plus: 1 %}
+    {% endif %}
+    height: calc({{ count }} * 3.29em);
+}
+{% unless section.settings.show_slider_arrows %}
+    .slider-nav__slider .flickity-prev-next-button {
+        display: none;
+    }
+{% endunless %}
+{% unless section.settings.show_slider_dots %}
+    .slider-nav__slider .flickity-page-dots {
+        display: none;
+    }
+{% endunless %}
+
+.slider-nav {
+    display: flex;
+    flex-direction: row;
+    margin: 0 40px;
+    min-height: 25em;
+    margin-top: 16px;
+  }
+  
+  #mm-1 > .mm-navbar
+  {
+  display:none;
+  }
+  
+  .slider-nav__nav {
+    flex-basis: 25%;
+    min-height: 100%;
+  }
+  
+  .slider-nav__links,
+  .slider-nav__child-links,
+  .slider-nav__grandchild-links {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+  }
+  
+  .slider-nav__child-links,
+  .slider-nav__grandchild-links {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    z-index: 200;
+  }
+  
+  .slider-nav__link:hover > .slider-nav__child-links {
+    display: block;
+  }
+  .slider-nav__child-links
+    > .slider-nav__link:hover
+    > .slider-nav__grandchild-links {
+    display: block;
+  }
+  
+  .slider-nav__link {
+    display: flex;
+    justify-content: space-between;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 0.5em 2em;
+    box-shadow: rgba(127, 127, 127, 0.5) 1px 1px;
+  }
+  
+  .slider-nav__link.advanced_search {
+    background-image: var(--color-gradient);
+  }
+  
+  .slider-nav__link.decklist_search {
+    background-image: var(--color-gradient-secondary);
+  }
+  
+  .slider-nav__link:hover {
+    text-shadow: #555 1px 0 5px;
+    background-image: var(--color-gradient-secondary);
+  }
+  .slider-nav__link.expandable::after {
+    content: ">";
+  }
+  
+  .slider-nav__slider {
+    flex-grow: 1;
+    min-height: 100%;
+  }
+  
+  .slider-nav__slide_link {
+    display: block;
+    background-image: var(--color-gradient);
+    border-radius: var(--border-radius);
+    padding: 0.5em 2em;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  
+  .slider-nav__slider .carousel-cell {
+    width: 100%;
+    height: 100%;
+    margin-right: 10px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 6;
+    flex-direction: column;
+    padding-right: 5em;
+  }
+  
+  .slider-nav__slider .flickity-page-dots {
+    bottom: 25px;
+    text-align: right;
+    padding-right: 5em;
+  }
+  
+  .slider-nav__slider .dot {
+    opacity: 1;
+    background-color: #7535e5;
+    width: 1em;
+    border-radius: 8px;
+    transition: width 0.2s;
+    box-shadow: rgba(127, 127, 127, 0.5) 1px 1px 5px;
+  }
+  
+  .slider-nav__slider .dot.is-selected {
+    width: 3em;
+  }
+  
+  .slider-nav__nav.mm-menu {
+    position: relative;
+  }
+  
+  @media only screen and (max-width: 1024px) {
+    select {
+      background: white;
+    }
+    .slider-nav {
+      margin: 15px 24px;
+    }
+  
+    .slider-nav__nav {
+      flex-basis: 33%;
+    }
+    .slider-nav__slider {
+      flex-basis: 40vw;
+    }
+    .slider-nav__link {
+      box-shadow: unset;
+    }
+    .slider-nav__slider .carousel {
+      height: 40vw;
+      min-height: 100%;
+    }
+    .slider-nav__slider .carousel-cell {
+      padding-right: 2em;
+    }
+    .slider-nav__slider .flickity-page-dots {
+      bottom: 10px;
+      padding-right: 2em;
+    }
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .slider-nav {
+      flex-direction: column-reverse;
+    }
+    .slider-nav__nav.mm-menu {
+      height: 25em;
+    }
+    .slider-nav__link {
+      display: flex;
+      position: relative;
+      padding: 0;
+    }
+    
+    .slider-nav__link.expandable::after {
+      content: "";
+    }
+  
+    .slider-nav__child-links,
+    .slider-nav__grandchild-links {
+      display: block;
+      position: relative;
+      left: 0;
+      top: 0;
+      margin-top: unset;
+      border: 1px none;
+      margin-left: unset;
+      width: unset;
+    }
+  
+    .slider-nav__links,
+    .slider-nav__child-links,
+    .slider-nav__grandchild-links {
+      min-height: unset;
+    }
+    .slider-nav__link:hover {
+      text-shadow: unset;
+    }
+  
+    .slider-nav__nav .mm-panel::after {
+      content: none;
+      display: none;
+    }
+  }
+  
+  @media only screen and (max-width: 435px){
+    .v2 input, .v2 select {
+      padding: 4px 10px;
+    }
+    .v2 .searchBar__submit {
+      padding: 5px 14px;
+    }
+    .v2 .searchBar__form {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  
+  @media only screen and (max-width: 385px){
+    .slider-nav__slider .flickity-page-dots {
+        bottom: 4px;
+        padding-right: 2em;
+    }
+  }
+{% endstyle %}
+<section class="slider-nav">
+    <nav class="slider-nav__nav" id="sliderMobileNav" class="mm-menu_opened">
+        <ul class="slider-nav__links">
+            {% if section.settings.show_advanced_search %}
+            <li class="slider-nav__link advanced_search">
+                <a class="slider-nav__a" href="{{ section.settings.advanced_search_link }}">
+                    Advanced Search
+                </a>
+            </li>
+            {% endif %}
+            {% if section.settings.show_multi_card_search %}
+            <li class="slider-nav__link decklist_search">
+                <a class="slider-nav__a" href="{{ section.settings.multi_card_search_link }}">
+                    Multi-Card Search
+                </a>
+            </li>
+            {% endif %}
+            {% assign section-links = section.settings.link_list %}
+            {% for link in linklists[section-links].links %}
+                <li class="slider-nav__link {% if link.links != blank %}expandable{% endif%}">
+                    <a class="slider-nav__a" href="{{ link.url }}">{{ link.title }}</a>
+                    {% if link.links != blank %}
+                        <ul class="slider-nav__child-links">
+                            {% for child_link in link.links %}  
+                                <li class="slider-nav__link {% if child_link.links != blank %}expandable{% endif%}">
+                                    <a class="slider-nav__a" href= "{{ child_link.url }}">
+                                        {{ child_link.title }}
+                                    </a>
+                                    {% if child_link.links != blank %}
+                                        <ul class="slider-nav__grandchild-links">
+                                            {% for grandchild_link in child_link.links %}  
+                                                <li class="slider-nav__link">
+                                                    <a class="slider-nav__a"  href= "{{ grandchild_link.url }}">
+                                                        {{ grandchild_link.title }}
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}   
+                                </li>
+                            {% endfor %}
+                        </ul> 
+                    {% endif %} 
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+    <div class="slider-nav__slider">
+        {% assign slider_items_count = section.blocks | size %}
+        <div class="carousel" {% if slider_items_count> 1 %}data-flickity='{ "setGallerySize": false }'{% endif %}>
+            {% for block in section.blocks %}
+            <div class="carousel-cell" style="background-image: url('{{ block.settings.background_image | img_url: 'master' }}')">
+                    <p>{{block.settings.subheading}}</p>
+                    <h3>{{block.settings.title}}</h3>
+                    <a class="slider-nav__slide_link" href="{{block.settings.button_url}}">
+                        {{block.settings.button_text}}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<script>
+    let menu = undefined;
+    function setupMenu() {
+        if (menu || window.innerWidth > 768) return;
+        menu = new Mmenu( "#sliderMobileNav", {
+            "setSelected": { "current": true },
+            "counters": true,
+            "extensions": [
+                "theme-dark"
+            ],
+            "offCanvas": false,
+            "navbars": [
+                {use: false, position: "bottom"}
+            ]
+        });
+    }
+    document.addEventListener("DOMContentLoaded", setupMenu);
+    window.addEventListener("resize", setupMenu);
+    
+</script>
+
+{% schema %}
+  {
+    "name": "Slider and Vertical Menu",
+    "settings":
+    [
+        {
+            "type": "link_list",
+            "id": "link_list",
+            "label": "Menu",
+            "info": "The menu to display to the left of the slider."
+        },
+        {
+            "type": "checkbox",
+            "id": "show_advanced_search",
+            "label": "Show Advanced Search",
+            "info": "Include a highlighted link to Advanced Search in the menu",
+            "default": true
+        },
+        {
+          "type": "url",
+          "id": "advanced_search_link",
+          "label": "Link to Advanced Search page"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_multi_card_search",
+            "label": "Show Multi-Card Search",
+            "info": "Include a highlighted link to Multi-Card Search in the menu",
+            "default": true
+        },
+        {
+          "type": "url",
+          "id": "multi_card_search_link",
+          "label": "Link to Multi-Card Search page"
+        },
+        {
+            "type": "color",
+            "id": "menu_text_color",
+            "label": "Menu text color",
+            "info": "Text color for menu items.",
+            "default": "#FFFFFF"
+        },
+        {
+            "type": "color",
+            "id": "menu_background_color",
+            "label": "Menu background color",
+            "info": "Background color for menu items.",
+            "default": "#150433"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_slider_arrows",
+            "label": "Show back and forward buttons on the slider",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "show_slider_dots",
+            "label": "Show page indicator dots on the slider",
+            "default": true
+        }
+    ],
+    "blocks": [
+        {
+            "type": "blocks",
+            "name": "Slide",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                },
+                {
+                    "type": "text",
+                    "id": "subheading",
+                    "label": "Subheading"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "background_image",
+                    "label": "Slide Background Image",
+                    "info": "The background image for the slide."
+                },
+                {
+                    "type": "text",
+                    "id": "button_text",
+                    "label": "Button text"
+                },
+                {
+                    "type": "url",
+                    "id": "button_url",
+                    "label": "Button link"
+                }
+            ]
+        }
+    ],
+    "presets": [
+      {
+        "name": "Hero Slider with Verticle Navigation",
+        "category": "Premium Theme 2 Modules"
+      }
+    ]
+  }
+{% endschema %}

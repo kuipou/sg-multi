@@ -1,0 +1,1718 @@
+{{ 'calendar.css' | asset_url | stylesheet_tag }}
+{% case data.showCalendar %}
+{% when "basic" %}
+{% include 'basic-Calendar' %}
+{% when "big" %}
+{% include 'big-Calendar' %}
+{% endcase %}
+<section class="collectionTemplate" data-section-id="collection-template" data-section-type="collection" data-section-settings='{
+  "currentSortBy": "manual",
+  "currentTags": [],
+  "filterType": "group",
+  "defaultLayout": "grid",
+  "defaultProductsPerPage": 24,
+  "isAutomatic": false,
+  "gridClasses": "1\/3--tablet-and-up 1\/4--desk"
+}'>
+  <div class="binder-app-container" style="padding:15px">
+    <div style="width: 100%; height: 100%; padding: 0px; border: 0px;">
+      <div id="event-calendar-app" class="cleanslate">
+        <div class="container-fluid event-stage xs sm md lg">
+          <div>
+            <div class="search-animation-container withDomnode calendar-type-enter-done">
+              <div class="widget-controls-right">
+                <button aria-label="Subscribe to Event" title="Subscribe to Event" class="ignore-react-onclickoutside subcribe-to-calendar__inverse" type="button">
+                  <div class="eca-flex eca-flex__center subscribe-text-area">Subscribe</div>
+                </button>
+                <div class="widget-controls">
+                  <div class="view-mode">
+                    <ul class="board is-selected">
+                      <li class="eca-flex eca-flex__center noselect" data-view="calendar" style="display:none !important">
+                        <div class="eca-flex eca-flex__center eca-flex__full-height">
+                          <svg id="calendar" viewBox="0 0 448 512">
+                            <title id="calendar-title">Calendar</title>
+                            <path d="M400 64h-48V12c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v52H160V12c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v52H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V160h352v298c0 3.3-2.7 6-6 6z">
+                            </path>
+                          </svg>
+                          <span>Grid</span>
+                        </div>
+                      </li>
+                      <li class="noselect" data-view="list">
+                        <div class="eca-flex eca-flex__center eca-flex__full-height">
+                          <svg id="align-justify" viewBox="0 0 448 512">
+                            <title id="align-justify-title">align-justify</title>
+                            <path d="M0 84V44c0-8.837 7.163-16 16-16h416c8.837 0 16 7.163 16 16v40c0 8.837-7.163 16-16 16H16c-8.837 0-16-7.163-16-16zm16 144h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 256h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0-128h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z">
+                            </path>
+                          </svg>
+                          <span>List</span>
+                        </div>
+                      </li>
+                      <li class="noselect" data-view="board">
+                        <div class="eca-flex eca-flex__center eca-flex__full-height">
+                          <svg id="th-large" viewBox="0 0 512 512">
+                            <title id="th-large-title">th-large</title>
+                            <path
+                              d="M296 32h192c13.255 0 24 10.745 24 24v160c0 13.255-10.745 24-24 24H296c-13.255 0-24-10.745-24-24V56c0-13.255 10.745-24 24-24zm-80 0H24C10.745 32 0 42.745 0 56v160c0 13.255 10.745 24 24 24h192c13.255 0 24-10.745 24-24V56c0-13.255-10.745-24-24-24zM0 296v160c0 13.255 10.745 24 24 24h192c13.255 0 24-10.745 24-24V296c0-13.255-10.745-24-24-24H24c-13.255 0-24 10.745-24 24zm296 184h192c13.255 0 24-10.745 24-24V296c0-13.255-10.745-24-24-24H296c-13.255 0-24 10.745-24 24v160c0 13.255 10.745 24 24 24z">
+                            </path>
+                          </svg>
+                          <span>Tile</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="filters-mobile-button noselect desktop">
+                  <div class="eca-flex eca-flex__center eca-flex__justify-center filters-mobile-button-text">
+                    <svg viewBox="0 0 512 512" class="s-padding">
+                      <title>Filter</title>
+                      <path d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z">
+                      </path>
+                    </svg><strong>Filter </strong>
+                  </div>
+                </div>
+                <div class="search-toggle eca-flex eca-flex__center">
+                  <svg id="search" viewBox="0 0 512 512">
+                    <title id="search-title">Search</title>
+                    <path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z">
+                    </path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="calendar-list-view__navigation-container">
+            <div class="listviewnavigation-animation-container withDomnode calendar-type-enter-done">
+              <div>
+                <div class="calendar-list-view__navigation">
+                  <button type="button" aria-label="View Past Events" title="Back to events in the past" class="calendar-list-view__navigate-button calendar-list-view__navigate-button--left calendar-list-view__navigate-button--disabled">
+                    <div class="eca-flex eca-flex__center eca-flex__justify-center eca-flex__full-height">
+                      <svg id="caret-left" viewBox="0 0 192 512" class="s24">
+                        <title id="caret-left-title">Caret Left</title>
+                        <path d="M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z">
+                        </path>
+                      </svg>
+                    </div>
+                  </button>
+                  <button aria-label="View Future Events" title="View events in the future" type="button" class="calendar-list-view__navigate-button calendar-list-view__navigate-button--right calendar-list-view__navigate-button--disabled">
+                    <div class="eca-flex eca-flex__center eca-flex__justify-center eca-flex__full-height">
+                      <svg id="caret-right" viewBox="0 0 192 512" class="s24">
+                        <title id="caret-right-title">Caret Right</title>
+                        <path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z">
+                        </path>
+                      </svg>
+                    </div>
+                  </button>
+                  <div class="event-summary noselect">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="search-bar-animation-container withDomnode calendar-type-enter-done" style="max-height: 0px;">
+              <div class="row">
+
+              </div>
+            </div>
+            <div class="calendar-list-view withDomnode calendar-type-enter-done" style="opacity: 0 !important;">
+              <div class="row">
+                <div class="filters-mobile-button noselect mobile">
+                  <div class="eca-flex eca-flex__center eca-flex__justify-center filters-mobile-button-text">
+                    <svg viewBox="0 0 512 512" class="s-padding">
+                      <title>Filter</title>
+                      <path d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z">
+                      </path>
+                    </svg><strong>Filter results </strong>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="calendar-list-events-wrapper withDomnode calendar-type-enter-done">
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  var options = {
+    fullNames: false
+  };
+  var CalendarV2;
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var colors = ["{{ data.color_type_1 }}", "{{ data.color_type_2 }}", "{{ data.color_type_3 }}", "{{ data.color_type_4 }}", "{{ data.color_type_5 }}", "{{ data.color_type_6 }}", "{{ data.color_type_7 }}", "{{ data.color_type_8 }}"];
+    var checkoutAction = "{{ data.addToCartAction }}";
+    CalendarV2 = new CalendarV2(document.querySelector('.binder-app-container'), colors, checkoutAction);
+  });
+
+  document.addEventListener("shopify:section:load", function () {
+    var colors = ["{{ data.color_type_1 }}", "{{ data.color_type_2 }}", "{{ data.color_type_3 }}", "{{ data.color_type_4 }}", "{{ data.color_type_5 }}", "{{ data.color_type_6 }}", "{{ data.color_type_7 }}", "{{ data.color_type_8 }}"];
+    var checkoutAction = "{{ data.addToCartAction }}";
+    CalendarV2 = new CalendarV2(document.querySelector('.binder-app-container'), colors, checkoutAction);
+  });
+
+  var CalendarV2 = (function () {
+
+    function CalendarV2(divToAppendTo, colors, checkoutAction) {
+      this.calendarDiv = divToAppendTo;
+      this.todaysDate = new Date();
+      this.colors = colors;
+      this.checkoutAction = checkoutAction;
+      this.data = [];
+      this.offset = 0;
+      this.currentFilter = [];
+      this.selectedFilter = [];
+      this.savedShopifyData = [];
+      this.view = undefined;
+      this.hostname = location.hostname;
+      this.pathname = location.pathname;
+      this.searchParam = location.search;
+      this.mapAPIkey = "{{ data.api_key}}";
+      this.showParticipants = "{{ data.showParticipants}}";
+      this.checkout = {};
+
+      this.dayNamesLong = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      this.dayNamesShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+      this.monthNamesLong = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      this.monthNamesShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+      if (this.getCookie("binder-calendar-view")) {
+        this.view = this.getCookie("binder-calendar-view");
+      } else {
+        this.view = "{{ data.default_view }}";
+        this.setCookie("binder-calendar-view", this.view, 365);
+      }
+
+      this.calendarDiv.querySelector('[data-view=' + this.view + ']').classList.add('active');
+
+      this.calculateInitialViewport();
+    }
+
+    CalendarV2.prototype.calculateInitialViewport = function () {
+      this.currentDate = new Date();
+      this.selectedDate = this.currentDate;
+
+      const startDate = new Date();
+      const endDate = new Date();
+
+      startDate.setDate(startDate.getDate() - 30);
+      endDate.setDate(endDate.getDate() + 60);
+
+      this.fetchData(this.buildDateString(startDate), this.buildDateString(endDate));
+      this.configureListeners(this.calendarDiv.querySelector('.event-stage'));
+    };
+
+    CalendarV2.prototype.buildDateString = function (date) {
+      const year = date.getFullYear();
+      let month = ("0" + (date.getMonth() + 1)).slice(-2);
+      let day = ("0" + date.getDate()).slice(-2);
+      return year + "-" + month + "-" + day;
+    };
+
+    CalendarV2.prototype.buildReadableDateString = function (format, dateString, time) {
+      if (time) {
+        var timeString = time;
+        var hourEnd = timeString.indexOf(":");
+        var H = +timeString.substr(0, hourEnd);
+        var h = H % 12 || 12;
+        var ampm = H < 12 ? " AM" : " PM";
+        timeString = h + timeString.substr(hourEnd, 3) + ampm;
+      }
+      var dateToConvert = dateString.substr(0, dateString.indexOf('T'));
+      const date = new Date(dateToConvert);
+      date.setTime(date.getTime() + date.getTimezoneOffset() * 60000);
+      if (format == "dateTime") {
+        let n = date.getDate();
+        return n + (n > 0 ? ['th', 'st', 'nd', 'rd'][(n > 3 && n < 21) || n % 10 > 3 ? 0 : n % 10] : '') + " " + this.monthNamesShort[date.getMonth()] + " @ " + timeString;
+      }
+      if (format == "fullDate") {
+        const year = date.getFullYear();
+        let day = ("0" + date.getDate()).slice(-2);
+        let month = this.monthNamesLong[date.getMonth()];
+        return day + " " + month + " " + year;
+      }
+      if (format == "dd") {
+        let day = ("0" + date.getDate()).slice(-2);
+        return day;
+      }
+      if (format == "shortMonth") {
+        let month = this.monthNamesShort[date.getMonth()];
+        return month;
+      }
+      if (format == "listDate") {
+        let n = date.getDate();
+        const year = date.getFullYear();
+        return n + (n > 0 ? ['th', 'st', 'nd', 'rd'][(n > 3 && n < 21) || n % 10 > 3 ? 0 : n % 10] : '') + " " + this.monthNamesLong[date.getMonth()] + " " + year + " @ " + timeString;
+      }
+    };
+
+
+    CalendarV2.prototype.setCookie = function (name, value, days) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    };
+
+    CalendarV2.prototype.getCookie = function (name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    };
+
+
+    CalendarV2.prototype.configureListeners = function (calendarDiv) {
+      const self = this;
+      const searchBtn = calendarDiv.querySelector('.search-toggle');
+      searchBtn.onclick = function () {
+        calendarDiv.classList.toggle('search-active');
+        if (!self.calendarDiv.querySelector('.search-bar-animation-container .row div')) {
+          searchBtn.innerHTML = `<svg id="times" viewBox="0 0 352 512"><title id="times-title">Times</title><path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>`;
+          calendarDiv.querySelector('.search-bar-animation-container .row').innerHTML = `
+                  <div class="ReactCollapse--collapse ReactCollapse--collapse--fully-open" aria-hidden="false" style="height: auto; overflow: initial;">
+                      <div class="ReactCollapse--content"><div class="search-box-five search-box-five--event-search">
+                          <div class="search search__search searchActive"><span class="search__input eca-flex eca-flex__center">
+                              <svg viewBox="0 0 512 512"><title>Search</title><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path></svg>
+                              <input name="search" autocomplete="off" placeholder="Search by event title or game type." type="text" value="">
+                              </span>
+                          </div>
+                      </div>
+                  </div>`;
+          self.calendarDiv.querySelector('.search-bar-animation-container').style.maxHeight = "50px";
+          calendarDiv.querySelector('.widget-controls').style = "display:none !important";
+          calendarDiv.querySelector('[name=search]').addEventListener("keyup", function (e) {
+            if (e.keyCode === 13) {
+              e.preventDefault();
+              self.currentFilter = self.data.filter(function (data) {
+                return data.title.toLowerCase().includes(e.target.value.toLowerCase()) || data.game.toLowerCase().includes(e.target.value.toLowerCase());
+              });
+              self.offset = 0;
+              self.selectedFilter = [];
+              self.calendarDiv.querySelector('.filters-mobile-button div').innerHTML = `<svg viewBox="0 0 512 512" class="s-padding"><title>Filter</title><path d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z"></path></svg><strong>Filter</strong>`;
+              self.calendarDiv.querySelector('.calendar-list-view').style = "opacity: 0 !important;";
+              setTimeout(() => {
+                self.buildEvents(self.currentFilter);
+              }, 300);
+            }
+          });
+        } else {
+          searchBtn.innerHTML = `<svg id="search" viewBox="0 0 512 512"><title id="search-title">Search</title><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path></svg>`;
+          self.calendarDiv.querySelector('.search-bar-animation-container').style = "max-height: 0px;";
+          setTimeout(() => {
+            self.calendarDiv.querySelector('.search-bar-animation-container .row div').remove();
+          }, 500);
+          calendarDiv.querySelector('.widget-controls').style = "display: flex !important;";
+          if (self.view == "board" || self.view == "list") {
+            self.currentFilter = self.data.filter(function (data) {
+              return data.timestamp > Date.now();
+            });
+          } else {
+            self.currentFilter = self.data;
+          }
+          self.calendarDiv.querySelector('.calendar-list-view').style = "opacity: 0 !important;";
+          setTimeout(() => {
+            self.buildEvents(self.currentFilter);
+          }, 300);
+        }
+      };
+      let availableFilters = document.querySelectorAll('.filters-container .filter');
+      availableFilters.forEach(function (filter) {
+        filter.onclick = function (e) {
+          e.preventDefault();
+          self.offset = 0;
+          if (filter.querySelector('svg')) {
+            var matchingFields = document.querySelectorAll("." + filter.classList[1]);
+            matchingFields.forEach(function (field) {
+              field.querySelector('svg').remove();
+              field.querySelector('input').value = false;
+              field.querySelector('input').checked = false;
+            });
+            self.calendarDiv.querySelector('.calendar-list-view').style = "opacity: 0 !important;";
+            setTimeout(() => {
+              self.filterEvents();
+            }, 200);
+
+          } else {
+            var matchingFields = document.querySelectorAll("." + filter.classList[1]);
+            matchingFields.forEach(function (field) {
+              field.querySelector('.filters__checkbox').innerHTML = `<svg id="check" viewBox="0 0 512 512"><title id="check-title">Check</title><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>`;
+              field.querySelector('input').value = true;
+              field.querySelector('input').checked = true;
+            });
+            self.calendarDiv.querySelector('.calendar-list-view').style = "opacity: 0 !important;";
+            setTimeout(() => {
+              self.filterEvents();
+            }, 200);
+          }
+        };
+      });
+      let viewBtns = self.calendarDiv.querySelectorAll('.view-mode li');
+      viewBtns.forEach(function (btn) {
+        btn.onclick = function () {
+          viewBtns.forEach(function (btn) {
+            btn.classList.remove('active');
+          });
+          btn.classList.add('active');
+          self.view = btn.getAttribute('data-view');
+          self.setCookie("binder-calendar-view", btn.getAttribute('data-view'), 365);
+          self.calendarDiv.querySelector('.calendar-list-view').style = "opacity: 0 !important;";
+          setTimeout(() => {
+            self.buildEvents(self.currentFilter);
+          }, 300);
+        };
+      });
+    };
+
+    CalendarV2.prototype.filterEvents = function () {
+      const self = this;
+      if (self.view == "board" || self.view == "list") {
+        var updateFilter = self.data.filter(function (data) {
+          return data.timestamp > Date.now();
+        });
+      } else {
+        var updateFilter = self.data;
+      }
+      var filters = [];
+      var temp = self.calendarDiv.querySelectorAll('.filters-container input:checked');
+      temp.forEach(function (t) {
+        filters.push(t.getAttribute('data-type').toLowerCase());
+      });
+      self.selectedFilter = filters;
+      if (filters.length > 0) {
+        self.calendarDiv.querySelector('.filters__header').innerHTML = `<button aria-label="Close" title="Close" type="button" class="filters__close eca-flex eca-flex__center eca-flex__justify-center" onclick="(function removeFilter(){document.querySelector('.event-stage .fade-container').remove();document.querySelector('.filters-container.mobile').parentNode.parentNode.remove();return false;})();return false;">
+                                <svg id="times" viewBox="0 0 352 512"><title id="times-title">Times</title><path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>
+                              </button>
+                                Filters (` + filters.length + `)`;
+        document.querySelector('.filters-container.mobile .filters__header').innerHTML = `<button aria-label="Close" title="Close" type="button" class="filters__close eca-flex eca-flex__center eca-flex__justify-center" onclick="(function removeFilter(){document.querySelector('.event-stage .fade-container').remove();document.querySelector('.filters-container.mobile').parentNode.parentNode.remove();return false;})();return false;">
+                                <svg id="times" viewBox="0 0 352 512"><title id="times-title">Times</title><path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>
+                              </button>
+                                Filters (` + filters.length + `)`;
+        self.calendarDiv.querySelector('.filters-mobile-button div').innerHTML = `<svg viewBox="0 0 512 512" class="s-padding"><title>Filter</title><path d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z"></path></svg><strong>Filter (` + filters.length + `)</strong>`;
+        self.currentFilter = updateFilter.filter(function (data) {
+          return (filters.includes('ticketed') && filters.includes('non-ticketed')) ? ((data.ticketed == true || data.ticketed == false) && filters.includes(data.type.toLowerCase())) : filters.includes('ticketed') ? (data.ticketed == true && filters.includes(data.type.toLowerCase())) : (filters.includes('non-ticketed') ? (data.ticketed == false && filters.includes(data.type.toLowerCase())) : filters.includes(data.type.toLowerCase()));
+        });
+        if (self.currentFilter.length == 0) {
+          if (filters.includes('ticketed') && filters.includes('non-ticketed')) {
+            self.currentFilter = updateFilter.filter(function (data) {
+              return data.ticketed == true || data.ticketed == false;
+            });
+          } else if (filters.includes('ticketed')) {
+            self.currentFilter = updateFilter.filter(function (data) {
+              return data.ticketed == true && filters.includes(data.type.toLowerCase());
+            });
+            if (self.currentFilter.length == 0) {
+              self.currentFilter = [];
+            }
+          } else if (filters.includes('non-ticketed')) {
+            self.currentFilter = updateFilter.filter(function (data) {
+              return data.ticketed == false && filters.includes(data.type.toLowerCase());
+            });
+            if (self.currentFilter.length == 0) {
+              self.currentFilter = [];
+            }
+          } else {
+            self.currentFilter = [];
+          }
+        }
+        if (self.currentFilter.length == 0 && filters.length == 1) {
+          self.currentFilter = updateFilter.filter(function (data) {
+            return filters.includes('non-ticketed') ? data.ticketed == false : data.ticketed == true;
+          });
+        }
+      }
+      else {
+        self.calendarDiv.querySelector('.filters__header').innerHTML = `<button aria-label="Close" title="Close" type="button" class="filters__close eca-flex eca-flex__center eca-flex__justify-center" onclick="(function removeFilter(){document.querySelector('.event-stage .fade-container').remove();document.querySelector('.filters-container.mobile').parentNode.parentNode.remove();return false;})();return false;">
+                                <svg id="times" viewBox="0 0 352 512"><title id="times-title">Times</title><path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>
+                              </button>
+                                Filters`;
+        document.querySelector('.filters-container.mobile .filters__header').innerHTML = `<button aria-label="Close" title="Close" type="button" class="filters__close eca-flex eca-flex__center eca-flex__justify-center" onclick="(function removeFilter(){document.querySelector('.event-stage .fade-container').remove();document.querySelector('.filters-container.mobile').parentNode.parentNode.remove();return false;})();return false;">
+        <svg id="times" viewBox="0 0 352 512"><title id="times-title">Times</title><path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>
+      </button>
+        Filters`;
+        self.calendarDiv.querySelector('.filters-mobile-button div').innerHTML = `<svg viewBox="0 0 512 512" class="s-padding"><title>Filter</title><path d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z"></path></svg><strong>Filter</strong>`;
+        self.currentFilter = updateFilter;
+      }
+      self.buildEvents(self.currentFilter);
+    };
+
+    CalendarV2.prototype.buyTicket = function (shopifyData) {
+      const self = this;
+      var binderData = self.data.filter(function (data) {
+        return data.handle == shopifyData.handle;
+      })[0];
+      var buyOverlay = document.createElement('div');
+      buyOverlay.innerHTML = `
+        <div class="event-calendar-app__backdrop in" style="opacity:0 !important"></div>
+        <div class="event-calendar-app cleanslate">
+            <div class="eca-modal fade in" style="opacity:0 !important">
+                <div class="rsvp">
+                    <style>
+                        .event-calendar-app .rsvp__submit.rsvp__submit--valid {
+                            background: #da4167 !important;
+                            opacity: 1;
+                        }
+                        .event-calendar-app .rsvp__submit--error {
+                            background: #da4167 !important;
+                            color: #fff !important;
+                        }
+                        .event-calendar-app .rsvp__submitted {
+                            background: #27ae60 !important;
+                        }
+                        .event-calendar-app .rsvp__stripe__field {
+                            border: 1px solid #dfdfdf !important;
+                            background: #fff !important;
+                        }
+                        .event-calendar-app .rsvp__stripe__field.StripeElement--focus {
+                            border: 1px solid #da4167 !important;
+                        }
+                        .event-calendar-app .rsvp__stripe-secure-message {
+                            color: #6f6f6f !important;
+                        }
+                        .event-calendar-app input:focus {
+                            outline: none !important;
+                            border: 1px solid #da4167 !important;
+                        }
+                    </style>
+                    <button aria-label="Close RSVP" title="Close RSVP" type="button" class="rsvp--close eca-flex eca-flex__center">
+                        <svg id="times" viewBox="0 0 352 512"><title id="times-title">Times</title><path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>
+                    </button>
+                    <div class="rsvp--header">Purchase Tickets</div>
+                    <div class="rsvp__event-name">`+ binderData.title + " - " + self.buildReadableDateString("listDate", binderData.date, binderData.time) + `</div>
+                    <div class="rsvp__input-container">
+                        <input data-validate autocomplete="off" placeholder="Name" name="name" type="text" value="{{ customer.name }}">
+                    </div>
+                    <div class="rsvp__input-container">
+                        <input data-validate autocomplete="off" placeholder="Email" name="email" type="text" value="{{ customer.email }}">
+                    </div>
+                    ` + self.buildAdditionalFields(binderData) + `    
+
+                    <div class="ticket-types">
+                    <style>
+                        .event-calendar-app .ticket-types__types {
+                        border: 1px solid #dfdfdf !important;
+                        background: #fff !important;
+                        }
+                        .event-calendar-app .ticket-types__total__label {
+                        color: #474747 !important;
+                        }
+                        .event-calendar-app .ticket-types__total__value {
+                        color: #474747 !important;
+                        }
+                        .event-calendar-app .ticket-type__price__label {
+                        color: #474747 !important;
+                        }
+                        .event-calendar-app .ticket-type__price__amount {
+                        color: #6f6f6f !important;
+                        }
+                    </style>
+                        <div class="ticket-types__types">
+                            <div class="ticket-type">
+                                <div class="ticket-type__price">
+                                    <div class="ticket-type__price__label">General Admission</div>
+                                    <div class="ticket-type__price__amount">`+ Shopify.formatMoney(shopifyData.price, window.theme.moneyWithCurrencyFormat) + `</div>
+                                    <div class="ticket-type__limit"></div>
+                                </div>
+                                <div class="rsvp__quantity">
+                                    <div class="rsvp__quantity__amount">
+                                        <button aria-label="Substract Participants" title="Subtract Participants" type="button" data-change="-1" class="rsvp__quantity__amount__minus eca-flex eca-flex__center rsvp__quantity__amount__minus--limit-reached">
+                                            <svg class="s16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="minus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" class=""></path></svg>
+                                        </button>
+                                        <el>0</el>
+                                        <button aria-label="Increase Participants" title="Increase Participants" type="button" data-change="+1" class="rsvp__quantity__amount__plus eca-flex eca-flex__center">
+                                            <svg class="s16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" class=""></path></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ticket-types__total">
+                                <div class="ticket-types__total__label">Total</div>
+                                <div class="ticket-types__total__value">`+ Shopify.formatMoney(0, window.theme.moneyWithCurrencyFormat) + `</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button aria-label="Add to Cart" title="Add to Cart" type="button" class="rsvp__submit rsvp__submit--error">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+        `;
+      document.querySelector('body').appendChild(buyOverlay);
+
+      var qtyBtns = buyOverlay.querySelectorAll('[data-change]');
+      qtyBtns.forEach(function (btn) {
+        btn.onclick = function (e) {
+          e.preventDefault();
+          self.updateTicket(buyOverlay, btn, shopifyData, binderData);
+        };
+      });
+      var validation = buyOverlay.querySelectorAll('[data-validate]');
+      validation.forEach(function (v) {
+        v.onchange = function (e) {
+          e.preventDefault();
+          self.validateTicket(buyOverlay, true);
+        };
+      });
+      buyOverlay.querySelector('.rsvp__submit').onclick = function () {
+        if (self.validateTicket(buyOverlay)) {
+          self.checkout["totalTickets"] = parseInt(buyOverlay.querySelector('el').innerHTML);
+          self.checkout["completed"] = 0;
+          self.checkout["participants"] = [];
+          self.checkout["shopify"] = [];
+          if (parseInt(buyOverlay.querySelector('el').innerHTML) > 1) {
+            buyOverlay.querySelector('.rsvp__submit').innerHTML = `<i class="far fa-circle-notch fa-spin"></i> Processing`;
+            buyOverlay.querySelector('.rsvp__submit').setAttribute('disabled', true);
+            self.addToCart(buyOverlay, shopifyData.variants[0].id, 1, binderData, false);
+          } else {
+            buyOverlay.querySelector('.rsvp__submit').innerHTML = `<i class="far fa-circle-notch fa-spin"></i> Processing`;
+            buyOverlay.querySelector('.rsvp__submit').setAttribute('disabled', true);
+            self.addToCart(buyOverlay, shopifyData.variants[0].id, 1, binderData, true);
+          }
+        }
+      };
+      setTimeout(() => {
+        buyOverlay.querySelector('.event-calendar-app__backdrop').style = "opacity: 0.5 !important";
+        buyOverlay.querySelector('.eca-modal.fade.in').style = "opacity: 1 !important";
+      }, 200);
+      document.querySelector('.event-calendar-app div').onmousedown = function (e) {
+        if (e.target.className == "eca-modal fade in") {
+          self.checkout = {};
+          buyOverlay.querySelector('.event-calendar-app__backdrop').style = "opacity: 0 !important";
+          buyOverlay.querySelector('.eca-modal.fade.in').style = "opacity: 0 !important";
+          setTimeout(() => {
+            document.querySelector('.event-calendar-app div').parentNode.parentNode.remove();
+          }, 200);
+        }
+      };
+    };
+
+    CalendarV2.prototype.updateItemCount = function () {
+      var url = '';
+      let cartIconCount = document.querySelectorAll('.cart-icon-count');
+
+      if (window.theme.pageType !== 'cart') {
+        url = "".concat(window.routes.cartUrl, "?view=mini-cart&timestamp=").concat(Date.now());
+      } else {
+        url = "".concat(window.routes.cartUrl, "?timestamp=").concat(Date.now());
+      }
+      return fetch(url, {
+        credentials: 'same-origin',
+        method: 'GET'
+      }).then(function (content) {
+        content.text().then(function (html) {
+          // We extract the data-item-count from the returned element
+          var myDiv = document.createElement('div');
+          myDiv.innerHTML = html;
+          if (myDiv.querySelector('.cart-icon-count')) {
+            var newCount = parseInt(myDiv.querySelector('.cart-icon-count').innerHTML);
+            cartIconCount.forEach(function (cart) {
+              cart.innerHTML = newCount;
+              if (parseInt(newCount) > 0) {
+                cart.style = "";
+              } else {
+                cart.style = "display:none";
+              }
+            });
+          }
+        });
+      });
+    };
+
+    CalendarV2.prototype.addToCart = function (buyOverlay, variant_id, qty, binderData, single) {
+      const self = this;
+      var properties = { "name": buyOverlay.querySelector('[name=name]').value, "email": buyOverlay.querySelector('[name=email]').value };
+      binderData.additionalInfo.forEach(function (info) {
+        Object.assign(properties, { [info.id]: buyOverlay.querySelector('[name=custom-' + info.id + ']').value });
+      });
+      var data = {
+        "id": variant_id,
+        "quantity": qty,
+        "properties": properties
+      };
+      self.checkout.shopify.push(data);
+      if (single) {
+        jQuery.ajax({
+          type: 'POST',
+          url: '/cart/add.js',
+          data: data,
+          dataType: 'json',
+          success: function (result) {
+            self.checkout = {};
+            buyOverlay.querySelector('.rsvp__submit').innerHTML = `Completed`;
+            self.updateItemCount();
+            if (self.checkoutAction == "checkout") {
+              window.location = '/checkout';
+            } else if (self.checkoutAction == "cart") {
+              window.location = '/cart';
+            } else {
+              adjustCartDropDown();
+              setTimeout(() => {
+                buyOverlay.querySelector('.event-calendar-app__backdrop').style = "opacity: 0 !important";
+                buyOverlay.querySelector('.eca-modal.fade.in').style = "opacity: 0 !important";
+                setTimeout(() => {
+                  document.querySelector('.event-calendar-app div').parentNode.parentNode.remove();
+                }, 200);
+              }, 1000);
+            }
+          }
+        });
+      } else {
+        self.checkout["participants"].push(properties);
+        self.checkout["completed"] = self.checkout.completed + 1;
+        buyOverlay.querySelector('.rsvp__submit').removeAttribute('disabled');
+        buyOverlay.querySelector('.rsvp__submit').innerHTML = (self.checkout.totalTickets == self.checkout.completed) ? `Add all to Cart` : (self.checkout.totalTickets == (self.checkout.completed + 1)) ? `Complete & Review Now` : `Next - Go to Step ` + (self.checkout.completed + 2);
+        buyOverlay.querySelector('.rsvp__event-name').innerHTML = (self.checkout.totalTickets == self.checkout.completed) ? `Review participant list` : "Participant " + (self.checkout.completed + 1) + " details";
+        buyOverlay.querySelector('.ticket-types').style = "display:none !important";
+        var inputs = buyOverlay.querySelectorAll('input');
+        inputs.forEach(function (input) {
+          if (self.checkout.totalTickets == (self.checkout.completed)) {
+            input.style = "display: none !important";
+          } else {
+            input.value = "";
+          }
+        });
+        if (self.checkout.completed == 1) {
+          buyOverlay.querySelector('.rsvp__submit').remove();
+          var completedDiv = document.createElement('div');
+          completedDiv.className = "rsvp__completed-container";
+          completedDiv.innerHTML = `
+                <div class="rsvp__completed-header" style="opacity:0">Registered Participants - Pending</div>
+                <div class="rsvp__completed-user" style="opacity:0">
+                    <div class="rsvp__completed-user--field">
+                        `+ self.checkout.completed + ` - ` + self.checkout.participants[self.checkout.completed - 1].name + ` (` + self.checkout.participants[self.checkout.completed - 1].email + `)
+                    </div>
+                </div>
+                `;
+          buyOverlay.querySelector('.rsvp').appendChild(completedDiv);
+          var rsvpBtn = document.createElement('button');
+          rsvpBtn.className = "rsvp__submit rsvp__submit--error";
+          rsvpBtn.innerHTML = (self.checkout.totalTickets == self.checkout.completed) ? `Add all to Cart` : (self.checkout.totalTickets == (self.checkout.completed + 1)) ? `Complete & Review Now` : `Next - Go to Step ` + (self.checkout.completed + 2);
+          buyOverlay.querySelector('.rsvp').appendChild(rsvpBtn);
+          setTimeout(() => {
+            buyOverlay.querySelector('.rsvp__completed-header').style = "opacity: 1";
+            buyOverlay.querySelector('.rsvp__completed-user').style = "opacity: 1";
+          }, 200);
+        } else {
+          if (self.checkout.totalTickets != self.checkout.completed) {
+            var userDiv = document.createElement('div');
+            userDiv.className = "rsvp__completed-user";
+            userDiv.style = "opacity: 0";
+            userDiv.innerHTML = `
+                    <div class="rsvp__completed-user--field">
+                        `+ self.checkout.completed + ` - ` + self.checkout.participants[self.checkout.completed - 1].name + ` (` + self.checkout.participants[self.checkout.completed - 1].email + `)
+                    </div>
+                    `;
+            buyOverlay.querySelector('.rsvp__completed-container').appendChild(userDiv);
+            setTimeout(() => {
+              userDiv.style = "opacity: 1";
+            }, 200);
+          } else {
+            buyOverlay.querySelector('.rsvp__completed-container').style = "display:none";
+            buyOverlay.querySelector('.rsvp__submit').remove();
+            var reviewWrapper = document.createElement('div');
+            reviewWrapper.className = "rsvp__review-container";
+            reviewWrapper.style = "opacity: 0";
+            reviewWrapper.innerHTML = `
+                    <table>
+                        <tr>
+                            <th style="width: 30%">Name</th>
+                            <th style="width: calc(70% - 25px)">Email</th>
+                            <th style="width: 25px"></th>
+                        </tr>
+                    </table>`;
+            buyOverlay.querySelector('.rsvp').appendChild(reviewWrapper);
+            var table = buyOverlay.querySelector('.rsvp table');
+            self.checkout.participants.forEach(function (participant, i = 0) {
+              var size = 0, key;
+              for (key in participant) {
+                if (participant.hasOwnProperty(key)) size++;
+              }
+              var userRow = document.createElement('tr');
+              userRow.innerHTML = `<td>` + participant.name + `</td><td>` + participant.email + `</td><td data-email="` + (participant.email).toLowerCase() + `"id="user-` + i + `"></td>`;
+              table.appendChild(userRow);
+              if (size > 2) {
+                var userRow = document.createElement('tr');
+                for (const [key, value] of Object.entries(participant)) {
+                  let pKey = parseInt(key);
+                  let keyName;
+                  if (participant.hasOwnProperty(key) && key != 'name' && key != 'email') {
+                    binderData.additionalInfo.forEach(function (additional) {
+                      for (const [key, value] of Object.entries(additional)) {
+                        if (pKey === value) {
+                          keyName = additional;
+                        }
+                      }
+                    });
+                    userRow.innerHTML += "<td colspan='3'> - " + keyName.header + ": " + value + " </td><br>";
+                  }
+                }
+                table.appendChild(userRow);
+              }
+            });
+            setTimeout(() => {
+              reviewWrapper.style = "opacity: 1";
+            }, 200);
+            var rsvpBtn = document.createElement('button');
+            rsvpBtn.className = "rsvp__submit rsvp__submit--error";
+            rsvpBtn.innerHTML = `Add all to Cart`;
+            buyOverlay.querySelector('.rsvp').appendChild(rsvpBtn);
+          }
+        }
+
+        self.validateTicket(buyOverlay, true);
+
+        if (self.checkout.totalTickets != (self.checkout.completed)) {
+          buyOverlay.querySelector('.rsvp__submit').onclick = function () {
+            if (self.validateTicket(buyOverlay)) {
+              buyOverlay.querySelector('.rsvp__submit').innerHTML = `<i class="far fa-circle-notch fa-spin"></i> Processing`;
+              buyOverlay.querySelector('.rsvp__submit').setAttribute('disabled', true);
+              self.addToCart(buyOverlay, variant_id, 1, binderData, false);
+            }
+          };
+        } else {
+          buyOverlay.querySelector('.rsvp__submit').onclick = function () {
+            buyOverlay.querySelector('.rsvp__submit').setAttribute('disabled', true);
+            buyOverlay.querySelector('.rsvp__submit').innerHTML = `<i class="far fa-circle-notch fa-spin"></i> Processing`;
+            var queue = [];
+            for (var i = 0; i < self.checkout.shopify.length; i++) {
+              queue.push(self.checkout.shopify[i]);
+            }
+            jQuery.post('/cart/add.js', {
+              items: queue
+            }, function (result) {
+              var totalToProcess = result.items.length;
+              let totalProcessed = 0;
+              for (var i = 0; i < result.items.length; i++) {
+                if (result.items[i].properties.email) {
+                  buyOverlay.querySelector('[data-email="' + (result.items[i].properties.email).toLowerCase() + '"]').innerHTML = `<span style="color: white;background: #7ac17a;padding: 2px 5px;">✓</span>`;
+                  totalProcessed = totalProcessed + 1;
+                  if (totalProcessed == totalToProcess) {
+                    buyOverlay.querySelector('.rsvp__submit').innerHTML = `Completed`;
+                    self.checkout = {};
+                    self.updateItemCount();
+                    if (self.checkoutAction == "checkout") {
+                      window.location = '/checkout';
+                    } else if (self.checkoutAction == "cart") {
+                      window.location = '/cart';
+                    } else {
+                      adjustCartDropDown();
+                      setTimeout(() => {
+                        buyOverlay.querySelector('.event-calendar-app__backdrop').style = "opacity: 0 !important";
+                        buyOverlay.querySelector('.eca-modal.fade.in').style = "opacity: 0 !important";
+                        setTimeout(() => {
+                          document.querySelector('.event-calendar-app div').parentNode.parentNode.remove();
+                        }, 200);
+                      }, 1000);
+                    }
+                  }
+                }
+              }
+            }, 'json');
+          };
+        }
+      }
+    };
+
+    CalendarV2.prototype.buildAdditionalFields = function (binderData) {
+      var data = document.createElement("div");
+      binderData.additionalInfo.forEach(function (additional) {
+        data.innerHTML += `
+        <div class="rsvp__input-container">
+            <input data-validate data-message="`+ additional.headerDescription + `" autocomplete="off" placeholder="` + additional.header + `" name="custom-` + additional.id + `" type="text" value="">
+        </div>
+        `;
+      });
+      return data.innerHTML;
+    };
+
+    CalendarV2.prototype.updateTicket = function (buyOverlay, target, shopifyData, binderData) {
+      const self = this;
+      var change = target.getAttribute('data-change');
+      var total = buyOverlay.querySelector('.ticket-types__total__value');
+      var qty = parseInt(target.parentNode.querySelector('el').innerHTML);
+      if (change == "+1") {
+        if ((qty + 1) > 0) {
+
+          // Shopify depreciated quantity return, way code base/db is structured we can't get quantity level 
+          // TODO: remedy when converting to shopify app extension, use back end admin api call to get quantity
+          // set limit on adding qty added === product qty 
+
+          target.parentNode.querySelector('.rsvp__quantity__amount__plus').classList.add('rsvp__quantity__amount__plus--limit-reached');
+
+          const clearItemFromCart = (data) => {
+            fetch('/cart/change.js', {
+              body: JSON.stringify({
+                id: String(shopifyData.variants[0].id),
+                quantity: 0,
+              }),
+              method: "POST",
+              headers: {
+                'Content-Type': 'application/json'
+              },
+            }).then(() => {
+              if (data.status && data.status === 422) {
+                target.parentNode.querySelector('.rsvp__quantity__amount__plus').classList.add('rsvp__quantity__amount__plus--limit-reached');
+                document.querySelector('.ticket-type__limit').innerText = `Max tickets: ${qty + 1}`;
+              } else {
+                target.parentNode.querySelector('.rsvp__quantity__amount__plus').classList.remove('rsvp__quantity__amount__plus--limit-reached');
+              }
+            });
+          };
+
+          fetch('/cart/add.js', {
+            body: JSON.stringify({
+              items: [{
+                id: shopifyData.variants[0].id,
+                quantity: qty + 2,
+              }]
+            }),
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json'
+            },
+          }).then((resp) => resp.json()).then((data) => {
+            clearItemFromCart(data);
+          }).catch((e) => {
+            console.log(e);
+          });
+          
+          target.parentNode.querySelector('.rsvp__quantity__amount__minus').classList.remove('rsvp__quantity__amount__minus--limit-reached');
+        }
+        target.parentNode.querySelector('el').innerHTML = qty + 1;
+        total.innerHTML = Shopify.formatMoney(((qty + 1) * shopifyData.price), window.theme.moneyWithCurrencyFormat);
+        if (((qty + 1) > 1)) {
+          buyOverlay.querySelector('.rsvp__submit').innerHTML = "Next - Go to Step 2";
+        } else {
+          buyOverlay.querySelector('.rsvp__submit').innerHTML = "Add to Cart";
+        }
+      } else {
+        if ((qty - 1) <= 0) {
+          target.parentNode.querySelector('.rsvp__quantity__amount__minus').classList.add('rsvp__quantity__amount__minus--limit-reached');
+          target.parentNode.querySelector('el').innerHTML = 0;
+          total.innerHTML = Shopify.formatMoney(0, window.theme.moneyWithCurrencyFormat);
+        } else {
+          target.parentNode.querySelector('el').innerHTML = qty - 1;
+          total.innerHTML = Shopify.formatMoney(((qty - 1) * shopifyData.price), window.theme.moneyWithCurrencyFormat);
+        }
+        if (((qty - 1) > 1)) {
+          buyOverlay.querySelector('.rsvp__submit').innerHTML = "Next - Go to Step 2";
+        } else {
+          buyOverlay.querySelector('.rsvp__submit').innerHTML = "Add to Cart";
+        }
+        target.parentNode.querySelector('.rsvp__quantity__amount__plus').classList.remove('rsvp__quantity__amount__plus--limit-reached');
+        document.querySelector('.ticket-type__limit').innerText = '';
+      }
+      self.validateTicket(buyOverlay, true);
+    };
+
+    CalendarV2.prototype.validateTicket = function (buyOverlay, showErrors) {
+      var validated = true;
+      var inputs = buyOverlay.querySelectorAll('input');
+      inputs.forEach(function (input) {
+        var custom = input.getAttribute('data-message') ? true : false;
+        if (input.value.length == 0) {
+          validated = false;
+          if (!showErrors) {
+            if (!input.parentNode.querySelector('.rsvp__input-invalid-message')) {
+              var errorSpan = document.createElement('span');
+              errorSpan.className = "rsvp__input-invalid-message";
+              if (custom) {
+                errorSpan.innerHTML = input.getAttribute('data-message') != "" ? input.getAttribute('data-message') : "This field is required";
+              } else {
+                errorSpan.innerHTML = "An " + input.getAttribute('name') + " is required";
+              }
+              input.parentNode.appendChild(errorSpan);
+            }
+          }
+        } else {
+          if (input.parentNode.querySelector('.rsvp__input-invalid-message')) {
+            input.parentNode.querySelector('.rsvp__input-invalid-message').remove();
+          }
+        }
+        if (input.getAttribute('name') == "email" && input.value.length > 0) {
+          const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          if (re.test(input.value) == false) {
+            var errorSpan = document.createElement('span');
+            errorSpan.className = "rsvp__input-invalid-message";
+            errorSpan.innerHTML = "A valid " + input.getAttribute('name') + " is required";
+            input.parentNode.appendChild(errorSpan);
+            validated = false;
+          } else {
+            if (input.parentNode.querySelector('.rsvp__input-invalid-message')) {
+              input.parentNode.querySelector('.rsvp__input-invalid-message').remove();
+            }
+          }
+        }
+      });
+      if (parseInt(buyOverlay.querySelector('.rsvp__quantity__amount el').innerHTML) == 0) {
+        validated = false;
+        if (!showErrors) {
+          if (!buyOverlay.querySelector('.rsvp__quantity__amount').parentNode.parentNode.parentNode.parentNode.querySelector('.rsvp__input-invalid-message')) {
+            var errorSpan = document.createElement('span');
+            errorSpan.className = "rsvp__input-invalid-message";
+            errorSpan.innerHTML = "Must select at least one ticket";
+            buyOverlay.querySelector('.rsvp__quantity__amount').parentNode.parentNode.parentNode.parentNode.appendChild(errorSpan);
+          }
+        }
+      } else {
+        if (buyOverlay.querySelector('.rsvp__quantity__amount').parentNode.parentNode.parentNode.parentNode.querySelector('.rsvp__input-invalid-message')) {
+          buyOverlay.querySelector('.rsvp__quantity__amount').parentNode.parentNode.parentNode.parentNode.querySelector('.rsvp__input-invalid-message').remove();
+        }
+      }
+      if (showErrors) {
+        if (validated) {
+          buyOverlay.querySelector('.rsvp__submit').style = "opacity: 1 !important";
+        } else {
+          buyOverlay.querySelector('.rsvp__submit').style = "opacity: 0.5 !important";
+        }
+      }
+      if (validated && !showErrors) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    CalendarV2.prototype.fetchShopify = function (handle, id) {
+      const self = this;
+      var temp = self.savedShopifyData.filter(function (data) {
+        return data.handle == handle;
+      });
+      if (temp.length == 0) {
+        jQuery.getJSON('/products/' + handle + '.js', function (result) {
+          self.savedShopifyData.push(result);
+          self.calendarDiv.querySelector('[data-event-id=binderpos-' + id + ']').querySelector('.calendar-' + self.view + '-event div').classList.remove('ticketed');
+          var purchaseBtns = self.calendarDiv.querySelector('[data-event-id=binderpos-' + id + ']').querySelectorAll('.calendar-' + self.view + '-event__buy-tickets div');
+          purchaseBtns.forEach(function (btn) {
+            if (result.available == false) {
+              btn.parentNode.classList.add('rsvp-button--sold-out');
+            }
+            if (result.available == true) {
+              btn.parentNode.onclick = function (e) {
+                e.preventDefault();
+                self.buyTicket(result);
+              };
+            }
+            btn.innerHTML = (result.available == true && result.price > 0) ? `<svg class="s-padding" id="ticket-alt" viewBox="0 0 576 512" style="fill: rgb(255, 255, 255); height: 14px;"><title id="ticket-alt-title">Alternate Ticket</title><path d="M128 160h320v192H128V160zm400 96c0 26.51 21.49 48 48 48v96c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48v-96c26.51 0 48-21.49 48-48s-21.49-48-48-48v-96c0-26.51 21.49-48 48-48h480c26.51 0 48 21.49 48 48v96c-26.51 0-48 21.49-48 48zm-48-104c0-13.255-10.745-24-24-24H120c-13.255 0-24 10.745-24 24v208c0 13.255 10.745 24 24 24h336c13.255 0 24-10.745 24-24V152z"></path></svg>
+                                                    <span class="calendar-`+ self.view + `-event__buy-tickets-text">Purchase Tickets</span>` : (result.available == true && result.price == 0) ? `<svg class="s-padding" id="ticket-alt" viewBox="0 0 576 512" style="fill: rgb(255, 255, 255); height: 14px;"><title id="ticket-alt-title">Alternate Ticket</title><path d="M128 160h320v192H128V160zm400 96c0 26.51 21.49 48 48 48v96c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48v-96c26.51 0 48-21.49 48-48s-21.49-48-48-48v-96c0-26.51 21.49-48 48-48h480c26.51 0 48 21.49 48 48v96c-26.51 0-48 21.49-48 48zm-48-104c0-13.255-10.745-24-24-24H120c-13.255 0-24 10.745-24 24v208c0 13.255 10.745 24 24 24h336c13.255 0 24-10.745 24-24V152z"></path></svg>
+                                                    <span class="calendar-`+ self.view + `-event__buy-tickets-text">RSVP for Event</span>` : `<span class="calendar-` + self.view + `-event__buy-tickets-text">Sold Out</span>`;
+          });
+        });
+      } else {
+        self.calendarDiv.querySelector('[data-event-id=binderpos-' + id + ']').querySelector('.calendar-' + self.view + '-event div').classList.remove('ticketed');
+        var purchaseBtns = self.calendarDiv.querySelector('[data-event-id=binderpos-' + id + ']').querySelectorAll('.calendar-' + self.view + '-event__buy-tickets div');
+        purchaseBtns.forEach(function (btn) {
+          if (temp[0].available == false) {
+            btn.parentNode.classList.add('rsvp-button--sold-out');
+          }
+          if (temp[0].available == true) {
+            btn.parentNode.onclick = function (e) {
+              e.preventDefault();
+              self.buyTicket(temp[0]);
+            };
+          }
+          btn.innerHTML = (temp[0].available == true && temp[0].price > 0) ? `<svg class="s-padding" id="ticket-alt" viewBox="0 0 576 512" style="fill: rgb(255, 255, 255); height: 14px;"><title id="ticket-alt-title">Alternate Ticket</title><path d="M128 160h320v192H128V160zm400 96c0 26.51 21.49 48 48 48v96c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48v-96c26.51 0 48-21.49 48-48s-21.49-48-48-48v-96c0-26.51 21.49-48 48-48h480c26.51 0 48 21.49 48 48v96c-26.51 0-48 21.49-48 48zm-48-104c0-13.255-10.745-24-24-24H120c-13.255 0-24 10.745-24 24v208c0 13.255 10.745 24 24 24h336c13.255 0 24-10.745 24-24V152z"></path></svg>
+                                                  <span class="calendar-`+ self.view + `-event__buy-tickets-text">Purchase Tickets</span>` : (temp[0].available == true && temp[0].price == 0) ? `<svg class="s-padding" id="ticket-alt" viewBox="0 0 576 512" style="fill: rgb(255, 255, 255); height: 14px;"><title id="ticket-alt-title">Alternate Ticket</title><path d="M128 160h320v192H128V160zm400 96c0 26.51 21.49 48 48 48v96c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48v-96c26.51 0 48-21.49 48-48s-21.49-48-48-48v-96c0-26.51 21.49-48 48-48h480c26.51 0 48 21.49 48 48v96c-26.51 0-48 21.49-48 48zm-48-104c0-13.255-10.745-24-24-24H120c-13.255 0-24 10.745-24 24v208c0 13.255 10.745 24 24 24h336c13.255 0 24-10.745 24-24V152z"></path></svg>
+                                                  <span class="calendar-`+ self.view + `-event__buy-tickets-text">RSVP for Event</span>` : `<span class="calendar-` + self.view + `-event__buy-tickets-text">Sold Out</span>`;
+
+        });
+      }
+    };
+
+    CalendarV2.prototype.stripeHtml = function (html) {
+      let tmp = document.createElement("DIV");
+      tmp.innerHTML = html;
+      return tmp.textContent || tmp.innerText || "";
+    };
+
+    CalendarV2.prototype.findAndLoadEvent = function () {
+      const self = this;
+      var event = false;
+      var ticket = false;
+      var url = new URL(window.location.href);
+      if (url.searchParams.get("ticket") != null || window.theme.pageType == "product") {
+        if (url.searchParams.get("ticket") != null) {
+          var temp = self.data.filter(function (d) {
+            return d.handle == url.searchParams.get("ticket");
+          })[0];
+        } else {
+          var temp = self.data.filter(function (d) {
+            return d.handle == "{{ product.handle }}";
+          })[0];
+          window.theme.pageType = "";
+        }
+        var temp1 = self.savedShopifyData.filter(function (data) {
+          return data.handle == temp.handle;
+        });
+        if (temp1.length == 0) {
+          jQuery.getJSON('/products/' + temp.handle + '.js', function (result) {
+            self.savedShopifyData.push(result);
+            self.eventView("direct", "binderpos-" + temp.id);
+          });
+        } else {
+          self.eventView("direct", "binderpos-" + temp.id);
+          //use temp[0]
+        }
+      }
+      if (url.searchParams.get("event") != null) {
+        var temp = decodeURI(url.searchParams.get("event")).match(/(.*)\-(.*)/);
+        self.eventView("direct", "binderpos-" + temp[2]);
+      }
+    };
+
+    CalendarV2.prototype.eventViewLayout = function (eventData) {
+      const self = this;
+      let userlist = [];
+      if (eventData.ticketed && self.showParticipants == "yes") {
+        var temp = self.savedShopifyData.filter(function (data) {
+          return data.handle == eventData.handle;
+        });
+        fetch("https://portal.binderpos.com/api/events/byProduct/" + temp[0].id + "/participants/forStore")
+          .then(response => response.json())
+          .then(data => {
+            userlist = data;
+            var participantsDiv = document.querySelector('.calendar-event-partipants');
+            participantsDiv.querySelector('h3').innerHTML = "Participants List (" + userlist.length + ")";
+            if (userlist.length > 0) {
+              participantsDiv.querySelector('.noRegistered').remove();
+              userlist.forEach((user, index) => {
+                var p = document.createElement('p');
+                p.innerHTML = (index + 1) + " - " + user.participantName;
+                participantsDiv.appendChild(p);
+              });
+            } else {
+              participantsDiv.querySelector('.noRegistered').innerHTML = "No players registered";
+            }
+          });
+      }
+      return (eventData.banner != null ? ('<div class="calendar-event-details__image__wrapper"><img alt="Event Banner" loading="lazy" class="calendar-event-details__image" src="' + eventData.banner + '"></div>') : "") + `                    
+      <div class="calendar-event-details__description calendar-event-details__description--with-image calendar-event-details__description--list-view-mode">
+        <div class="calendar-event-details__filters-container">
+          <div class="calendar-event-details__filter calendar-event-details__filter-1" style="background: `+ eventData.color + ` !important">
+            <div class="eca-flex eca-flex__center">`+ eventData.type + `</div>
+          </div>
+          <div class="calendar-event-details__filter calendar-event-details__filter-1" style="background: #959e97 !important">
+            <div class="eca-flex eca-flex__center">`+ eventData.game + `</div>
+          </div>
+        </div>
+        <div class="calendar-event-details__long-description">
+          `+ eventData.description + `
+        </div>
+        <div class="calendar-event-details__prize-structure"> 
+          `+ eventData.prizeStructure + `
+        </div>
+        `+ ((eventData.ticketed && self.showParticipants == "yes") ? `
+        <hr /><div class="calendar-event-partipants">
+            <h3>Participants List (`+ userlist.length + `)</h3>
+            `+ (userlist.length == 0 ? `<span class="noRegistered">Retrieving names...</span>` : "") + `
+        </div><hr />`: ``) + `
+        <div class="calendar-event-details__map">` + (this.mapAPIkey ? `
+<iframe width="100%" height="350" src="https://www.google.com/maps/embed/v1/place?key={{ data.api_key}}&q=`+ (eventData.streetAddress && eventData.zipCode ? (eventData.streetAddress + ", " + eventData.city + ", " + eventData.state + ", " + eventData.zipCode) : `{{ shop.address.summary | escape }}`) + `" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+<hr>`: ``) + `
+          <div class="calendar-event-details__bottom-bar">
+            <div class="calendar-event-details__subscription-button">
+              <button aria-label="Add to Calendar" title="Add to Calendar" class="ignore-react-onclickoutside event-subcribe-to-calendar" type="button">
+                <div class="eca-flex eca-flex__center subscribe-text-area"><svg class="s-padding" id="calendar-alt" viewBox="0 0 448 512" style="fill: rgb(255, 255, 255); height: 14px;"><title id="calendar-alt-title">Alternate Calendar</title><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"></path></svg>Add to calendar</div>
+              </button>
+            </div>
+            <div class="sharing">
+              <div class="sharing__copy-success">
+                Copied to clipboard
+              </div>
+              <div class="sharing__icon sharing__icon--link eca-flex">
+                <svg class="s16" id="link" viewBox="0 0 512 512"><title id="link-title">Link</title><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"></path></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    };
+
+    CalendarV2.prototype.eventView = function (display, selector) {
+      const self = this;
+      var eventDiv = self.calendarDiv.querySelector('[data-event-id="' + selector + '"]');
+      var eventId = parseInt(selector.split('-')[1]);
+      var eventData = self.data.filter(function (data) {
+        return data.id == eventId;
+      })[0];
+      if (display == "list") {
+        if (eventDiv.querySelector('.ReactCollapse--collapse')) {
+          document.title = "Events";
+          history.pushState({}, null, location.protocol + "//" + self.hostname + self.pathname);
+          eventDiv.querySelector('.ReactCollapse--collapse').style.maxHeight = "0px";
+          setTimeout(() => {
+            eventDiv.querySelector('.ReactCollapse--collapse').remove();
+          }, 500);
+        } else {
+          document.title = "Events | " + eventData.title + " Event";
+          if (self.calendarDiv.querySelector('.ReactCollapse--collapse')) {
+            self.calendarDiv.querySelector('.ReactCollapse--collapse').style.maxHeight = "0px";
+            self.calendarDiv.querySelector('.ReactCollapse--collapse').remove();
+          }
+          var para = new URLSearchParams();
+          para.append(eventData.handle ? "ticket" : "event", eventData.handle ? eventData.handle : (escape(eventData.title).toLocaleLowerCase() + "-" + eventData.id));
+          history.pushState({}, null, location.protocol + "//" + self.hostname + self.pathname + "?" + para.toString());
+          let details = document.createElement('div');
+          details.className = `ReactCollapse--collapse`;
+          details.setAttribute('aria-hidden', false);
+          details.style.maxHeight = null;
+          details.innerHTML = `
+            <div class="ReactCollapse--content">
+              <div class="collapse-content-container">
+                <div class="calendar-event-details col-md-12-no-float">
+                  <div class="row">
+                   ` + self.eventViewLayout(eventData) + `
+                  </div>
+                </div>
+              </div>
+          `;
+          eventDiv.appendChild(details);
+          setTimeout(() => {
+            details.style.maxHeight = details.scrollHeight + "px";
+          }, 200);
+          self.calendarDiv.querySelector('.sharing__icon').onclick = function () {
+            var copyText = location.protocol + "//" + self.hostname + self.pathname + "?" + para.toString();
+            const el = document.createElement('textarea');
+            el.value = encodeURI(copyText);
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            self.calendarDiv.querySelector('.sharing__copy-success').style = "opacity: 1 !important";
+            setTimeout(() => {
+              self.calendarDiv.querySelector('.sharing__copy-success').style = "opacity: 0 !important";
+            }, 1500);
+            document.body.removeChild(el);
+          };
+          details.parentNode.scrollIntoView();
+        }
+      } else if (display = "board" || display == "direct") {
+        document.title = "Events | " + eventData.title + " Event";
+        var temp = self.savedShopifyData.filter(function (data) {
+          return data.handle == eventData.handle;
+        });
+        var para = new URLSearchParams();
+        para.append(eventData.handle ? "ticket" : "event", eventData.handle ? eventData.handle : (escape(eventData.title).toLocaleLowerCase() + "-" + eventData.id));
+        history.pushState({}, null, location.protocol + "//" + self.hostname + self.pathname + "?" + para.toString());
+        self.calendarDiv.querySelector('.calendar-list-view').style = "opacity: 0 !important";
+        self.calendarDiv.querySelector('.calendar-list-view__navigation-container').style = "opacity: 0 !important";
+        self.calendarDiv.querySelector('.search-animation-container').style = "opacity: 0 !important";
+        setTimeout(() => {
+          self.calendarDiv.querySelector('.calendar-list-view').style = "display:none !important";
+          self.calendarDiv.querySelector('.calendar-list-view__navigation-container').style = "display:none !important";
+          self.calendarDiv.querySelector('.search-animation-container').style = "display:none !important";
+          let eventViewContainer = document.createElement('div');
+          eventViewContainer.className = "single-event withDomnode calendar-type-enter-done";
+          eventViewContainer.style = "opacity: 0 !important";
+          eventViewContainer.innerHTML = `
+        <style>
+          #event-calendar-app .single-event__back {
+              color: #474747 !important;
+              
+              background: #f5f5f5 !important;
+          }
+          #event-calendar-app .single-event__back:hover {
+              background: #f5f5f5 !important;
+          }
+          #event-calendar-app .single-event__back svg {
+              fill: #474747 !important;
+          }
+          #event-calendar-app .single-event__body {
+              border-color: #efefef !important;
+          }
+          #event-calendar-app .calendar-event-details__location {
+              color: #6f6f6f !important;
+          }   
+          .calendar-event-details__title {
+              background: #f5f5f5 !important;
+          }                 
+        </style>
+        <div class="row">
+            <div class="single-event__navigation">
+              <span class="single-event__back eca-flex eca-flex__center">
+                <svg id="caret-left" viewBox="0 0 192 512" class="s-padding"><title id="caret-left-title">Caret Left</title><path d="M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z"></path></svg>
+                <span class="single-event__back__text">Back to events</span>
+              </span>
+            </div>
+          </div>
+          <div class="row single-event__body">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="calendar-event-details__title">
+                  <div class="calendar-event-details__name">
+                    `+ eventData.title + `
+                  </div>
+                  <a class="calendar-event-details__location calendar-event-details__location--physical" target="_blank" href="http://googlemaps.com/?q=`+ (eventData.streetAddress && eventData.zipCode ? (eventData.streetAddress + ", " + eventData.city + ", " + eventData.state + ", " + eventData.zipCode) : `{{ shop.address.summary | escape }}`) + `">
+                    <div class="eca-flex eca-flex__center eca-flex__justify-center">
+                      <svg style="fill: #6f6f6f !important" id="location-arrow" viewBox="0 0 512 512" class="md-padding"><title id="location-arrow-title">location-arrow</title><path d="M444.52 3.52L28.74 195.42c-47.97 22.39-31.98 92.75 19.19 92.75h175.91v175.91c0 51.17 70.36 67.17 92.75 19.19l191.9-415.78c15.99-38.39-25.59-79.97-63.97-63.97z"></path></svg> 
+                      `+ (eventData.buildingName ? eventData.buildingName : `{{ shop.name }}`) + `
+                    </div>
+                  </a>
+                  <span class="calendar-event-details__date eca-without-image">
+                    <style>
+                        #event-calendar-app .calendar-event-details__date.eca-without-image, 
+                        #event-calendar-app .calendar-event-details__date.eca-without-image svg {
+                            color: #6f6f6f !important;
+                            fill: #6f6f6f !important;
+                        }
+                    </style>
+                    <div class="eca-flex eca-flex__center">
+                      <svg viewBox="0 0 512 512" class="md-padding "><title>Clock</title><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"></path></svg>
+                      <span>`+ self.buildReadableDateString("listDate", eventData.date, eventData.time) + `</span>
+                    </div>
+                  </span>
+                  `+ (eventData.ticketed ? (`<div>
+                    <div class="rsvp-button calendar-event-details__buy-tickets calendar-event-details__buy-tickets--dark `+ (temp[0].available == false ? "rsvp-button--sold-out" : "") + `">
+                      <div class="eca-flex eca-flex__center eca-flex__justify-center eca-flex__full-height">
+                        `+ ((temp[0].available == true && temp[0].price > 0) ? `<svg class="s-padding" id="ticket-alt" viewBox="0 0 576 512" style="fill: rgb(255, 255, 255); height: 14px;"><title id="ticket-alt-title">Alternate Ticket</title><path d="M128 160h320v192H128V160zm400 96c0 26.51 21.49 48 48 48v96c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48v-96c26.51 0 48-21.49 48-48s-21.49-48-48-48v-96c0-26.51 21.49-48 48-48h480c26.51 0 48 21.49 48 48v96c-26.51 0-48 21.49-48 48zm-48-104c0-13.255-10.745-24-24-24H120c-13.255 0-24 10.745-24 24v208c0 13.255 10.745 24 24 24h336c13.255 0 24-10.745 24-24V152z"></path></svg>
+                        <span class="calendar-event-details__buy-tickets-text">Purchase Tickets</span>` : (temp[0].available == true && temp[0].price == 0) ? `<svg class="s-padding" id="ticket-alt" viewBox="0 0 576 512" style="fill: rgb(255, 255, 255); height: 14px;"><title id="ticket-alt-title">Alternate Ticket</title><path d="M128 160h320v192H128V160zm400 96c0 26.51 21.49 48 48 48v96c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48v-96c26.51 0 48-21.49 48-48s-21.49-48-48-48v-96c0-26.51 21.49-48 48-48h480c26.51 0 48 21.49 48 48v96c-26.51 0-48 21.49-48 48zm-48-104c0-13.255-10.745-24-24-24H120c-13.255 0-24 10.745-24 24v208c0 13.255 10.745 24 24 24h336c13.255 0 24-10.745 24-24V152z"></path></svg>
+                        <span class="calendar-event-details__buy-tickets-text">RSVP for Event</span>` : `<span style="pointer-events:none" class="calendar-event-details__buy-tickets-text">Sold Out</span>`
+              ) + `
+                        </div>
+                      </div>
+                    </div>`) : "") + `
+                </div>
+              </div>
+              <div class="row">
+                ` + self.eventViewLayout(eventData) + `
+              </div>
+            </div> 
+          </div>                
+          `;
+          self.calendarDiv.querySelector('.calendar-list-view').parentNode.appendChild(eventViewContainer);
+          eventViewContainer.style = "opacity: 1 !important";
+          if (temp.length > 0 && temp[0].available == true) {
+            var purchaseBtn = document.querySelector('.single-event .rsvp-button');
+            purchaseBtn.onclick = function (e) {
+              e.preventDefault();
+              self.buyTicket(temp[0]);
+            };
+          }
+          self.calendarDiv.querySelector('.sharing__icon').onclick = function () {
+            var copyText = location.protocol + "//" + self.hostname + self.pathname + "?" + para.toString();
+            const el = document.createElement('textarea');
+            el.value = encodeURI(copyText);
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            self.calendarDiv.querySelector('.sharing__copy-success').style = "opacity: 1 !important";
+            setTimeout(() => {
+              self.calendarDiv.querySelector('.sharing__copy-success').style = "opacity: 0 !important";
+            }, 1500);
+            document.body.removeChild(el);
+          };
+          self.calendarDiv.querySelector('.single-event__back').onclick = function () {
+            document.title = "Events";
+            history.pushState({}, null, location.protocol + "//" + self.hostname + self.pathname);
+            eventViewContainer.style = "opacity: 0 !important";
+            setTimeout(() => {
+              eventViewContainer.remove();
+              self.calendarDiv.querySelector('.calendar-list-view__navigation-container').style = "display:flex !important";
+              self.calendarDiv.querySelector('.search-animation-container').style = "display:block !important";
+              self.calendarDiv.querySelector('.calendar-list-view').style = "opacity: 1 !important";
+            }, 300);
+          };
+        }, 300);
+      }
+    };
+
+    CalendarV2.prototype.buildEvents = function (data) {
+      const self = this;
+      this.calendarDiv.querySelector('.calendar-list-events-wrapper').innerHTML = "";
+      var firstDate = "";
+      var lastDate = "";
+      var currentPage = (self.offset / 6) + 1;
+      var totalPages = Math.ceil(self.data.length / 6 - 1);
+      var prevBtn = this.calendarDiv.querySelector('.calendar-list-view__navigate-button--left');
+      var nextBtn = this.calendarDiv.querySelector('.calendar-list-view__navigate-button--right');
+      if (self.offset > 0) {
+        prevBtn.classList.remove('calendar-list-view__navigate-button--disabled');
+        prevBtn.onclick = function () {
+          self.calendarDiv.querySelector('.calendar-list-view').style = "opacity: 0 !important;";
+          setTimeout(() => {
+            self.offset = ((currentPage - 2) * 6);
+            self.buildEvents(self.currentFilter);
+          }, 300);
+        };
+      } else {
+        prevBtn.classList.add('calendar-list-view__navigate-button--disabled');
+        prevBtn.onclick = null;
+      }
+      if (totalPages > 1 && currentPage != totalPages) {
+        nextBtn.classList.remove('calendar-list-view__navigate-button--disabled');
+        nextBtn.onclick = function () {
+          self.calendarDiv.querySelector('.calendar-list-view').style = "opacity: 0 !important;";
+          setTimeout(() => {
+            self.offset = (currentPage * 6);
+            self.buildEvents(self.currentFilter);
+          }, 300);
+        };
+      } else {
+        nextBtn.classList.add('calendar-list-view__navigate-button--disabled');
+        nextBtn.onclick = null;
+      }
+      for (var i = self.offset; i < (self.offset + 6); i++) {
+        if (data[i] != undefined) {
+          if (i == self.offset) {
+            firstDate = data[i].date;
+            let startDate = new Date(data[i].timestamp);
+            let endDate = new Date(data[i].timestamp);
+            startDate.setDate(startDate.getDate() - 30);
+            endDate.setDate(endDate.getDate() + 60);
+            self.fetchMoreData(this.buildDateString(startDate), this.buildDateString(endDate));
+            if (self.view == "board") {
+              var gridWrapper = document.createElement('div');
+              gridWrapper.className = "board-view-calendar";
+              this.calendarDiv.querySelector('.calendar-list-events-wrapper').appendChild(gridWrapper);
+            }
+          } else {
+            lastDate = data[i].date;
+          }
+          if (self.view == "board") {
+            var item = document.createElement('div');
+
+            let removeEventSummaryHTML = "{{ data.removeEventSummaryHTML }}";
+            let eventDescription = removeEventSummaryHTML === "yes" ? self.stripeHtml(data[i].description) : data[i].description;
+
+            item.className = "calendar-board-event";
+            item.setAttribute('data-event-id', "binderpos-" + data[i].id);
+
+            const lazyLoadingBanner = data[i].banner != null
+              ? `<img loading="lazy" src="${data[i].banner}" alt="Event Banner Image" class="calendar-board-event__image calendar-board-event__image-3BB510A1-CF7F-4B4C-8654-736CAB3692E1">`
+              : `<img loading="lazy" src='http://www.todayifoundout.com/wp-content/uploads/2013/09/calendar.jpg' alt="Calendar Image">`;
+
+            const isTicketedButton = data[i].isTicketed == true
+              ? `<span class="calendar-${self.view}-event__buy-tickets-text">Retrieving...</span>`
+              : `<span class="calendar-${self.view}-event__buy-tickets-text nonTicketed">View Information</span>`;
+
+            item.innerHTML = `<div class="calendar-board-event__container clickable ${data[i].ticketed ? " ticketed" : ""}">
+                    <div class="ie-fix-flex-image-class">
+                      ${lazyLoadingBanner}
+                    </div>
+                    <div class="calendar-board-event__event-color" style="background: ${data[i].color} !important"></div>
+                    <div class="calendar-board-event__content">
+                      <h2>${data[i].title}</h2>
+                      <p>${eventDescription}</p>
+                    </div>
+                    <div class="calendar-board-event__footer">
+                        <div class="calendar-board-event__tickets-container">
+                          <div class="rsvp-button calendar-board-event__buy-tickets">
+                            <div class="eca-flex eca-flex__center eca-flex__justify-center eca-flex__full-height">
+                              ${isTicketedButton}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="calendar-board-event__location">
+                          <div class="eca-flex eca-flex__center">
+                            <svg id="location-arrow" viewBox="0 0 512 512" class="s-padding s14"><title id="location-arrow-title">location-arrow</title><path fill="currentColor" d="M444.52 3.52L28.74 195.42c-47.97 22.39-31.98 92.75 19.19 92.75h175.91v175.91c0 51.17 70.36 67.17 92.75 19.19l191.9-415.78c15.99-38.39-25.59-79.97-63.97-63.97z"></path></svg>${data[i].buildingName ? data[i].buildingName : '{{ shop.name }}'}
+                          </div>
+                        </div>
+                        <span class="calendar-board-event__time eca-board-event-time">
+                          <div class="eca-flex eca-flex__center">
+                            <svg viewBox="0 0 512 512" class="s-padding s14 "><title>Clock</title><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"></path></svg>
+                            <span>${self.buildReadableDateString("dateTime", data[i].date, data[i].time)}</span>
+                          </div>
+                        </span>
+                    </div>
+                </div>`;
+
+            gridWrapper.appendChild(item);
+          } else if (self.view == "list") {
+            var item = document.createElement('div');
+            item.className = "calendar-list-event";
+            item.setAttribute('data-event-id', "binderpos-" + data[i].id);
+            item.innerHTML = `<div class="calendar-list-event__header clickable ` + (data[i].ticketed ? " ticketed" : "") + `">
+                  <div class="calendar-list-event__color2" style="background: `+ data[i].color + `!important"></div>
+                  <div class="calendar-list-event__color" style="background: `+ data[i].color + `!important"></div>
+                  <div class="calendar-list-event__date">
+                    <div class="calendar-list-event__date__from">
+                      <div class="calendar-list-event__date__day">`+ self.buildReadableDateString("dd", data[i].date, data[i].time) + `</div>
+                      <div class="calendar-list-event__date__month">`+ self.buildReadableDateString("shortMonth", data[i].date, data[i].time) + `</div>
+                    </div>
+                  </div>
+                  <div class="calendar-list-event__details calendar-list-event__details--with-thumbnail">
+                    <img alt="Ticket Image" loading="lazy" class="calendar-list-event__image" src="`+ data[i].ticketImage + `">
+                    <div class="calendar-list-event__content">
+                      <div class="calendar-list-event__name">`+ data[i].title + `</div>
+                      <div class="calendar-list-event__short-description">`+ self.stripeHtml(data[i].description) + `</div>
+                      <div class="calendar-list-event__properties">
+                        <span class="calendar-list-event__location-desc">
+                          <div class="eca-flex eca-flex__center">
+                            <svg id="location-arrow" viewBox="0 0 512 512" class="s-padding s12"><title id="location-arrow-title">location-arrow</title><path fill="currentColor" d="M444.52 3.52L28.74 195.42c-47.97 22.39-31.98 92.75 19.19 92.75h175.91v175.91c0 51.17 70.36 67.17 92.75 19.19l191.9-415.78c15.99-38.39-25.59-79.97-63.97-63.97z"></path></svg>
+                            `+ (data[i].buildingName ? data[i].buildingName : `{{ shop.name }}`) + `
+                          </div>
+                        </span>
+                        <span class="calendar-list-event__time eca-list-event-time">
+                          <div class="eca-flex eca-flex__center">
+                            <svg viewBox="0 0 512 512" class="s-padding s12"><title>Clock</title><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"></path></svg>
+                            <span>`+ self.buildReadableDateString("listDate", data[i].date, data[i].time) + `</span>
+                          </div>
+                        </span>
+                        <div class="calendar-list-event__tickets-section calendar-list-event__tickets-section--bottom"> 
+                          <div class="calendar-list-event__tickets-container calendar-list-event__tickets-container--rsvp">
+                            <div class="calendar-list-event__buy-tickets">
+                              <div class="eca-flex eca-flex__center eca-flex__justify-center eca-flex__full-height">
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="link" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="s-padding" style="fill: rgb(255, 255, 255); height: 14px;"><path d="M128 160h320v192H128V160zm400 96c0 26.51 21.49 48 48 48v96c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48v-96c26.51 0 48-21.49 48-48s-21.49-48-48-48v-96c0-26.51 21.49-48 48-48h480c26.51 0 48 21.49 48 48v96c-26.51 0-48 21.49-48 48zm-48-104c0-13.255-10.745-24-24-24H120c-13.255 0-24 10.745-24 24v208c0 13.255 10.745 24 24 24h336c13.255 0 24-10.745 24-24V152z"></path></svg>
+                                <span class="calendar-list-event__buy-tickets-text">` + (data[i].isTicketed == true ? (`<span class="calendar-` + self.view + `-event__buy-tickets-text">Retrieving...</span>`) : '<span class="calendar-' + self.view + '-event__buy-tickets-text nonTicketed">View Information</span>') + `</span>
+                              </div>
+                            </div>
+                          </div>                         
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <div class="calendar-list-event__tickets-section calendar-list-event__tickets-section--side">
+                  <div class="calendar-list-event__tickets-container calendar-list-event__tickets-container--rsvp">
+                    <div class="calendar-list-event__buy-tickets">
+                      <div class="eca-flex eca-flex__center eca-flex__justify-center eca-flex__full-height">
+                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="link" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="s-padding" style="fill: rgb(255, 255, 255); height: 14px;"><path d="M128 160h320v192H128V160zm400 96c0 26.51 21.49 48 48 48v96c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48v-96c26.51 0 48-21.49 48-48s-21.49-48-48-48v-96c0-26.51 21.49-48 48-48h480c26.51 0 48 21.49 48 48v96c-26.51 0-48 21.49-48 48zm-48-104c0-13.255-10.745-24-24-24H120c-13.255 0-24 10.745-24 24v208c0 13.255 10.745 24 24 24h336c13.255 0 24-10.745 24-24V152z"></path></svg>
+                        <span class="calendar-list-event__buy-tickets-text">
+                          ` + (data[i].isTicketed == true ? (`<span class="calendar-` + self.view + `-event__buy-tickets-text">Retrieving...</span>`) : '<span class="calendar-' + self.view + '-event__buy-tickets-text nonTicketed">View Information</span>') + `
+                        </span>
+                      </div>
+                    </div>
+                  </div> 
+                </div>
+              </div>`;
+            this.calendarDiv.querySelector('.calendar-list-events-wrapper').appendChild(item);
+          }
+          if (data[i].ticketed == true) {
+            this.fetchShopify(data[i].handle, data[i].id);
+          }
+        }
+      }
+      setTimeout(() => {
+        self.calendarDiv.querySelector('.calendar-list-view').style = "opacity: 1 !important";
+      }, 300);
+      let eventsAction = self.calendarDiv.querySelectorAll('.calendar-' + self.view + '-event .clickable');
+      eventsAction.forEach(function (item) {
+        item.onclick = function (e) {
+          if ((!e.target.parentNode.parentNode.parentNode.parentNode.querySelector('.nonTicketed'))) {
+            if ((e.target.className.toLowerCase().indexOf("calendar-board-event__buy-tickets-text") == 0) || (e.target.className.toLowerCase().indexOf("calendar-board-event__tickets-container") === 0) || (e.target.className.toLowerCase().indexOf("calendar-list-event__tickets-container") === 0 || (e.target.className.toLowerCase().indexOf("rsvp-button") === 0) || (e.target.className.toLowerCase().indexOf("calendar-list-event__buy-tickets-text") === 0) || (e.target.className.toLowerCase().indexOf("calendar-list-event__buy-tickets") === 0))) {
+              return;
+            }
+          }
+          self.eventView(self.view, item.parentNode.getAttribute('data-event-id'));
+        };
+      });
+      // If only a single event, set the Last Date to the Same as the First Date.
+      if (self.searchParam != "" || window.theme.pageType == "product") {
+        self.findAndLoadEvent();
+        self.searchParam = "";
+      }
+      if (lastDate == "") {
+        lastDate = firstDate;
+      }
+      if (data.length > 0) {
+        this.calendarDiv.querySelector('.event-summary').innerHTML = `<span class="event-summary__month">` + self.buildReadableDateString("fullDate", firstDate) + `</span> - <span class="event-summary__month">` + self.buildReadableDateString("fullDate", lastDate) + `</span> <span class="event-summary__pages">(Page ` + currentPage + ` of ` + totalPages + `)</span>`;
+      } else {
+        this.calendarDiv.querySelector('.event-summary').innerHTML = `<span class="event-summary__month">No Results Found</span>`;
+      }
+    };
+
+    CalendarV2.prototype.fetchMoreData = async function (startDate, endDate) {
+      const self = this;
+      var endpoint = "https://portal.binderpos.com/api/events/forStore?startDate=" + startDate + "&endDate=" + endDate;
+      let response = await fetch(endpoint, {
+        method: "GET",
+        headers: new Headers({
+          "Content-Type": "application/json",
+        })
+      });
+      if (!response.ok && response.status != 201) {
+        let error = await response.json();
+        throw error;
+      }
+      let data = await response.json();
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        data = data;
+      }
+
+      var result = data.filter(function (o1) {
+        // filter out (!) items in result2
+        return !self.data.some(function (o2) {
+          return o1.id === o2.id;
+        });
+      });
+      self.data = self.data.concat(result);
+    };
+
+    CalendarV2.prototype.fetchData = async function (startDate, endDate) {
+      const self = this;
+      var endpoint = "https://portal.binderpos.com/api/events/forStore?startDate=" + startDate + "&endDate=" + endDate;
+      let response = await fetch(endpoint, {
+        method: "GET",
+        headers: new Headers({
+          "Content-Type": "application/json",
+        })
+      });
+      if (!response.ok && response.status != 201) {
+        let error = await response.json();
+        throw error;
+      }
+      let data = await response.json();
+      try {
+        this.data = JSON.parse(data);
+      } catch (e) {
+        this.data = data;
+      }
+      for (i = 0; i < data.length; i++) {
+        data[i].date = data[i].date.split('T')[0] + "T" + data[i].time + "Z[GMT]";
+        data[i].timestamp = new Date((data[i].date.split('T')[0] + "T" + data[i].time)).getTime();
+      }
+      this.data = data.sort((a, b) => a.timestamp - b.timestamp);
+      if (this.view == "board" || this.view == "list") {
+        this.currentFilter = this.data.filter(function (data) {
+          return data.timestamp > Date.now();
+        });
+      } else {
+        this.currentFilter = this.data;
+      }
+      var filters = [];
+      var i;
+      for (i = 0; i < this.currentFilter.length; i++) {
+        filters.push(this.currentFilter[i].type);
+      }
+      let unique = [...new Set(filters)];
+      const filterBtn = self.calendarDiv.querySelector('.filters-mobile-button');
+      filterBtn.onclick = function () {
+        var filterContainer = self.calendarDiv.querySelector('.filters-container');
+        if (filterContainer == null) {
+          var filterContainerMobile = document.createElement('div');
+          filterContainerMobile.className = "event-calendar-app";
+          filterContainerMobile.innerHTML = `
+              <div class="xs sm md">
+                <div class="filters-container mobile">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="filters__header">
+                        <button type="button" class="filters__close eca-flex eca-flex__center eca-flex__justify-center" onclick="(function removeFilter(){document.querySelector('.event-stage .fade-container').remove();document.querySelector('.filters-container.mobile').parentNode.parentNode.remove();return false;})();return false;">
+                          <svg id="times" viewBox="0 0 352 512"><title id="times-title">Times</title><path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path>
+                          </svg>
+                        </button>Filters `+ (self.selectedFilter.length > 0 ? ("(" + self.selectedFilter.length + ")") : "") + `</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row filters">
+                      <div class="col-md-12">
+                        <form>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>`;
+          document.querySelector('body').appendChild(filterContainerMobile);
+          var label = document.createElement('label');
+          label.className = "filter filter-ticketed";
+          label.style = "border: 1px #474747 solid !important;";
+          label.innerHTML = `<input ` + (self.selectedFilter.includes('ticketed') ? "value=true checked=true" : "value=false") + ` data-type="ticketed" id="ticketed-checkbox-1" type="checkbox" name="eca-filter_ticketed"><span style="border: 1px #474747 solid !important;" class="filters__checkbox eca-flex eca-flex__center">` + (self.selectedFilter.includes('ticketed') ? `<svg id="check" viewBox="0 0 512 512"><title id="check-title">Check</title><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>` : "") + `</span><span class="filters__name" style="color: #474747 !important">Ticketed Events</span>`;
+          document.querySelector('.filters-container.mobile form').appendChild(label);
+          var label = document.createElement('label');
+          label.className = "filter filter-non-ticketed";
+          label.style = "border: 1px #474747 solid !important; color: #474747 !important";
+          label.innerHTML = `<input ` + (self.selectedFilter.includes('non-ticketed') ? "value=true checked=true" : "value=false") + ` data-type="non-ticketed" id="non-ticketed-checkbox-1" type="checkbox" name="eca-filter_non-ticketed"><span style="border: 1px #474747 solid !important;" class="filters__checkbox eca-flex eca-flex__center">` + (self.selectedFilter.includes('non-ticketed') ? `<svg id="check" viewBox="0 0 512 512"><title id="check-title">Check</title><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>` : "") + `</span><span class="filters__name" style="color: #474747 !important">Non-Ticketed Events</span>`;
+          document.querySelector('.filters-container.mobile form').appendChild(label);
+          var filterHeader = document.createElement('span');
+          filterHeader.innerHTML = "Available Event Types";
+          filterHeader.className = "filter-header";
+          document.querySelector('.filters-container.mobile form').appendChild(filterHeader);
+          var o;
+          for (o = 0; o < unique.length; o++) {
+            var label = document.createElement('label');
+            label.className = "filter filter-" + (o + 1);
+            label.style = "background:" + self.colors[o] + "!important";
+            label.innerHTML = `<input data-type="` + unique[o] + `" id="` + (o + 1) + `-checkbox-1" type="checkbox" name="eca-filter_` + (o + 1) + `"><span class="filters__checkbox eca-flex eca-flex__center"></span><span class="filters__name">` + unique[o] + `</span>`;
+            document.querySelector('.filters-container.mobile form').appendChild(label);
+            document.querySelector('.filters-container.mobile form').querySelector('[data-type=' + unique[o] + ']').value = self.selectedFilter.includes(unique[o].toLowerCase()) ? true : false;
+            document.querySelector('.filters-container.mobile form').querySelector('[data-type=' + unique[o] + ']').checked = self.selectedFilter.includes(unique[o].toLowerCase()) ? true : false;
+            document.querySelector('.filters-container.mobile form').querySelector('[data-type=' + unique[o] + ']').parentNode.querySelector('.filters__checkbox').innerHTML = self.selectedFilter.includes(unique[o].toLowerCase()) ? (`<svg id="check" viewBox="0 0 512 512"><title id="check-title">Check</title><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>`) : "";
+
+          }
+          var filterContainerDesktop = document.createElement('div');
+          filterContainerDesktop.className = "fade-container";
+          filterContainerDesktop.innerHTML = `
+              <div class="fade in filter-fade">
+                <div class="event-calendar-app">
+                  <div class="xs sm md lg">
+                    <div class="filters-container desktop">
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="filters__header">
+                              <button type="button" class="filters__close eca-flex eca-flex__center eca-flex__justify-center" onclick="(function removeFilter(){document.querySelector('.event-stage .fade-container').remove();document.querySelector('.filters-container.mobile').parentNode.parentNode.remove();return false;})();return false;">
+                                <svg id="times" viewBox="0 0 352 512"><title id="times-title">Times</title><path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>
+                              </button>
+                                Filters `+ (self.selectedFilter.length > 0 ? ("(" + self.selectedFilter.length + ")") : "") + `
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row filters">
+                          <div class="col-md-12">
+                            <form>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>`;
+          self.calendarDiv.querySelector('.event-stage div').insertBefore(filterContainerDesktop, self.calendarDiv.querySelector('.event-stage div').childNodes[0]);
+          var label = document.createElement('label');
+          label.className = "filter filter-ticketed";
+          label.style = "border: 1px #474747 solid !important;";
+          label.innerHTML = `<input ` + (self.selectedFilter.includes('ticketed') ? "value=true checked=true" : "value=false") + ` data-type="ticketed" id="ticketed-checkbox-2" type="checkbox" name="eca-filter_ticketed"><span style="border: 1px #474747 solid !important;" class="filters__checkbox eca-flex eca-flex__center">` + (self.selectedFilter.includes('ticketed') ? `<svg id="check" viewBox="0 0 512 512"><title id="check-title">Check</title><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>` : "") + `</span><span class="filters__name" style="color: #474747 !important">Ticketed Events</span>`;
+          self.calendarDiv.querySelector('.event-stage form').appendChild(label);
+          var label = document.createElement('label');
+          label.className = "filter filter-non-ticketed";
+          label.style = "border: 1px #474747 solid !important; color: #474747 !important";
+          label.innerHTML = `<input ` + (self.selectedFilter.includes('non-ticketed') ? "value=true checked=true" : "value=false") + ` data-type="non-ticketed" id="non-ticketed-checkbox-2" type="checkbox" name="eca-filter_non-ticketed"><span style="border: 1px #474747 solid !important;" class="filters__checkbox eca-flex eca-flex__center">` + (self.selectedFilter.includes('non-ticketed') ? `<svg id="check" viewBox="0 0 512 512"><title id="check-title">Check</title><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>` : "") + `</span><span class="filters__name" style="color: #474747 !important">Non-Ticketed Events</span>`;
+          self.calendarDiv.querySelector('.event-stage form').appendChild(label);
+          var filterHeader = document.createElement('span');
+          filterHeader.innerHTML = "Available Event Types";
+          filterHeader.className = "filter-header";
+          self.calendarDiv.querySelector('.event-stage form').appendChild(filterHeader);
+          var o;
+          for (o = 0; o < unique.length; o++) {
+            var label = document.createElement('label');
+            label.className = "filter filter-" + (o + 1);
+            label.style = "background:" + self.colors[o] + "!important";
+            label.innerHTML = `<input data-type="` + unique[o] + `" id="` + (o + 1) + `-checkbox-2" type="checkbox" name="eca-filter_` + (o + 1) + `"><span class="filters__checkbox eca-flex eca-flex__center"></span><span class="filters__name">` + unique[o] + `</span>`;
+            self.calendarDiv.querySelector('.event-stage form').appendChild(label);
+            self.calendarDiv.querySelector('[data-type=' + unique[o] + ']').value = self.selectedFilter.includes(unique[o].toLowerCase()) ? true : false;
+            self.calendarDiv.querySelector('[data-type=' + unique[o] + ']').checked = self.selectedFilter.includes(unique[o].toLowerCase()) ? true : false;
+            self.calendarDiv.querySelector('[data-type=' + unique[o] + ']').parentNode.querySelector('.filters__checkbox').innerHTML = self.selectedFilter.includes(unique[o].toLowerCase()) ? (`<svg id="check" viewBox="0 0 512 512"><title id="check-title">Check</title><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>`) : "";
+          }
+          self.configureListeners(self.calendarDiv.querySelector('.event-stage'));
+        } else {
+          self.calendarDiv.querySelector('.event-stage .fade-container').remove();
+          document.querySelector('.filters-container.mobile').parentNode.parentNode.remove();
+        }
+      };
+      for (o = 0; o < unique.length; o++) {
+        for (i = 0; i < data.length; i++) {
+          if (data[i].type == unique[o]) {
+            data[i].color = self.colors[o];
+          }
+        }
+      }
+      this.buildEvents(this.currentFilter);
+    };
+    return CalendarV2;
+  })();
+</script>

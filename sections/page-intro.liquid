@@ -1,0 +1,166 @@
+<section class="pageIntro" style="
+     {% if template contains 'collection' and collection.image %}
+            background-size:cover !important;
+            background: linear-gradient(180deg, #020202 0%, rgba(29, 32, 40, 0) 163.33%), url({{ collection.image | img_url: '1920x505', crop: 'center' }});
+            background-position: center;
+        {% elsif section.settings.bg_img != blank %}
+            background-image:url('{{ section.settings.bg_img | img_url: 'master' }}');
+            background-size: cover;
+        {% endif %}
+
+    ">
+
+    {%- unless template == 'index' or template == 'cart' or template == 'list-collections' or template == '404' -%}
+    {%- assign t = template | split: '.' | first -%}
+
+    <nav class="breadcrumbs breadcrumbs--pageIntro" role="navigation" aria-label="breadcrumbs">
+        <ol class="breadcrumbs__list">
+            <li class="breadcrumbs__item">
+            <a class="breadcrumbs__link" href="/">Home</a>
+            </li>
+            {%- case t -%}
+            {%- when 'page' -%}
+                <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="{{ page.url }}" aria-current="page">{{ page.title }}</a>
+                </li>
+            {%- when 'product' -%}
+                {%- if collection.url -%}
+                <li class="breadcrumbs__item">
+                    <a href="{{ collection.url }}" class="breadcrumbs__link">{{ collection.title }}</a>
+                </li>
+                {%- endif -%}
+                <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="{{ product.url }}" aria-current="page">{{ product.title }}</a>
+                </li>
+            {%- when 'collection' and collection.handle -%}
+                {%- if current_tags -%}
+                <li class="breadcrumbs__item">
+                    <a href="{{ collection.url }}" class="breadcrumbs__link">{{ collection.title }}</a>
+                </li>
+                <li class="breadcrumbs__item">
+                    {%- capture tag_url -%}{{ collection.url }}/{{ current_tags | join: "+"}}{%- endcapture -%}
+                    <a class="breadcrumbs__link" href="{{ tag_url }}" aria-current="page">{{ current_tags | join: " + "}}</a>
+                </li>
+                {%- else -%}
+                <li class="breadcrumbs__item">
+                    <a class="breadcrumbs__link" href="{{ collection.url }}" aria-current="page">{{ collection.title }}</a>
+                </li>
+                {%- endif -%}
+            {%- when 'blog' -%}
+                {%- if current_tags -%}
+                <li class="breadcrumbs__item">
+                    <a href="{{ blog.url }}" class="breadcrumbs__link">{{ blog.title }}</a>
+                </li>
+                <li class="breadcrumbs__item">
+                    {%- capture tag_url -%}{{blog.url}}/tagged/{{ current_tags | join: "+" }}{%- endcapture -%}
+                    <a class="breadcrumbs__link" href="{{ tag_url }}" aria-current="page">{{ current_tags | join: " + " }}</a>
+                </li>
+                {%- else -%}
+                <li class="breadcrumbs__item">
+                    <a class="breadcrumbs__link" href="{{ blog.url }}" aria-current="page">{{ blog.title }}</a>
+                </li>
+                {%- endif -%}
+            {%- when 'article' -%}
+                <li class="breadcrumbs__item">
+                    <a href="{{ blog.url }}" class="breadcrumbs__link">{{ blog.title }}</a>
+                </li>
+                <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="{{ article.url }}" aria-current="page">{{ article.title }}</a>
+                </li>
+            {%- when 'search' -%}
+                <li class="breadcrumbs__item">
+                    <div class="breadcrumbs__link">Search: "{{ search.terms }}"</div>
+                </li>
+            {%- else -%}
+                <li class="breadcrumbs__item">
+                <a class="breadcrumbs__link" href="{{ request.path }}" aria-current="page">{{ page_title }}</a>
+                </li>
+            {%- endcase -%}
+        </ol>
+    </nav>
+    {%- endunless -%}
+    <h2 class="pageIntro__title">
+        {{ page.title }}
+        {{ collection.title }}
+        {% case template %}
+            {% when 'customers/login' %}
+                Login
+            {% when 'customers/reset_password' %}
+                Reset Password
+            {% when 'customers/register' %}
+                Register
+            {% when 'customers/account' %}
+                {{ 'customer.account.title' | t }}
+            {% when 'search' %}
+                Search
+        {% endcase %}
+    </h2>
+</section>
+
+<style>
+
+    .breadcrumbs__link,
+    .breadcrumbs__link[aria-current="page"]
+    {
+        color: {{section.settings.breadcrumb}};
+    }
+
+    .breadcrumbs__item:not(:last-child):after 
+    {
+        color: {{section.settings.slash}};
+    }
+
+    .pageIntro__title
+    {
+        color: {{section.settings.title}};
+    }
+
+    .pageIntro
+    {
+        background-color: {{section.settings.bg}};
+    }
+
+</style>
+
+{% schema %}
+{
+    "name": "Page Intro",
+    "tag": "div",
+    "settings": [
+      {
+          "type": "header",
+          "content": "Colors",
+          "info": "The colors for this section."
+      },
+      {
+          "type": "color",
+          "id": "breadcrumb",
+          "label": "Breadrumb Color",
+          "default": "#FFFFFF"
+      },
+      {
+          "type": "color",
+          "id": "title",
+          "label": "Title Color",
+          "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "slash",
+        "label": "Slash Color",
+        "default": "#eb7c00"
+      },
+      {
+        "type": "color",
+        "id": "bg",
+        "label": "Background Color",
+        "default": "#003049"
+      },
+      {
+        "type": "image_picker",
+        "label": "Background image",
+        "id": "bg_img"
+      }
+    ]
+}
+{% endschema %}

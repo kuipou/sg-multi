@@ -1,0 +1,53 @@
+p, h1, h2, h3, h4, h5, h6
+{
+    color: #292929;
+}
+
+a
+{
+    color:inherit;
+}
+
+main
+{
+    background-color: #ffffff
+}
+
+/* 
+
+ */
+
+
+.a-contactRow_title,
+.a-contactRow_subText
+{
+    color: ;
+}
+
+.m-blockMenu__item,
+.m-collectionGrid__item,
+.featuredAuthor__grid
+
+{
+    border: 1px solid ;
+}
+
+.featuredAuthor__card
+{
+    border-right: 1px solid ;
+}
+
+.featuredAuthor__card:last-child
+{
+    border-right:none;
+}
+
+.a-sectionTitle__text
+{
+    border-right: 1px solid #292929;
+}
+
+.m-contactRow__col
+{
+    border-right:1px solid ;
+}

@@ -1,0 +1,17 @@
+<div class="collection-list-2__product">
+  <div class="collection-list-2__product--imgWrapper">
+    <a href="{{ product.url }}">
+      <img loading="lazy" style="width: 100%; position: relative; top: 50%; transform: translateY(-50%);" class="collection-list-2__product--img" src="{{ product.featured_image | img_url: '105x105' }}" />
+    </a>
+    {% include "add-to-wishlist-button" %}
+  </div>
+  <div class="collection-list-2__product--details">
+    <div class="collection-list-2__product--wrapper">
+      <p class="collection-list-2__product--type">{{ product.type }}</p>
+      <a href="{{ product.url }}">
+        <p class="collection-list-2__product--title">{{ product.title }}</p>
+      </a>
+      <p class="collection-list-2__product--price">{{product.selected_or_first_available_variant.price | money_with_currency }}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,137 @@
+{%- assign header_font = settings.type_header_font -%}
+{%- assign base_font = settings.type_base_font -%}
+
+{{ header_font | font_face }}
+{{ base_font | font_face }}
+
+{%- assign base_font_bold = base_font | font_modify: 'weight', 'bolder' -%}
+{%- assign base_font_italic = base_font | font_modify: 'style', 'italic' -%}
+{%- assign base_font_bold_italic = base_font_bold | font_modify: 'style', 'italic' -%}
+
+{{ base_font_bold | font_face }}
+{{ base_font_italic | font_face }}
+{{ base_font_bold_italic | font_face }}
+
+/* Typography */
+
+body
+{
+  font-family: {{ base_font.family }};
+  color:var(--text-color);
+  font-size:var(--text-size);
+}
+
+p, a, button, input, select
+{
+  color:inherit;
+  font-family: {{ base_font.family }};
+}
+
+h1,h2,h3,h4,h5,h6
+{
+  font-family: {{header_font.family}};
+  margin-bottom: 16px;
+}
+
+/* General Variables */
+
+:root {
+
+    /* Borders */
+
+    --border-radius: {{settings.global_style_border_radius}}px;
+    --border-color: #BDBDBD;
+    --header-border-color: rgba(30, 52, 93, 0.3);
+
+    /* Text */
+
+    --text-size: 14px;
+    --text-color: #5F5F5F;
+    --text-font-weight: 400;
+    --default-text-font-size: 15px;
+    --base-text-font-size: 16px;
+    --text-font-bolder-weight: 600;
+
+    /* Typography */
+
+    --base-font: {{ base_font.family }};
+    --header-font: {{header_font.family}};
+
+    /* Colors */
+    --input-background: #fff;
+    --color-gradient: linear-gradient({{ settings.color_primary_gradient_degree }}deg, {{ settings.color_primary_gradient_start }} 2.77%, {{ settings.color_primary_gradient_end }} 84.58%);
+    --color-gradient-secondary: linear-gradient({{ settings.color_secondary_gradient_degree }}deg,{{ settings.color_secondary_gradient_start }} 2.77%,{{ settings.color_secondary_gradient_end }} 84.58%);
+    --color-primary: {{ settings.color_theme_primary }};
+    --color-secondary: {{ settings.color_theme_secondary }};
+    --color-page-background: {{ settings.color_page_background }};
+    --brand-secondary: {{ settings.color_theme_primary }};
+    --button-bg-color: {{ settings.color_theme_primary }};
+    --button-text-color:  #fff;
+    --button-bg-hover-color: {{ settings.color_theme_primary }};
+    --button-text-hover-color: #fff;
+
+    /* Padding */
+
+    --page-padding-y: 24px;
+    --page-padding-x: 40px;
+    --mobile-container-gutter: 20px;
+    --desktop-container-gutter: 40px;
+    
+  /* Product */
+    {%- assign product_on_sale_lightness = settings.product_on_sale_accent | color_extract: 'lightness' -%}
+    {%- assign product_custom_label_1_lightness = settings.product_label_1_background | color_extract: 'lightness' -%}
+    {%- assign product_custom_label_2_lightness = settings.product_label_2_background | color_extract: 'lightness' -%}
+
+    --text-color-rgb                   :  {{ settings.color_text_dark | color_extract: 'red' }}, {{ settings.color_text_dark | color_extract: 'green' }}, {{ settings.color_text_dark | color_extract: 'blue' }};
+    --product-on-sale-accent           : {{ settings.product_on_sale_accent }};
+    --product-on-sale-accent-rgb       : {{ settings.product_on_sale_accent | color_extract: 'red' }}, {{ settings.product_on_sale_accent | color_extract: 'green' }}, {{ settings.product_on_sale_accent | color_extract: 'blue' }};
+    --product-on-sale-color            : {% if product_on_sale_lightness < 65 %}#ffffff{% else %}#000000{% endif %};
+    --product-in-stock-color           : {{ settings.product_in_stock_color }};
+    --product-low-stock-color          : {{ settings.product_low_stock_color }};
+    --product-sold-out-color           : {{ settings.product_sold_out_color }};
+    --product-custom-label-1-background: {{ settings.product_label_1_background }};
+    --product-custom-label-1-color     : {% if product_custom_label_1_lightness < 65 %}#ffffff{% else %}#000000{% endif %};
+    --product-custom-label-2-background: {{ settings.product_label_2_background }};
+    --product-custom-label-2-color     : {% if product_custom_label_2_lightness < 65 %}#ffffff{% else %}#000000{% endif %};
+    --product-review-star-color        : {{ settings.product_star_color }};
+
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+
+
+
+
+<script>
+  // IE11 does not have support for CSS variables, so we have to polyfill them
+  if (!(((window || {}).CSS || {}).supports && window.CSS.supports('(--a: 0)'))) {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2';
+    script.onload = function() {
+      cssVars({});
+    };
+
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+</script>
+

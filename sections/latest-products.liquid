@@ -1,0 +1,63 @@
+<div class="latestProducts">
+  <div class="latestProducts__intro">
+    <div class="m-sectionTitle">
+      <a class="a-sectionTitle__link" href="{{ section.settings.url }}">
+        <h3 class="a-sectionTitle__text white">{{ section.settings.title }}</h3>
+        <p class="a-sectionTitle__button">{{ section.settings.button }} <i class="fas fa-long-arrow-alt-right"></i></p>
+      </a>
+    </div>
+  </div>
+  <div class="lp__cardGrid">
+    {% assign setcollection = section.settings.collection %}
+    {% for product in collections[setcollection].products limit:4 %}
+    <div class="lp__card">
+      <a href="{{ product.url | within: collection }}" class="lp__card__link">
+        <img loading="lazy" data-src="{{ product.featured_image.src | img_url: 'master' }}" alt="{{ product.featured_image.alt | escape }}" class="lp__card__media lazy">
+      </a>
+      <a href="{{ product.url | within: collection }}" class="lp__card__title"><span>{{ product.title }}</span></a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<style>
+  @media screen and (max-width: 991px) {
+    .lp__cardGrid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
+{% schema %}
+{
+"name": "Latest products",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Latest products"
+},
+{
+"type": "text",
+"id": "button",
+"label": "View text",
+"default": "View store"
+},
+{
+"type": "url",
+"id": "url",
+"label": "View link"
+},
+{
+"type": "collection",
+"id": "collection",
+"label": "Collection"
+}
+],
+"presets": [
+{
+"name": "Latest Products",
+"category": "Premium Theme 1 Modules"
+}
+]
+}
+{% endschema %}

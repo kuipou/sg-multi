@@ -1,0 +1,119 @@
+<div class="o-newsletterWrap" {% if section.settings.bg_image != blank %}style="
+            background-image:url({{ section.settings.bg_image | img_url: 'master' }});
+            background-position: center;
+            background-size: cover;
+        "{% endif %}>
+    <div class="titleHeader newsletter__text">{{ section.settings.title }}</div>
+    <h3 class="newsletter__text">{{ section.settings.sub_title }}</h3>
+    {{ section.settings.text_area }}
+    {% form 'customer' %}
+      {{ form.errors | default_errors }}
+      {% if form.posted_successfully? %}
+        <p class="form--success">Thank you for subscribing</p>
+      {% else %}
+        <div class="password__input-group">
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input type="email"
+            name="contact[email]"
+            id="Email"
+            class="input-group__field newsletter__input"
+            value="{% if customer %}{{ customer.email }}{% endif %}"
+            placeholder="{{ section.settings.placeholder }}"
+            autocorrect="off"
+            autocapitalize="off"
+            style="margin-bottom: 5px;"        
+          >
+          <span class="input-group__btn">
+            <button aria-label="Subscribe" title="Subscribe" type="submit" class="btn button newsletter__submit" name="commit" id="Subscribe" style="margin-left: 5px;line-height: 53px;top: 0;">
+              <span class="newsletter__submit-text--large">{{ section.settings.button }}</span>
+            </button>
+          </span>
+        </div>
+      {% endif %}
+    {% endform %}
+    <!-- <p>{{ section.settings.privacy }}</p> -->
+    {% for block in section.blocks %}
+    {% case block.type %}
+    {% when "@app" %}
+    {% render block %}
+    {% endcase %}
+    {% endfor %}
+</div>
+
+
+<style>
+    .o-newsletterWrap p,
+    .newsletter__text
+    {
+        color: {{ section.settings.color_newsletter_text }};
+    }
+</style>
+
+{% schema %}
+
+{
+    "name": "Newsletter",
+    "blocks": [
+    {
+      "type": "@app"
+    }
+    ],
+    "settings": [
+        {
+            "type": "header",
+            "content": "Colors",
+            "info": "The colors for this section."
+        }, {
+            "type": "color",
+            "id": "color_newsletter_text",
+            "label": "Text Color",
+            "default": "#FFFFFF"
+        }, {
+            "type": "header",
+            "content": "Settings",
+            "info": "The settings for this section."
+        }, {
+            "type": "image_picker",
+            "id": "bg_image",
+            "label": "Background image"
+        }, {
+            "id": "title",
+            "type": "text",
+            "label": "Section title",
+            "default": "Newsletter"
+        }, {
+            "id": "sub_title",
+            "type": "text",
+            "label": "Sub title",
+            "default": "Let's keep in touch"
+        }, {
+            "id": "text_area",
+            "type": "richtext",
+            "label": "Text area",
+            "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus velit elit, consequat eget urna at, vehicula.</p>"
+        }, {
+            "id": "placeholder",
+            "type": "text",
+            "label": "Sub title",
+            "default": "Your best email address"
+        }, {
+            "id": "button",
+            "type": "text",
+            "label": "Button text",
+            "default": "Subscribe"
+        }, {
+            "id": "privacy",
+            "type": "text",
+            "label": "Privacy text",
+            "default": "We take your privacy very seriously, and will never share your email."
+        }
+    ],
+    "presets": [
+        {
+            "name": "Newsletter",
+            "category": "Premium Theme 1 Modules"
+        }
+    ]
+}
+
+{% endschema %}

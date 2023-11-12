@@ -1,0 +1,128 @@
+{% assign articles = blogs[section.settings.blog].articles %}
+<section id="blog-1">
+  <div class="blog-1-header">
+    <h3>Recent Articles</h3>
+    <div style="justify-self: self-end;">
+      <a href="{{ blogs[section.settings.blog].url }}">
+        <span>Read more articles</span>
+      </a>
+    </div>
+  </div>
+  <div class="blog-1-wrapper">
+    {% if articles.size == 0 %}
+    {% include 'blog-1-example'%}
+    {% include 'blog-1-example'%}
+    {% include 'blog-1-example'%}
+    {% include 'blog-1-example'%}
+    {% else %}
+    {% for article in articles limit: 4 %}
+    <div class="article-box">
+      <div class="article-holder">
+        <div class="article">
+          <a href="{{ article.url }}">
+            <img loading="lazy" width="100%" src="{{article.image | img_url: '500x300' , crop: 'top'}}" alt="{{ article.title }}">
+          </a>
+          <h3 class="article-title"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+          <p class="content">{{ article.excerpt_or_content | strip_html | truncatewords: 50, '...' | escape }}</p>
+          <a href="{{ article.url }}">
+            <p class="readMore">CONTINUE READING </p>
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+</section>
+{% schema %}
+{
+"name": "Recent Articles (Blogs)",
+"settings": [
+{
+"type": "header",
+"content": "Blog Settings"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Section Title",
+"default": "Recent Articles"
+},
+{
+"type": "blog",
+"id": "blog",
+"label": "Blog",
+"info": "Please select a blog"
+}
+],
+"presets": [
+{
+"name": "Generic Blog Template",
+"category": "Generic Modules"
+}
+]
+}
+{% endschema %}
+
+<style>
+  .blog-1-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 30px;
+    grid-row-gap: 30px;
+  }
+
+  .article-holder {
+    border: 1px solid #CCCCCC;
+    margin: 10px 0px;
+    padding: 14px;
+    height: 100%;
+  }
+
+  h3.article-title {
+    text-align: center;
+  }
+
+  h3.article-title a {
+    font-size: 16px;
+    color: var(--color-primary);
+  }
+
+  .article-holder p.readMore {
+    margin-top: 12px;
+    text-align: center;
+    color: var(--color-primary);
+  }
+
+  .blog-1-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .blog-1-header span {
+    color: var(--color-primary);
+    text-transform: uppercase;
+    border: 1px solid var(--color-primary);
+    padding: 6px 10px;
+    width: max-content;
+    height: 30px;
+    line-height: 18px;
+    margin-top: 6px;
+    display: block;
+    font-weight: 600;
+  }
+
+  .blog-1-header span:hover {
+    color: var(--color-secondary);
+    border: 1px solid var(--color-secondary);
+    transition: all 0.5s;
+  }
+
+  .article-box {
+    height: 100%;
+  }
+
+  section#blog-1 {
+    padding-bottom: 40px;
+  }
+</style>

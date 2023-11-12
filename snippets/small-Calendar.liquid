@@ -1,0 +1,71 @@
+<section id="small-calendar"
+    {% if section.settings.bg_image != null %}
+        style="background:url({{ section.settings.bg_image | file_url | replace: '/files/files', '/files' }})"
+    {% endif %}
+>
+</section>
+{% assign url = "https://binderpos-small-calendar.web.app" %}
+<script src="{{url}}/static/js/runtime-main.js"></script>
+<script src="{{url}}/static/js/2.chunk.js"></script>
+<script src="{{url}}/static/js/main.chunk.js"></script>
+<link rel="stylesheet" href="{{url}}/static/css/2.chunk.css">
+<link rel="stylesheet" href="{{url}}/static/css/main.chunk.css">
+
+
+  
+<style>
+    #small-calendar>div .events {
+        width: 100%;
+        height: {{ block.settings.height }}px;
+    }
+    div#small-calendar h1 {
+        display: none;
+    }
+    #small-calendar>div .events .event {
+        height: 85px;
+        margin-bottom: 0;
+    }
+    #small-calendar>div .events .event .date .day, #small-calendar>div .events .event .date .month {
+        font-family: {{ settings.type_base_font.family }};
+    }
+    #small-calendar>div .events .event .date .day {
+        line-height: 36px;
+    }
+    #small-calendar>div .events .event .date {
+        width: 68px;
+        height: 58px;
+    }   
+    #small-calendar>div .events .event {
+        height: 60px;
+    }
+    #small-calendar>div .events .event .info {
+        height: 58px;
+    }
+    #small-calendar>div .events .event {
+        grid-template-columns: 76px 44px 1fr;
+    }
+    #small-calendar>div .events img {
+        max-width: 30px !important;
+        max-height: 30px !important;
+    }
+    #small-calendar>div .events .event .info p.title {
+        font-family: {{ settings.type_base_font.family }};
+        font-size: unset;
+        line-height: 30px;
+        text-align: left;
+        padding-top: 0;
+        margin: 0;
+        height: 22px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 160px;
+        margin-bottom: 7px;
+    }
+    #small-calendar>div .events .event .info .price-label {
+        color: {{ block.settings.section_price }};
+    }
+    #small-calendar>div .events .event .date .day {
+        color: {{ block.settings.section_date }};
+    }
+</style>

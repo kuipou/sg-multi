@@ -1,0 +1,78 @@
+{{ '404.css' | asset_url | stylesheet_tag }}
+<!-- BEM classes prefixed with page to avoid invalid css -->
+<section class="page-404">
+  <div class="page-404__wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="col-sm-10 col-sm-offset-1 text-center">
+          <div class="page-404__bg-container">
+            <h1 class="text-center ">{{section.settings.title}}</h1>
+          </div>
+          <div class="page-404__details">
+            <h3 class="h2">
+              {{section.settings.sub_title}}
+            </h3>
+            <p>{{section.settings.description}}</p>
+            <a href="{{section.settings.button_link}}" class="page-404__link">{{section.settings.button_label}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% for block in section.blocks %}
+    {% case block.type %}
+    {% when '@app' %}
+    {% render block %}
+    {% endcase %}
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+"name": "Content",
+"class": "index-section",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Title",
+"default": "404"
+},
+{
+"type": "text",
+"id": "sub_title",
+"label": "Sub Title",
+"default": "UH OH! You're lost."
+},
+{
+"type": "textarea",
+"id": "description",
+"label": "Description",
+"default": "The page you are looking for does not exist. How you got here is a mystery. But you can click the button below to go back to the homepage."
+},
+{
+"type": "text",
+"id": "button_label",
+"label": "Button Label",
+"default": "HOME"
+},
+{
+"type": "url",
+"id": "button_link",
+"label": "Button Link",
+"default": "/"
+}
+],
+"blocks": [
+{
+"type": "@app"
+}
+],
+"presets": [
+{
+"name": "Add Content Snippet"
+}
+],
+"templates": ["404"]
+}
+{% endschema %}

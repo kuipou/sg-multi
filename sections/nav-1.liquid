@@ -1,0 +1,550 @@
+<nav aria-labelledby="mobileNavigation" id="mobileNav" role="navigation">
+  <ul>
+    {% if customer %}
+    <li>
+      <a href="/account/logout">
+        Logout
+      </a>
+    </li>
+    {% else %}
+    <li>
+      <a href="/account/login">
+        Login
+      </a>
+    </li>
+    {% endif %}
+    {%- for link in linklists[section.settings.mobile_menu].links -%}
+    <li>
+      <a href="{{ link.url }}" {% if link.active %} aria-current="page" {% endif %}>
+        {{ link.title }}
+      </a>
+      {%- if link.links != blank -%}
+      <ul>
+        {%- for child_link in link.links -%}
+        <li>
+          <a href="{{ child_link.url }}" {% if child_link.active %} aria-current="page" {% endif %}>
+            {{ child_link.title }}
+          </a>
+
+          {%- if child_link.links != blank -%}
+          <ul>
+            {%- for grandchild_link in child_link.links -%}
+            <li>
+              <a href="{{ grandchild_link.url }}" {% if grandchild_link.active %} aria-current="page" {% endif %}>
+                {{ grandchild_link.title }}
+              </a>
+            </li>
+            {%- endfor -%}
+          </ul>
+          {%- endif -%}
+
+        </li>
+        {%- endfor -%}
+      </ul>
+      {%- endif -%}
+
+    </li>
+    {%- endfor -%}
+    {%if settings.enable_iwish %}
+    <li>
+      {% render 'iwish_v2' with 'iwishlink' %}
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+<nav aria-labelledby="desktopNavigation" role="navigation">
+  <div class="o-mainNav">
+    <ul class="mainNav__ul">
+      {% for link in linklists[section.settings.navigation_menu].links %}
+      <li aria-haspopup="true" class="mainNav__item
+                                                                    {% if link.links != blank %}
+                                                                        mainNav__item--blackout
+                                                                    {% endif %}
+                                                                ">
+        <a href="{{ link.url }}" class="mainNav__a" {% if link.active %} aria-current="page" {% endif %}>
+          {{ link.title }}
+          {%- if link.links != blank -%}
+          &nbsp<i class="fas fa-angle-down"></i>
+          {% else %}
+          {% for block in section.blocks %}
+          {% if block.settings.mega_handle == link.title %}
+          &nbsp<i class="fas fa-angle-down"></i>
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+        </a>
+        {% for block in section.blocks %}
+        {% if block.settings.mega_handle == link.title %}
+        <ul aria-label="submenu" class="mainNav__mega lazy" style="background-image:url('{{ block.settings.mega_menu_bg | img_url: '350x' }}'); background-position: left; background-size: contain; background-repeat: no-repeat;">
+          {% if block.settings.intro_toggle == true %}
+          <li class="megaMenu__col megaMenu__col--intro">
+            <div class="megaIntro__top">
+              <a href="{{ block.settings.intro_title_url }}">
+                <h5 class="megaCol__title">{{ block.settings.intro_title }}</h5>
+                <p class="megaCol__link">{{ block.settings.intro_title_link }}&nbsp;<i class="fal fa-long-arrow-right"></i>
+                </p>
+              </a>
+            </div>
+            <div class="megaIntro__bottom">
+              {% if block.settings.button_text_1 != blank %}
+              <a href="{{ block.settings.button_url_1 }}" class="button button--fullWidth" role="button">{{ block.settings.button_text_1 }}&nbsp;<i class="fal fa-long-arrow-right"></i>
+              </a>
+              {% endif %}
+              {% if block.settings.button_text_2 != blank %}
+              <a href="{{ block.settings.button_url_2 }}" class="button button--fullWidth" role="button">{{ block.settings.button_text_2 }}&nbsp;<i class="fal fa-long-arrow-right"></i>
+              </a>
+              {% endif %}
+            </div>
+          </li>
+          {% endif %}
+          {% if block.settings.nav_toggle_1 == true %}
+          <li class="megaMenu__col megaMenu__col--links">
+            <div class="megaNav">
+              {% for link in linklists[block.settings.mega_nav_link_list_1].links %}
+              <a href="{{ link.url }}">
+                <h5 class="megaCol__title">{{ link.title }}</h5>
+              </a>
+              <ul class="megaNav__ul">
+                {%- for child_link in link.links -%}
+                <li class="megaNav__li">
+                  <a href="{{ child_link.url }}">{{ child_link.title }}
+                    <i class="fal fa-long-arrow-right"></i>
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+              <a href="{{ link.url }}">
+                <p class="megaCol__link">{{ block.settings.mega_nav_link_1 }}</p>
+              </a>
+              {% endfor %}
+            </div>
+          </li>
+          {% endif %}
+          {% if block.settings.nav_toggle_2 == true %}
+          <li class="megaMenu__col megaMenu__col--links">
+            <div class="megaNav">
+              {% for link in linklists[block.settings.mega_nav_link_list_2].links %}
+              <a href="{{ link.url }}">
+                <h5 class="megaCol__title">{{ link.title }}</h5>
+              </a>
+              <ul class="megaNav__ul">
+                {%- for child_link in link.links -%}
+                <li class="megaNav__li">
+                  <a href="{{ child_link.url }}">{{ child_link.title }}
+                    <i class="fal fa-long-arrow-right"></i>
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+              <a href="{{ link.url }}">
+                <p class="megaCol__link">{{ block.settings.mega_nav_link_2 }}</p>
+              </a>
+              {% endfor %}
+            </div>
+          </li>
+          {% endif %}
+          {% if block.settings.featured_toggle == true %}
+          <li class="megaMenu__col megaMenu__col--featured">
+            <a href="{{ block.settings.featured_url }}" class="megaFeatured">
+              <h5 class="megaCol__title">{{ block.settings.featured_title }}</h5>
+              <div class="megaFeatured__image lazy" style="background-image: url('{{ block.settings.featured_image | img_url: 'medium' }}');">
+                <div class="megaFeatured__caption">{{ block.settings.featured_caption }}</div>
+              </div>
+              <p class="megaCol__link">{{ block.settings.featured_link }}</p>
+            </a>
+          </li>
+          {% endif %}
+          {% if block.settings.promo_toggle == true %}
+          <li class="megaMenu__col megaMenu__col--promo">
+            <a href="{{ block.settings.promo_url }}" class="megaPromo">
+              <img loading="lazy" data-src="{{ block.settings.promo_image | img_url: 'master' }}" alt="{{ block.settings.promo_alt }}" class="megaPromo__image lazy">
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+        {% endif %}
+        {% endfor %}
+        {% if block.settings.mega_handle != link.title %}
+        {%- if link.links != blank -%}
+        <ul aria-label="submenu" class="mainNav__children">
+          {%- for child_link in link.links -%}
+          <li class="mainNav__child">
+            <a href="{{ child_link.url }}" class="mainNav__child-a" {% if child_link.active %} aria-current="page" {% endif %}>
+              {{ child_link.title }}
+            </a>
+            {%- if child_link.links != blank -%}
+            <ul class="mainNav__grandChildren">
+              {%- for grandchild_link in child_link.links -%}
+              <li class="mainNav__grandChild">
+                <a href="{{ grandchild_link.url }}" class="mainNav__grandChild-a" {% if grandchild_link.active %} aria-current="page" {% endif %}>
+                  - {{ grandchild_link.title }}
+                </a>
+              </li>
+              {%- endfor -%}
+            </ul>
+            {%- endif -%}
+          </li>
+          {%- endfor -%}
+        </ul>
+        {%- endif -%}
+        {%- endif -%}
+      </li>
+      <div class="mainNav__blackOut"></div>
+      {% endfor %}
+    </ul>
+  </div>
+</nav>
+
+<script>
+  document.addEventListener(
+    "DOMContentLoaded", () => {
+      new Mmenu("#mobileNav", {
+        "counters": true,
+        "navbars": [
+          {
+            "position": "top",
+            "type": "tabs",
+            "content": [
+              "<div><a href='/cart'>Cart&nbsp;<i class='fad fa-shopping-cart'></i></a></div>",
+              "<div><a href='/account'>Account&nbsp;<i class='fad fa-user-circle'></i></a></div>"
+            ]
+          },
+          {
+            "position": "bottom",
+            "content": [
+              "<a class='fab fa-facebook-f' href='https://www.facebook.com/channelfireball'></a>",
+              "<a class='fab fa-twitter' href='https://twitter.com/ChannelFireball'></a>",
+              "<a class='fab fa-youtube' href='https://www.youtube.com/user/ChannelFireball'></a>"
+            ]
+          }
+        ],
+        "extensions": [
+          "pagedim-black",
+          "theme-dark",
+          "position-right",
+          "border-full"
+        ]
+      }, {
+        offCanvas: {
+          page: {
+            selector: "#pageBackground"
+          }
+        }
+      });
+    }
+  );
+
+</script>
+<style>
+  /* Nav styles */
+
+  .o-mainNav {
+    background-color: {{ section.settings.color_nav_bg }};
+  }
+
+  .mainNav__a {
+    color: {{ section.settings.color_nav_links }};
+  }
+
+  .mainNav__a i {
+    color: {{ section.settings.color_nav_accents }};
+  }
+
+  /* Mega menu styles */
+
+  .mainNav__mega {
+    background-color: {{ section.settings.color_mega_menu_bg }};
+  }
+
+  .megaCol__title,
+  .megaCol__link,
+  .megaNav__li a {
+    color: {{ section.settings.color_mega_menu_text }};
+  }
+
+  .megaNav__li:hover i {
+    color: {{ section.settings.color_mega_menu_arrow_hover }};
+  }
+
+  .megaIntro__bottom .button {
+    max-width: 290px;
+    border-radius: 40px;
+  }
+</style>
+
+{% schema %}
+{
+"name": "Navigation",
+"class": "hidden-mobile",
+"settings": [
+{
+"type": "header",
+"content": "Menu Selector",
+"info": "Select the main menus."
+},
+{
+"type": "link_list",
+"id": "navigation_menu",
+"label": "Navigation Menu",
+"info": "This is the menu which will be used in the sites main navigation bar."
+},
+{
+"type": "link_list",
+"id": "mobile_menu",
+"label": "Mobile Menu",
+"info": "This is the menu which will be used in the sites mobile navigation bar."
+},
+{
+"type": "header",
+"content": "Colors",
+"info": "The colors for this section."
+},
+{
+"type": "color",
+"id": "color_nav_bg",
+"label": "Nav Background",
+"default": "#000000"
+},
+{
+"type": "color",
+"id": "color_nav_links",
+"label": "Nav Links",
+"default": "#FFFFFF"
+},
+{
+"type": "color",
+"id": "color_nav_accents",
+"label": "Nav Accents",
+"default": "#EB7C00"
+},
+{
+"type": "range",
+"id": "color_header_border_trans",
+"label": "Border Transparency",
+"info": "What percentage to use for transparency of the border.",
+"min": 10,
+"max": 100,
+"step": 10,
+"unit": "%",
+"default": 30
+},
+{
+"type": "header",
+"content": "Colors",
+"info": "The colors for the mega menus."
+},
+{
+"type": "color",
+"id": "color_mega_menu_bg",
+"label": "Background Color",
+"default": "#FFFFFF"
+},
+{
+"type": "color",
+"id": "color_mega_menu_text",
+"label": "Text Color",
+"default": "#292929"
+},
+{
+"type": "color",
+"id": "color_mega_menu_arrow_hover",
+"label": "Arrow Color (Hover)",
+"default": "#292929"
+}
+],
+"blocks": [
+{
+"type": "blocks",
+"name": "Mega Menu",
+"settings": [
+{
+"type": "header",
+"content": "Settings",
+"info": "The settings for this mega menu."
+},
+{
+"type": "image_picker",
+"label": "Background image",
+"info": "The image displayed in the background of this mega menu.",
+"id": "mega_menu_bg"
+},
+{
+"type": "text",
+"id": "mega_handle",
+"placeholder": "Menu handle",
+"info": "Enter the menu handle of the menu item you wish to turn into a mega menu.",
+"label": "Menu name"
+},
+{
+"type": "header",
+"content": "Intro Column",
+"info": "The first column in the mega menu, an intro column."
+},
+{
+"type": "checkbox",
+"id": "intro_toggle",
+"default": true,
+"info": "You can enable or disable this column.",
+"label": "Enable column?"
+},
+{
+"type": "text",
+"id": "intro_title",
+"default": "Title",
+"info": "The title text for this mega menu",
+"label": "Intro column title"
+},
+{
+"type": "text",
+"id": "intro_title_link",
+"default": "View all",
+"label": "Intro title link text"
+},
+{
+"type": "url",
+"id": "intro_title_url",
+"label": "Intro title link URL"
+},
+{
+"type": "text",
+"id": "button_text_1",
+"default": "Button",
+"label": "Primary button text"
+},
+{
+"type": "url",
+"id": "button_url_1",
+"label": "Primary button URL"
+},
+{
+"type": "text",
+"id": "button_text_2",
+"default": "Button",
+"label": "Secondary button text"
+},
+{
+"type": "url",
+"id": "button_url_2",
+"label": "Secondary button URL"
+},
+{
+"type": "header",
+"content": "Menu Column One",
+"info": "A menu list for displaying links."
+},
+{
+"type": "checkbox",
+"id": "nav_toggle_1",
+"default": true,
+"info": "You can enable or disable this column.",
+"label": "Enable column?"
+},
+{
+"type": "link_list",
+"id": "mega_nav_link_list_1",
+"label": "Link list",
+"info": "The link list to display in this menu column."
+},
+{
+"type": "text",
+"id": "mega_nav_link_1",
+"default": "View more",
+"label": "Bottom link text"
+},
+{
+"type": "header",
+"content": "Menu Column Two",
+"info": "A menu list for displaying links."
+},
+{
+"type": "checkbox",
+"id": "nav_toggle_2",
+"default": true,
+"info": "You can enable or disable this column.",
+"label": "Enable column?"
+},
+{
+"type": "link_list",
+"id": "mega_nav_link_list_2",
+"label": "Link list",
+"info": "The link list to display in this menu column."
+},
+{
+"type": "text",
+"id": "mega_nav_link_2",
+"default": "View more",
+"label": "Bottom link text"
+},
+{
+"type": "header",
+"content": "Featured Column",
+"info": "A column to display a featured collection/product."
+},
+{
+"type": "checkbox",
+"id": "featured_toggle",
+"default": true,
+"info": "You can enable or disable this column.",
+"label": "Enable column?"
+},
+{
+"type": "text",
+"id": "featured_title",
+"default": "Title",
+"label": "Featured column title"
+},
+{
+"type": "image_picker",
+"id": "featured_image",
+"label": "Featured column image"
+},
+{
+"type": "text",
+"id": "featured_caption",
+"default": "Image caption",
+"label": "Featured image caption"
+},
+{
+"type": "text",
+"id": "featured_link",
+"default": "View more",
+"label": "Bottom link text"
+},
+{
+"type": "url",
+"id": "featured_url",
+"label": "Column URL"
+},
+{
+"type": "header",
+"content": "Promo Column",
+"info": "A column to display a promotional image."
+},
+{
+"type": "checkbox",
+"id": "promo_toggle",
+"default": true,
+"info": "You can enable or disable this column.",
+"label": "Enable column?"
+},
+{
+"type": "image_picker",
+"id": "promo_image",
+"label": "Promo image"
+},
+{
+"type": "text",
+"id": "promo_caption",
+"default": "Image caption",
+"label": "Image caption"
+},
+{
+"type": "url",
+"id": "promo_url",
+"label": "Promo URL"
+}
+]
+}
+]
+}
+{% endschema %}

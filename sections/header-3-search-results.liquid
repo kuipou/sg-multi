@@ -1,0 +1,90 @@
+{%- if predictive_search.performed -%}
+  {%- assign show_empty_state = true -%}
+  <div id="predictive-search-results">
+
+    {%- if predictive_search.resources.products.size > 0 -%}
+      {%- assign show_empty_state = false -%}
+      <p class="search-bar__result-category">{{ 'header.search.products' | t }}</p>
+      <div class="search-bar__result-products">
+        {%- for product in predictive_search.resources.products limit: 5 -%}
+          <a href="{{ product.url }}" class="search-bar__result-item">
+            <div class="search-bar__image-container">
+              <div class="aspect-ratio aspect-ratio--square">
+                <img src="{{ product.featured_image | img_url: '120x120' }}" alt="{{ product.featured_image.alt | escape }}">
+              </div>
+            </div>
+  
+            <div class="search-bar__item-info">
+              <p class="search-bar__item-title">{{ product.title | highlight: clean_terms }}</p>
+              <span class="search-bar__item-price">{{ product.selected_or_first_available_variant.price | money_with_currency }}</span>
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+      {%- if predictive_search.resources.products.size > 5 -%}
+        <button aria-label="Search" title="Search" class="search-bar__view-all" type="submit">
+          {%- if settings.search_mode == 'product' -%}
+            {{- 'header.search.view_products' | t -}}
+          {%- else -%}
+            {{- 'header.search.view_results' | t -}}
+          {%- endif -%}
+
+          {%- render 'icon', icon: 'arrow-right' -%}
+        </button>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if predictive_search.resources.articles.size > 0 and predictive_search.resources.pages.size > 0 -%}
+
+      {%- assign show_empty_state = false -%}
+      
+      <p class="search-bar__result-category">{{ 'header.search.blog_posts_and_pages' | t }}</p>
+      <ul class="search-bar__result-linklist list--unstyled" role="list">
+        {%- for article in predictive_search.resources.articles -%}
+          <li>
+            <a href="{{ article.url }}" class="search-bar__result-link">{{ article.title }}</a>
+          </li>
+        {%- endfor -%}
+        {%- for page in predictive_search.resources.pages -%}
+          <li>
+            <a href="{{ page.url }}" class="search-bar__result-link">{{ page.title }}</a>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+    {%- else -%}
+
+      {%- if predictive_search.resources.articles.size > 0 -%}
+        {%- assign show_empty_state = false -%}
+        <p class="search-bar__result-category">{{ 'header.search.blog_posts' | t }}</p>
+        <ul class="search-bar__result-linklist list--unstyled" role="list">
+          {%- for article in predictive_search.resources.articles -%}
+            <li>
+              <a href="{{ article.url }}" class="search-bar__result-link">{{ article.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if predictive_search.resources.pages.size > 0 -%}
+        {%- assign show_empty_state = false -%}
+        <p class="search-bar__result-category">{{ 'header.search.pages' | t }}</p>
+        <ul class="search-bar__result-linklist list--unstyled" role="list">
+          {%- for page in predictive_search.resources.pages -%}
+            <li>
+              <a href="{{ page.url }}" class="search-bar__result-link">{{ page.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    
+    {%- endif -%}
+
+    {%- if show_empty_state -%}
+      <div class="search-bar__empty-state">
+        <p class="heading h4">{{ 'header.search.no_results' | t }}</p>
+      </div>
+    {%- endif -%}
+
+  </div>
+{%- endif -%}

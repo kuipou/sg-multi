@@ -1,0 +1,32 @@
+{% comment %}
+
+  Added by Helium Development
+  Please contact support@heliumdev.com with any questions.
+
+  The script below forces menu attachment after the DOM has been loaded.
+
+{% endcomment %}
+
+<script>
+    (function(){
+      document.addEventListener('DOMContentLoaded', function() {
+        var meteorTick = setInterval(lookForMeteor, 250);
+        
+        function lookForMeteor() {
+          if (window.MeteorMenu && MeteorMenu.api) {
+            MeteorMenu.api.attach();
+            clearInterval(meteorTick);
+          }
+        }
+        
+        lookForMeteor();
+      });
+    })();
+  </script>
+  
+  <style> 
+  .meteor-menu[data-meteor-template=fortress] .m-pointer {
+    display: block !important;
+  }
+  </style>
+    

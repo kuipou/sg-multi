@@ -1,0 +1,189 @@
+<style>
+    span.select2-dropdown.select2-dropdown--below {
+        position: relative;
+        top:0;
+    }
+
+    .select2-selection .select2-selection--multiple,
+    .cardFilter__item .select2-container--default {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+</style>
+
+{% assign array_tag2 = 'Artifact,Basic,Creature,Enchantment,Instant,Land,Legendary,Planeswalker,Sorcery' | split: ',' %}
+{% assign array_tag3 = 'Black,Blue,Green,Red,White,Colorless' | split: ',' %}
+{% assign array_tag4 = 'Uncommon,Common,Rare,Mythic' | split: ',' %}
+{% assign exclude = 'normal,1v1,OneVsOne,Pauper,Penny,Normal,NonFoil,Foil,Flip,Brawl,Duel,Transform,Modern,Standard,Commander,Vintage,Legacy,Saga,Token,Emblem,Frontier,Future,Split,Double_faced_token' | split: ',' %}
+{% assign array_deny = array_tag2 | concat: array_tag3 | concat: array_tag4 | concat: exclude %}
+
+<div class="cardFilterMobile">
+    <div class="cardFilterMobile__content">
+        <div class="cardFilterMobile__header">
+            <div class="cardFilterMobile__title">Advanced Search</div>
+            <a class="cardFilterMobile__closeX"><i class="fal fa-times"></i></a>
+        </div>
+        <div class="cardFilterMobile__controls">
+            <ul class="cardFilter">
+                <li class="cardFilter__item">
+                    <select class="cardFilter__select2--edition" multiple="multiple" name="states[]"
+                        style="width:100%;text-align:center;">
+                        {% for t in collection.all_tags %}
+                        {% assign tag = t | strip %}
+                        {% unless array_deny contains tag %}
+                        {% assign tagTitle = tag | truncate: 30 %}
+                        {% if current_tags contains tag %}
+                        <option value="{{ tag | handleize }}">{{ tagTitle }}</option>
+                        {% else %}
+                        <option value="{{ tag | handleize }}">{{ tagTitle }}</option>
+                        {% endif %}
+                        {% endunless %}
+                        {% endfor %}
+                    </select>
+                </li>
+                </li>
+                <li class="cardFilter__item">
+                    <select class="cardFilter__select2--type" multiple="multiple" name="states[]"
+                        style="width:100%;text-align:center;">
+                        {% for t in array_tag2 %}
+                        {% assign tag = t | strip %}
+                        {% if collection.tags contains tag %}
+                        {% assign tagTitle = tag | truncate: 30 %}
+                        {% if current_tags contains tag %}
+                        <option value="{{ tagTitle | handleize }}">{{ tagTitle }}</option>
+                        {% else %}
+                        <option value="{{ tagTitle | handleize }}">{{ tagTitle }}</option>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </li>
+                <li class="cardFilter__item">
+                    <select class="cardFilter__select2--color" multiple="multiple" name="states[]"
+                        style="width:100%;text-align:center;">
+                        {% for t in array_tag3 %}
+                        {% assign tag = t | strip %}
+                        {% if collection.tags contains tag %}
+                        {% assign tagTitle = tag | truncate: 30 %}
+                        {% if current_tags contains tag %}
+                        <option value="{{ tagTitle | handleize }}">{{ tagTitle }}</option>
+                        {% else %}
+                        <option value="{{ tagTitle | handleize }}">{{ tagTitle }}</option>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </li>
+                <li class="cardFilter__item">
+                    <select class="cardFilter__select2--rarity" multiple="multiple" name="states[]"
+                        style="width:100%;text-align:center;">
+                        {% for t in array_tag4 %}
+                        {% assign tag = t | strip %}
+                        {% if collection.all_tags contains tag %}
+                        {% assign tagTitle = tag | truncate: 30 %}
+                        {% if current_tags contains tag %}
+                        <option value="{{ tagTitle | handleize }}">{{ tagTitle }}</option>
+                        {% else %}
+                        <option value="{{ tagTitle | handleize }}">{{ tagTitle }}</option>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </li>
+                <li class="cardFilter__item">
+                    <button aria-label="Filter Results" title="Filter Results" class="button" onclick="filter()">Filter</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    var modal = document.querySelector(".cardFilterMobile");
+var trigger = document.querySelector(".cardFilterMobile__trigger");
+var closeButton = document.querySelector(".cardFilterMobile__closeButton");
+var closeToggle = document.querySelector(".cardFilterMobile__closeToggle");
+var closeX = document.querySelector(".cardFilterMobile__closeX");
+
+function toggleModal() {
+    modal.classList.toggle("cardFilterMobile__showModal");
+}
+
+function windowOnClick(event) {
+    if (event.target === modal) {
+        toggleModal();
+    }
+}
+
+trigger.addEventListener("click", toggleModal);
+closeButton.addEventListener("click", toggleModal);
+closeToggle.addEventListener("click", toggleModal);
+closeX.addEventListener("click", toggleModal);
+window.addEventListener("click", windowOnClick);
+</script>
+
+<script>
+    $(document).ready(function () {
+        console.log('test')
+        var currentTags = "{{ current_tags | join: ',' }}".toLowerCase().split(",");
+        var i;
+        for (i = 0; i < currentTags.length; i++) {
+            if (currentTags[i] != "") {
+                var foundOption = document.querySelector(".cardFilter__item select option[value='" + Shopify.handleize(currentTags[i]) + "']");
+                foundOption.selected = true;
+            }
+        }
+        $(".cardFilter__select2--edition").select2({ placeholder: "Edition", maximumSelectionLength: 1 });
+        $(".cardFilter__select2--type").select2({ placeholder: "Type" });
+        $(".cardFilter__select2--color").select2({ placeholder: "Color" });
+        $(".cardFilter__select2--rarity").select2({ placeholder: "Rarity", maximumSelectionLength: 1 });
+    });
+
+    // Handlesize
+    Shopify.handleize = function (str) {
+        str = str.toLowerCase();
+        var toReplace = [
+            "\"",
+            "'",
+            "\\",
+            "(",
+            ")",
+            "[",
+            "]"
+        ];
+        // For the old browsers
+        for (var i = 0; i < toReplace.length; ++i) {
+            str = str.replace(toReplace[i], "");
+        }
+        
+        // Replaces non-standard characters aside from é for things like pokémon go
+        str = str.replace(/[^a-z^A-Z^0-9^é]+/g, "-");
+
+        if (str.charAt(str.length - 1) == "-") {
+            str = str.replace(/-+\z/, "");
+        }
+        if (str.charAt(0) == "-") {
+            str = str.replace(/\A-+/, "");
+        }
+        return str
+    };
+
+    function filter() {
+        var options = document.querySelectorAll(".cardFilter__item select option");
+        var filterString = ""
+        var i;
+        for (i = 0; i < options.length; i++) {
+            if (options[i].selected) {
+                if (filterString == "") {
+                    filterString = options[i].value.toLowerCase();
+                } else {
+                    filterString += "+" + options[i].value.toLowerCase();
+                }
+            }
+        }
+        window.location.href = "{{ collection.url }}/" + filterString;
+    }
+</script>

@@ -1,0 +1,289 @@
+/* Notes
+
+Blue Gradient:
+
+    background: linear-gradient({{ settings.color_primary_gradient_degree }}deg, #{{ settings.color_primary_gradient_start }} 0%, #{{ settings.colors.color_primary_gradient_end }} 100%);
+
+Orange Gradient:
+
+    background: linear-gradient({{ settings.color_secondary_gradient_degree }}deg, {{ settings.color_secondary_gradient_start }} 0%, {{ settings.color_secondary_gradient_end }} 100%);
+
+*/
+
+/* _block-menu.scss */
+
+.o-blockMenu
+{
+    background-color: {{ settings.color_white }};
+}
+
+/* _video-carousel.scss */
+
+.videoCarousel
+{
+    background: linear-gradient({{ settings.color_secondary_gradient_degree }}deg, {{ settings.color_secondary_gradient_start }} 0%, {{ settings.color_secondary_gradient_end }} 100%);
+}
+
+p, a, h, .productPage__breadcrumb
+{
+    color: {{settings.color_txt}};
+}
+
+.m-contactRow__col, 
+.i-headerTop, 
+.i-headerBottom__link
+{
+    border-right: {{settings.color_border_light_blue}} 1px solid;
+}
+
+.i-headerBottom {
+    border: {{settings.color_border_light_blue}} 1px solid;
+}
+
+.m-headerTop {
+    border-bottom: {{settings.color_border_light_blue}} 1px solid;
+}
+
+.product-page {
+    border-top: {{settings.color_border_light_blue}} 1px solid;
+}
+
+.a-input,
+.a-select,
+.o-siteSearch
+{
+    background: {{settings.color_light}};
+}
+
+.m-collectionGrid__item
+{
+    background-color: {{settings.color_light}};
+}
+
+.m-siteSearch__select, 
+.a-sectionTitle__text,
+.m-featuredColl__title a h3
+{
+    border-right-color: {{settings.color_light_grey}} 1px solid;
+}
+
+.card__heading,
+.dark,
+.qtydiv label,
+.quanity-selector .qtyminus,
+.quanity-selector .qtyplus,
+.card__heading,
+.featuredAuthor__name,
+.a-collectionItem__title,
+.a-footer__title,
+.productPage__price,
+.product-title
+{
+    color: {{settings.color_dark}}
+}
+
+.button secondary,
+.productCard__price,
+.productPage__tag
+{
+    color: {{settings.color_orange}};
+}
+
+
+.pagination .active,
+.button formButton,
+.productPage__tags li
+{
+    border-color: {{settings.color_orange}} 1px solid;
+}
+
+.latestArticles__isPro
+{
+    background-color: {{settings.color_orange}};
+}
+
+.breadcrumbs__item:not(:last-child):after
+{
+    color: {{settings.color_orange}};
+}
+
+.m-featuredColl_productRight a
+{
+    color: {{settings.color_grey}}
+}
+
+.m-featuredColl_productRight span
+{
+    color: {{settings.color_c2a}}
+}
+
+.o-mainNav
+{
+    background-color: {{settings.color_black}};
+}
+
+.a-button,
+.m-siteSearch__button,
+.white,
+.latestArticles__isPro,
+.m-headerTop,
+.a-announcementBar__text, 
+.a-headerMenu__item a,
+.a-headerMenu__item select,
+.o-mainNav a,
+.i-headerTop__link li,
+.o-newsletterWrap a,
+.o-newsletterWrap h3,
+.pageIntro,
+.m-slideContents h3,
+.m-slideContents p,
+.videoCarousel__title,
+.collectionList__title,
+.product-controls form button 
+{
+    color: {{settings.color_white}}
+}
+
+.cardFilter,
+.card, 
+.productCard__card,
+.o-aboutGrid__wrap,
+.o-blockMenu,
+.featuredAuthor__grid,
+.o-collectionGrid,
+.o-featuredColl,
+.lp__card,
+.collectionList__item,
+.loginForm,
+.productPage__left,
+.product-page 
+{
+    background-color: {{settings.color_white}};
+}
+
+.mainNav__children,
+#shopify-section-video-carousel
+{
+    background: {{settings.color_white}};
+}
+
+.videoCarousel__item
+{
+    border-bottom-color: {{settings.color_white25}} 1px solid;
+}
+
+.card__title,
+.card__info,
+.productCard__lower,
+.card__title,
+.card__info,
+.productCard__lower,
+.m-blockMenu__item,
+.blogFeed,
+.o-globalFooter,
+.lp__card__title,
+.collectionList,
+.collectionTemplate,
+.loginTemplate,
+.productPage__right,
+.productPage__under,
+.card 
+{
+    background-color: {{settings.color_grey_6}};
+}
+
+.card,
+input,
+.productCard__card,
+.cardFilter,
+.card ,
+.m-blockMenu__item,
+.featuredAuthor__grid,
+.lp__card ,
+.cardFilter ,
+.collectionList__item,
+.loginForm,
+.productPage__legalities
+{
+    border-color: {{settings.color_grey_4}} 1px solid;
+}
+
+.card__title,
+.card__title ,
+.lp__card__title 
+{
+    border-top-color: {{settings.color_grey_4}} 1px solid;
+}
+
+.a-sectionTitle__button,
+.a-sectionTitle__button,
+.i-slide__date,
+.i-slide__c2a,
+.videoCarousel__time
+{
+    color: {{settings.color_grey_4}};
+}
+
+.cardFilter__item ,
+.featuredAuthor__card,
+.cardFilter__item ,
+.collectionList,
+.collectionTemplate,
+.loginTemplate,
+.productPage__left,
+.productPage__right
+{
+    border-right-color: {{settings.color_grey_4}} 1px solid;
+}
+
+.i-slide__c2a,
+.collectionList,
+.collectionTemplate,
+.loginTemplate,
+.productPage__left
+{
+    border-left-color:  {{settings.color_grey_4}} 1px solid;
+}
+
+.m-collectionGrid__item
+{
+    border-color: {{settings.color_grey_5}} 1px solid;
+}
+
+.mainNav__children a:hover
+{
+    background-color: {{settings.color_grey_5}};
+}
+
+.a-input
+{
+    box-shadow: {{settings.color_grey_3}};
+}
+
+.a-select,
+.o-siteSearch
+{
+    border-color: {{settings.color_grey_3}} 1px solid;
+}
+
+.featuredAuthor__link,
+.m-featuredColl_productRight p
+{
+    color: {{settings.color_grey_3}};
+}
+
+.m-footerMain
+{
+    border-top-color: {{settings.color_grey_3}} 1px solid;
+}
+
+.i-headerTop,
+.i-headerBottom
+{
+    background: {{settings.color_trans_blue}};
+}
+
+.o-header
+{
+    background-color: {{ settings.color_header_bg }};
+}

@@ -1,0 +1,67 @@
+{% if section.settings.enable_calendar %}
+{% case section.settings.calendar %}
+{% when "Default" %}
+{% include 'basic-Calendar' %}
+{% when "Big" %}
+{% include 'big-Calendar' %}
+{% endcase %}
+{% endif %}
+
+{% schema %}
+{
+"name": "Event Calendar",
+"class": "index-section",
+"settings": [
+{
+"type": "checkbox",
+"id": "enable_calendar",
+"label": "Enable event calendar",
+"default": true
+},
+{
+"type": "text",
+"id": "title",
+"label": "Title",
+"default": "Event Calendar"
+},
+{
+"type": "select",
+"id": "calendar",
+"label": "Calendar Style",
+"options": [
+{
+"group": "Styles",
+"value": "Default",
+"label": "Default Calendar"
+}, {
+"group": "Styles",
+"value": "Big",
+"label": "Big Calendar"
+}
+],
+"default": "Default",
+"info": "Publish and reload the page to see your new calendar style."
+}, {
+"type": "image_picker",
+"id": "bg_image",
+"label": "Background Image"
+}
+],
+"presets": [
+{
+"name": "Event Calendar Module"
+}
+]
+}
+
+{% endschema %}
+
+{% stylesheet %}
+
+
+
+{% endstylesheet %}
+
+
+{% javascript %}
+{% endjavascript %}

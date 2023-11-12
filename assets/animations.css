@@ -1,0 +1,115 @@
+/**
+ * ----------------------------------------
+ * animation slide-right
+ * ----------------------------------------
+ */
+ @-webkit-keyframes slide-right-out {
+    0% {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+    }
+    100% {
+      -webkit-transform: translateX(16px);
+              transform: translateX(16px);
+    }
+  }
+  
+  @keyframes slide-right-out {
+    0% {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+    }
+    100% {
+      -webkit-transform: translateX(16px);
+              transform: translateX(16px);
+    }
+  }
+  
+  @-webkit-keyframes slide-right-in {
+    0% {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+    }
+    100% {
+      -webkit-transform: translateX(0px);
+              transform: translateX(0px);
+    }
+  }
+  
+  @keyframes slide-right-in {
+    0% {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+    }
+    100% {
+      -webkit-transform: translateX(0px);
+              transform: translateX(0px);
+    }
+  }
+
+/* Ripple Out */
+
+
+  @-webkit-keyframes hvr-ripple-out {
+    100% {
+      top: -12px;
+      right: -12px;
+      bottom: -12px;
+      left: -12px;
+      opacity: 0;
+    }
+  }
+  @keyframes hvr-ripple-out {
+    100% {
+      top: -12px;
+      right: -12px;
+      bottom: -12px;
+      left: -12px;
+      opacity: 0;
+    }
+  }
+
+
+/* Icon Forward */
+.button,
+.a-sectionTitle__button {
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  -webkit-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+}
+.button i,
+.a-sectionTitle__button i {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+  font-size: 12px;
+  line-height: 16px;
+}
+.button:hover i, .button:focus i, .button:active i,
+.a-sectionTitle__button:hover i, .a-sectionTitle__button:focus i, .a-sectionTitle__button:active i
+{
+  -webkit-transform: translateX(4px);
+  transform: translateX(4px);
+}
+
+.a-footer__link a,
+.megaNav__li a
+{
+  transition: all 300ms linear;
+}
+
+.a-footer__link:hover a,
+.megaNav__li:hover a,
+.helpIndex__link:hover a,
+.pageSidebar__menuItem:hover a
+{
+  padding-left:8px;
+  font-weight:700;
+}
+

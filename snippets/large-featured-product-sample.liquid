@@ -1,0 +1,34 @@
+{% assign product = "" %}
+<section class="large-featured-product">
+  <div class="large-featured-product__image">
+    <img loading="lazy" src="{{ 'sample-product.png' | asset_url }}" height="300px" />
+  </div>
+  <div class="large-featured-product__description">
+    <h5 class="large-featured-product__product-type">
+      Example Product Type
+    </h5>
+    <h2 class="large-featured-product__product-name">
+      Example Product Title
+    </h2>
+    <hr />
+    <div class="large-featured-product__details">
+      <div class="large-featured-product__price-stock">
+        <p class="large-featured-product__price">
+          {{ "999" | money_with_currency }}
+        </p>
+      </div>
+      <div class="large-featured-product__controls">
+        <input name="quantity" class="large-featured-product__quantity" type="number" value="1" max=10 />
+        <button aria-label="Add to Cart" title="Add to Cart" class="large-featured-product__button">
+          Add to cart
+        </button>
+        {% include "add-to-wishlist-button" %}
+      </div>
+      <div class="large-featured-product__link">
+        <span>
+          <a href="#">View more info</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

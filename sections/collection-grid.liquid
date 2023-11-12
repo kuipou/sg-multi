@@ -1,0 +1,116 @@
+<div class="o-collectionGrid">
+  <div class="m-sectionTitle">
+    <a class="a-sectionTitle__link" href="{{ section.settings.url }}">
+      <h3 class="a-sectionTitle__text">{{ section.settings.title }}</h3>
+      <p class="a-sectionTitle__button">{{ section.settings.button }}&nbsp;<i class="fal fa-long-arrow-right"></i></p>
+    </a>
+  </div>
+  <div class="m-collectionGrid">
+    {%- for block in section.blocks -%}
+        {%- assign collection = collections[block.settings.collection] -%}
+        <a href="{{ collection.url }}" class="m-collectionGrid__item" style="background-size: cover !important; background: url({{ collection | img_url: 'medium' }})">
+          <p class="a-collectionItem__title">{{ collection.title }}</p>
+        </a>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+
+  .o-collectionGrid
+  {
+    background-color: {{section.settings.color_collection_grid_bg}};
+  }
+
+  .m-collectionGrid__item
+  {
+    background-color: {{section.settings.color_collection_grid_card_bg}};
+    border: 1px solid {{section.settings.color_collection_grid_card_border}};
+  }
+
+  .a-collectionItem__title
+  {
+    color: {{section.settings.color_collection_grid_card_text}};
+  }
+
+</style>
+
+{% schema %}
+{
+  "name": "Collection grid",
+  "tag": "section",
+  "max_blocks": 10,
+  "settings": [
+    {
+        "type": "header",
+        "content": "Colors",
+        "info": "The colors for this section."
+    },
+    {
+        "type": "color",
+        "id": "color_collection_grid_bg",
+        "label": "Background Color",
+        "default": "#FFFFFF"
+    },
+    {
+        "type": "color",
+        "id": "color_collection_grid_card_bg",
+        "label": "Card Background Color",
+        "default": "#F2F2F2"
+    },
+    {
+      "type": "color",
+      "id": "color_collection_grid_card_border",
+      "label": "Card Border Color",
+      "default": "#BDBDBD"
+    },
+    {
+        "type": "color",
+        "id": "color_collection_grid_card_text",
+        "label": "Card Text Color",
+        "default": "#333745"
+    },
+    {
+        "type": "header",
+        "content": "Settings",
+        "info": "The settings for this section."
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Popular collections"
+    },
+    {
+      "type": "text",
+      "id": "button",
+      "label": "View text",
+      "default": "View all collections"
+    },
+    {
+      "type": "url",
+      "id": "url",
+      "label": "View link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_grid",
+      "name": "Grid item",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+      {
+          "name": "Collections Grid",
+          "category": "Premium Theme 1 Modules"
+      }
+  ]
+}
+{% endschema %}

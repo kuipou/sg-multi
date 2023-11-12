@@ -1,0 +1,185 @@
+// Colors
+// -------------------------------------
+$color-white: #ffffff;
+$color-white-dark: #f7f7f7;
+$color-grey-light: #ededed;
+$color-grey: #cccccc;
+$color-grey-dark: #737373;
+$color-black-light: #4b4b4b;
+$color-black: #474747;
+$color-teal: #25878c;
+$color-orange-dark: #df380f;
+$color-orange: #ed6a10;
+$color-yellow: #f89622;
+$color-yellow-light: #ffd031;
+$color-primary: $color-yellow;
+
+@mixin square($width, $max: false, $min: false, $height: false) {
+  @if ($height == false) {
+    $height: $width;
+  }
+  width: $width;
+  height: $height;
+  @if ($min) {
+    min-width: $width;
+    min-height: $height;
+  }
+  @if ($max) {
+    max-width: $width;
+    max-height: $height;
+  }
+}
+
+@mixin breakpoint-xs-up {
+  @include breakpoint-custom-up($screen-xs-min) {
+    @content;
+  }
+}
+
+// Media Queries
+@mixin breakpoint-custom-up($min) {
+  @media all and (min-width: $min) {
+    @content;
+  }
+}
+
+// Breakpoints
+$screen-xs-min: 28rem;
+$screen-sm-min: 46rem;
+$screen-md-min: 64rem;
+$screen-lg-min: 82rem;
+
+$transition-speed-default: 350ms;
+$transition-easing-default: ease-out;
+
+$transition-transform: transform $transition-speed-default
+  $transition-easing-default;
+
+// absolute transform center an element
+@mixin absolute-center() {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+$rotation: 20deg;
+$movement: 100%;
+$size-loading-spinner: 6.5rem;
+
+// Z index
+// -------------------------------------
+
+$z-below: -1;
+$z-default: 0;
+$z-above: 30;
+$z-menu: 50;
+$z-header: 60;
+$z-modal: 100;
+
+$gap-size: 1rem;
+
+$size-loading-spinner-sm: 5rem;
+$size-loading-spinner: 6.5rem;
+
+$animation-speed-default: 3.5s;
+$animation-easing-default: linear;
+$color-black: #474747;
+$color-orange-dark: #df380f;
+$border-radius-small: 0.2rem;
+
+// Opacity
+$opacity-90: 0.9;
+$opacity-80: 0.8;
+$opacity-70: 0.7;
+$opacity-60: 0.6;
+$opacity-50: 0.5;
+$opacity-40: 0.4;
+$opacity-30: 0.3;
+$opacity-20: 0.2;
+$opacity-15: 0.15;
+$opacity-10: 0.1;
+
+$shadow-card: 0 0.2rem 0.4rem transparentize($color-black, $opacity-80);
+
+@keyframes shuffle {
+  0% {
+    transform: translate(-50%, -50%) rotate(0);
+  }
+  15% {
+    transform: translate((-50% + $movement), -50%) rotate($rotation);
+  }
+  16% {
+    z-index: $z-above + 5;
+  }
+  45% {
+    transform: translate((-50% - $movement), -50%) rotate(-$rotation);
+    z-index: $z-above + 5;
+  }
+  46% {
+    z-index: $z-below;
+  }
+  60% {
+    transform: translate(-50%, -50%) rotate(0);
+    z-index: $z-below;
+  }
+}
+
+.loading-spinner {
+  margin: 0 auto;
+
+  &__inner {
+    position: relative;
+    padding: gap-size(1);
+    @include square(($size-loading-spinner + gap-size(2)));
+  }
+
+  .spinner-card {
+    $offset: $animation-speed-default / 5;
+    @include square(
+      $size-loading-spinner-sm,
+      false,
+      false,
+      $size-loading-spinner-sm * 4/3
+    );
+    @include absolute-center();
+    animation: shuffle $animation-speed-default $animation-easing-default 0s
+      infinite;
+    background: $color-primary;
+    background-image: url('https://cdn.shopify.com/s/files/1/0437/4016/8351/products/198548_200w_small.jpg?v=1598488470');
+    border-radius: $border-radius-small;
+    box-shadow: $shadow-card;
+    transition: $transition-transform;
+    transform-origin: bottom center;
+    padding: 0;
+    z-index: $z-above;
+    background-size: cover;
+
+    @include breakpoint-xs-up {
+      @include square(
+        $size-loading-spinner,
+        false,
+        false,
+        $size-loading-spinner * 4/3
+      );
+    }
+
+    &:nth-of-type(2) {
+      animation-delay: $offset;
+      background: $color-orange;
+      z-index: $z-above - 1;
+    }
+
+    &:nth-of-type(3) {
+      animation-delay: $offset * 2;
+      background: $color-orange-dark;
+      z-index: $z-above - 2;
+    }
+
+    &:nth-of-type(4) {
+      animation-delay: $offset * 3;
+      background: $color-orange;
+      z-index: $z-above - 2;
+    }
+  }
+}

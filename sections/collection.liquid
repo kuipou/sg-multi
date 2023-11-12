@@ -1,0 +1,351 @@
+{% assign customerTags = section.settings.userTags | split: ',' %}
+{% assign foundType = "" %}
+{% assign gameMatch = false %}
+
+{% for block in section.blocks %}
+  {% assign tag1Prefix = block.settings.tag1Prefix %}
+  {% assign tag2Prefix = block.settings.tag2Prefix %}
+  {% assign tag3Prefix = block.settings.tag3Prefix %}
+{% endfor %}
+
+{% if collection.all_types contains "MTG Single" and collection.all_types.size == 1 %}
+{% assign gameMatch = true %}
+{% elsif collection.all_types contains "Pokemon Single" and collection.all_types.size == 1%}
+{% assign gameMatch = true %}
+{% elsif collection.all_types contains "Flesh And Blood Single" and collection.all_types.size == 1%}
+{% assign gameMatch = true %}
+{% elsif collection.all_types contains "Yugioh Single" and collection.all_types.size == 1%}
+{% assign gameMatch = true %}
+{% elsif collection.all_types contains "Dragon Ball Super Single" and collection.all_types.size == 1%}
+{% assign gameMatch = true %}
+{% else %}
+  {% for block in section.blocks %}
+    {% if collection.all_types contains block.settings.type %}
+    {% assign foundType = block %}
+    {% assign array_tag2 = '' | split: ',' %}
+    {% for t in collection.all_tags %}
+      {% assign tag1Prefix = block.settings.tag1Prefix | append:':' %}
+      {% assign tag1Prefix2 = block.settings.tag1Prefix | downcase | append:'_' %}
+      {% if t contains tag1Prefix or t contains tag1Prefix2 %}
+        {% assign race = t | split: ',' %}
+        {% assign array_tag2 = array_tag2 | concat: race %}
+      {% endif %}
+    {% endfor %}
+    {% assign array_tag3 = '' | split: ',' %}
+    {% for t in collection.all_tags %}
+    {% assign tag2Prefix = block.settings.tag2Prefix | append:':' %}
+    {% assign tag2Prefix2 = block.settings.tag2Prefix | downcase | append:'_' %}
+      {% if t contains tag2Prefix or t contains tag2Prefix2%}
+        {% assign race = t | split: ',' %}
+        {% assign array_tag3 = array_tag3 | concat: race %}
+      {% endif %}
+    {% endfor %}
+    {% assign array_tag4 = '' | split: ',' %}
+    {% for t in collection.all_tags %}
+    {% assign tag3Prefix = block.settings.tag3Prefix | append:':' %}
+    {% assign tag3Prefix2 = block.settings.tag3Prefix | downcase | append:'_' %}
+      {% if t contains tag3Prefix or t contains tag3Prefix2%}
+        {% assign race = t | split: ',' %}
+        {% assign array_tag4 = array_tag4 | concat: race %}
+      {% endif %}
+    {% endfor %}
+    
+    {% assign exclude = '' | split: ',' %}
+    {% assign array_deny = array_tag2 | concat: array_tag3 | concat: array_tag4 | concat: exclude | concat: customerTags %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+{% for tag in collection.all_tags %}
+{% unless exclude contains tag or tag contains 'Token Creature' or tag contains '__' or tag contains 'AT{' or tag contains 'Creature' or tag contains 'Faerie' or tag contains 'Efreet' or tag contains 'Troll' or tag contains 'Fungus' or tag contains 'Kithkin' or tag contains 'Insect' or tag contains 'Dryad' or tag contains 'Dwarf' or tag contains 'Bird' or tag contains 'Bear' or tag contains 'Cat' or tag contains 'Elf' or tag contains 'Lizard' or tag contains 'Merfolk' or tag contains 'Worm' or tag contains 'Orc' or tag contains 'Ogre' or tag contains 'Vampire' or tag contains 'Spirit' or tag contains 'Treefolk' or tag contains 'Human ' or tag contains 'Zombie ' or tag contains '/0' or tag contains '/1' or tag contains '/2' or tag contains '/3' or tag contains '/4' or tag contains '/5' or tag contains '/9'  or tag contains '/6' or tag contains '/7' or tag contains '/8' or tag contains 'C+'  or tag contains 'D+' or tag contains 'C-'  or tag contains 'D-' or tag contains 'F -'  or tag contains 'F +' or tag contains 'G+'  or tag contains 'G-' or tag contains 'G +'  or tag contains 'G -' or tag contains 'DP Trainer Kit:' or tag contains 'EX Trainer Kit:' or tag contains 'F-'  or tag contains 'F+' or tag contains 'L-'  or tag contains 'L+' or tag contains 'L -'  or tag contains 'L +' or tag contains 'M -' or tag contains 'M +' or tag contains 'M-' or tag contains 'M+'  or tag contains 'P-'  or tag contains 'P+' or tag contains 'P -'  or tag contains 'P +' or tag contains 'R +' or tag contains 'R -' or tag contains 'R+' or tag contains 'R-' or tag contains 'W+' or tag contains 'W-' or tag contains 'W +' or tag contains 'W -'%}
+   
+  {% capture addTag %}
+    {{ tag }},
+    {% endcapture %}
+    {% assign collectionTags = collectionTags | append: addTag %}
+  {% endunless %}
+{% endfor %}
+{% assign collectionTags = collectionTags | split: ','%}
+
+<div class="cardFilterMobile">
+  <div class="cardFilterMobile__content">
+    <div class="cardFilterMobile__header">
+      <div class="cardFilterMobile__title">Advanced Search</div>
+      <a class="cardFilterMobile__closeX">
+        <i class="fal fa-times"></i>
+      </a>
+    </div>
+    <div class="cardFilterMobile__controls">
+      <ul class="cardFilter">
+        <li class="cardFilter__item">
+          <select class="cardFilter__select2--edition" multiple="multiple" name="states[]" style="width:100%;text-align:center;">
+            {% if gameMatch == false %}
+              {% for t in collectionTags %}
+                {% assign tag = t | strip %}
+                {% unless array_deny contains tag or customerTags contains tag %}
+                {% assign tagTitle = tag | truncate: 30 %}
+                    {% if current_tags contains tag %}
+                      <option value="{{ tag | handleize }}">{{ tagTitle }}</option>
+                    {% else %}
+                      <option value="{{ tag | handleize }}">{{ tagTitle }}</option>
+                    {% endif %}
+                {% endunless %}
+              {% endfor %}
+            {% endif %}
+          </select>
+        </li>
+        {% assign collectionTags = collectionTags | join: ','%}
+        <li class="cardFilter__item">
+          <select class="cardFilter__select2--type" multiple="multiple" name="states[]" style="width:100%;text-align:center;">
+            {% if gameMatch == false %}
+              {% for t in array_tag2 %}
+                {% assign tag = t | strip %}
+                {% if collectionTags contains tag %}
+                {% assign valueTag = tag | split: ',' %}
+                {% if tag contains ':' %}
+                {% assign tagTitle = tag | split: ':' %}
+                {% if tagTitle.size > 1 %}
+                  {% assign tagTitle = tagTitle[1] %}
+                {% endif %}
+                {% elsif tag contains '_' %}
+                {% assign tagTitle = tag | split: '_' %}
+                {% if tagTitle.size > 1 %}
+                  {% assign tagTitle = tagTitle[1] %}                 
+                {% endif %}                        
+                {% else %}
+                {% assign tagTitle = valueTag[0] %}
+                {%endif%}
+                {% assign tagTitle = tagTitle | truncate: 30 %}
+                    {% if current_tags contains tag %}
+                        <option value="{{ valueTag | handleize }}">{{ tagTitle }}</option>
+                    {% else %}
+                        <option value="{{ valueTag | handleize }}">{{ tagTitle }}</option>
+                    {% endif %}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </select>
+        </li>
+        <li class="cardFilter__item">
+          <select class="cardFilter__select2--color" multiple="multiple" name="states[]" style="width:100%;text-align:center;">
+            {% if gameMatch == false %}
+              {% for t in array_tag3 %}
+                {% assign tag = t | strip %}
+                {% if collectionTags contains tag %}
+                {% assign valueTag = tag | split: ',' %}
+                {% if tag contains ':' %}
+                {% assign tagTitle = tag | split: ':' %}
+                {% if tagTitle.size > 1 %}
+                  {% assign tagTitle = tagTitle[1] %}
+                {% endif %}
+                {% elsif tag contains '_' %}
+                {% assign tagTitle = tag | split: '_' %}
+                {% if tagTitle.size > 1 %}
+                  {% assign tagTitle = tagTitle[1] %}                 
+                {% endif %}                        
+                {% else %}
+                {% assign tagTitle = valueTag[0] %}
+                {%endif%}
+                {% assign tagTitle = tagTitle | truncate: 30 %}
+                    {% if current_tags contains tag %}
+                        <option value="{{ valueTag | handleize }}">{{ tagTitle }}</option>
+                    {% else %}
+                        <option value="{{ valueTag | handleize }}">{{ tagTitle }}</option>
+                    {% endif %}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </select>
+        </li>
+        <li class="cardFilter__item">
+          <select class="cardFilter__select2--rarity" multiple="multiple" name="states[]" style="width:100%;text-align:center;">
+            {% if gameMatch == false %}
+              {% for t in array_tag4 %}
+                {% assign tag = t | strip %}
+                {% if collectionTags contains tag %}
+                  {% assign valueTag = tag | split: ',' %}
+                  {% if tag contains ':' %}
+                    {% assign tagTitle = tag | split: ':' %}
+                    {% if tagTitle.size > 1 %}
+                      {% assign tagTitle = tagTitle[1] %}
+                    {% endif %}
+                  {% elsif tag contains '_' %}
+                    {% assign tagTitle = tag | split: '_' %}
+                    {% if tagTitle.size > 1 %}
+                      {% assign tagTitle = tagTitle[1] %}                 
+                    {% endif %}                        
+                  {% else %}
+                    {% assign tagTitle = valueTag[0] %}
+                  {%endif%}
+                  {% assign tagTitle = tagTitle | truncate: 30 %}
+                  {% if current_tags contains tag %}
+                    <option value="{{ valueTag | handleize }}">{{ tagTitle }}</option>
+                  {% else %}
+                    <option value="{{ valueTag | handleize }}">{{ tagTitle }}</option>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </select>
+        </li>
+        <li class="cardFilter__item">
+          <button class="button" onclick="filter()">{{ 'collection.filter.title' | t }}</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<section class="collectionTemplate" data-section-id="collection-template" data-section-type="collection" data-section-settings='{
+  "currentSortBy": "manual",
+  "currentTags": [],
+  "filterType": "group",
+  "defaultLayout": "grid",
+  "defaultProductsPerPage": 24,
+  "isAutomatic": false,
+  "gridClasses": "1\/3--tablet-and-up 1\/4--desk"
+}'>
+  {%- paginate collection.products by section.settings.collection_size -%}
+  {{ collection.description }}
+  <div class="collectionBar">
+    {% include 'collection-bar' %}
+    <div class="collectionBar__right">
+      <label for="sort-by" class="sortBy__label">{{ 'collection.sorting.title' | t }}</label>
+      <select id="sort-by" class="sortBy__select" style="background-image: url({{ 'dropdown-arrow.png' | asset_img_url: 'master' }});">
+        {% unless collection.handle == 'all' %}
+        <option value="price-ascending">Price: Low to High</option>
+        <option value="price-descending">Price: High to Low</option>
+        {% endunless %}
+        <option value="title-ascending">A-Z</option>
+        <option value="title-descending">Z-A</option>
+        <option value="created-ascending">Oldest to Newest</option>
+        <option value="created-descending">Newest to Oldest</option>
+        <option value="best-selling">Best Selling</option>
+        <option value="manual">Featured</option>
+      </select>
+    </div>
+  </div>
+  <div class="collectionGrid">
+    {% for product in collection.products %}
+      {% include 'collection-grid-item' | product: product, show_oos_variant: section.settings.show_oos_variant %}
+    {% else %}
+    <p>no matches</p>
+    {% endfor %}
+  </div>
+
+  <div class="collectionBar collectionBar--bottom">
+    {% include 'collection-bar' %}
+    <div class="collectionBar__right">
+      <label for="sort-by" class="sortBy__label">Sort by</label>
+      <select id="sort-by1" class="sortBy__select" style="background-image: url({{ 'dropdown-arrow.png' | asset_img_url: 'master' }});">
+        {% unless collection.handle == 'all' %}
+        <option value="price-ascending">Price: Low to High</option>
+        <option value="price-descending">Price: High to Low</option>
+        {% endunless %}
+        <option value="title-ascending">A-Z</option>
+        <option value="title-descending">Z-A</option>
+        <option value="created-ascending">Oldest to Newest</option>
+        <option value="created-descending">Newest to Oldest</option>
+        <option value="best-selling">Best Selling</option>
+        <option value="manual"></option>
+      </select>
+    </div>
+  </div>
+  {%- endpaginate -%}
+</section>
+
+
+{% schema %}
+{
+  "name": "Collection Page",
+  "blocks": [
+    {
+      "type": "Type",
+      "name": "Filter by Product Type",
+      "settings": [
+        {
+          "type": "text",
+          "id": "type",
+          "label": "Product Type",
+          "info": "What product type are we creating filters for?"
+        },
+        {
+          "type": "text",
+          "id": "tag1Prefix",
+          "label": "Filter 1 Prefix",
+          "info": "For example if your tagged a board game Playtime: 60 Mins then the prefix would be Playtime"
+        },
+        {
+          "type": "text",
+          "id": "tag2Prefix",
+          "label": "Filter 2 Prefix",
+          "info": "For example if your tagged a board game Players: 2 Player then the prefix would be Players"
+        },
+        {
+          "type": "text",
+          "id": "tag3Prefix",
+          "label": "Filter 3 Prefix",
+          "info": "For example if your tagged a board game Size: 100ct then the prefix would be Size"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection Settings"
+    },
+    {
+      "type": "textarea",
+      "id": "userTags",
+      "label": "Tags to Exclude",
+      "info" : "Please user comma seperated values ie: dont,show,this"
+    },
+    {
+      "type": "select",
+      "id": "collection_size",
+      "label": "Results per Page",
+      "options": [
+        {
+          "value": "8",
+          "label": "8"
+        },
+        {
+          "value": "16",
+          "label": "16"
+        },
+        {
+          "value": "24",
+          "label": "24"
+        },
+        {
+          "value": "32",
+          "label": "32"
+        }
+      ],
+      "default": "16"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_oos_variant",
+      "label": "Show out of stock variants on products",
+      "default": false
+    }
+  ]
+}
+{% endschema %}
+
+<div hidden id="collection-js"
+  data-tag1Prefix='{{ tag1Prefix | escape }}'
+  data-tag2Prefix='{{ tag2Prefix | escape }}'
+  data-tag3Prefix='{{ tag3Prefix | escape }}'
+  data-product-form-sold-out='{{ 'product.form.sold_out' | t }}'
+  data-product-form-pre-order='{{ 'product.form.pre_order' | t }}'
+  data-product-form-add-to-card='{{ 'product.form.add_to_cart' | t }}'
+  data-collection='{{ collection | json | escape }}'
+  data-current-tags='{{ current_tags | json | escape }}'
+  data-collection-url='{{ collection.url | escape }}'
+  data-collection-all-types='{{ collection.all_types | json | escape }}'
+  data-collection-all-tags='{{ collection.all_tags | json | escape }}'
+  data-sort-by='{{ collection.sort_by | default: collection.default_sort_by | escape }}'
+></div>
+
+{{ 'collection.js' | asset_url | script_tag }}

@@ -1,0 +1,70 @@
+@keyframes shuffle {
+  0% {
+    transform: translate(-50%, -50%) rotate(0);
+  }
+  15% {
+    transform: translate(50%, -50%) rotate(20deg);
+  }
+  16% {
+    z-index: 35;
+  }
+  45% {
+    transform: translate(-150%, -50%) rotate(-20deg);
+    z-index: 35;
+  }
+  46% {
+    z-index: -1;
+  }
+  60% {
+    transform: translate(-50%, -50%) rotate(0);
+    z-index: -1;
+  }
+}
+.loading-spinner {
+  margin: 0 auto;
+}
+.loading-spinner__inner {
+  position: relative;
+  padding: gap-size(1);
+  width: 6.5remgap-size(2);
+  height: 6.5remgap-size(2);
+}
+.loading-spinner .spinner-card {
+  width: 5rem;
+  height: 6.6666666667rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  animation: shuffle 3.5s linear 0s infinite;
+  background: #f89622;
+  background-image: url("https://cdn.shopify.com/s/files/1/0437/4016/8351/products/198548_200w_small.jpg?v=1598488470");
+  border-radius: 0.2rem;
+  box-shadow: 0 0.2rem 0.4rem rgba(71, 71, 71, 0.2);
+  transition: transform 350ms ease-out;
+  transform-origin: bottom center;
+  padding: 0;
+  z-index: 30;
+  background-size: cover;
+}
+@media all and (min-width: 28rem) {
+  .loading-spinner .spinner-card {
+    width: 6.5rem;
+    height: 8.6666666667rem;
+  }
+}
+.loading-spinner .spinner-card:nth-of-type(2) {
+  animation-delay: 0.7s;
+  background: #ed6a10;
+  z-index: 29;
+}
+.loading-spinner .spinner-card:nth-of-type(3) {
+  animation-delay: 1.4s;
+  background: #df380f;
+  z-index: 28;
+}
+.loading-spinner .spinner-card:nth-of-type(4) {
+  animation-delay: 2.1s;
+  background: #ed6a10;
+  z-index: 28;
+}

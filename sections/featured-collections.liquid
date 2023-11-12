@@ -1,0 +1,197 @@
+<style>
+  .o-featuredColl {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+  }
+
+  .m-featuredColl__col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .m-featuredColl__top {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+  }
+
+  .m-featuredColl__title {
+    margin-bottom: 16px;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+
+  .m-featuredColl__title a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .m-featuredColl__title a h3 {
+    padding-right: 16px;
+    border-right: 1px solid;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 37px;
+    margin-bottom: 0;
+  }
+
+  .m-featuredColl__title a p {
+    padding-left: 16px;
+  }
+
+  .m-featuredColl__bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+  }
+
+  .m-featuredColl__product {
+    display: flex;
+    margin-bottom: 24px;
+  }
+
+  .m-featuredColl_productLeft a img {
+    max-width: 80px;
+    max-height: 112px;
+    border-radius: 4px;
+    margin-right: 16px;
+  }
+
+  .m-featuredColl_productRight {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+  }
+
+  .m-featuredColl_productRight p {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .m-featuredColl_productRight a {
+    margin-bottom: 4px;
+  }
+
+  .m-featuredColl_productRight span {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
+    text-transform: uppercase;
+  }
+
+  .m-featuredColl_productRight strong {
+    font-size: 14px;
+    color: #a53e3e;
+  }
+</style>
+
+{% if section.blocks.size > 0 %}
+<section class="o-featuredColl">
+  {% for block in section.blocks %}
+  <div class="m-featuredColl__col">
+    <div class="m-featuredColl__top">
+      <div class="m-sectionTitle">
+        <a class="a-sectionTitle__link" href="{{block.settings.button_url}}">
+          <h3 class="a-sectionTitle__text">{{block.settings.title}}</h3>
+          <p class="a-sectionTitle__button">
+            {{block.settings.button_text}}
+            <i class="fal fa-long-arrow-right"></i>
+          </p>
+        </a>
+      </div>
+      <p>{{block.settings.paragraph}}</p>
+    </div>
+    <div class="m-featuredColl__bottom">
+      {% for product in collections[block.settings.collection].products limit:4 %}
+      <div class="m-featuredColl__product">
+        <div class="m-featuredColl_productLeft">
+          <a href="{{ product.url | within: collection }}">
+            <img loading="lazy" data-src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}" class="featured-product-image lazy">
+          </a>
+        </div>
+        <div class="m-featuredColl_productRight">
+          <a href="{{ product.url | within: collection }}">
+            <p> {{ product.title }}</p>
+          </a>
+          {% if product.available %}
+          {% if product.price_varies == true %}
+          <p>From {{ product.selected_or_first_available_variant.price | money_with_currency }}</p>
+          {% else %}
+          <div style="display: flex;">
+            <p>{{ product.selected_or_first_available_variant.price | money_with_currency }}</p>&nbsp;
+            {% if product.compare_at_price > product.price %} <p style="text-decoration: line-through;color:red;">{{ product.compare_at_price | money_with_currency }}</p>{% endif %}
+          </div>
+          {% endif %}
+          {% else %}
+          <strong style="color: var(--product-sold-out-color )">Sold out</strong>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</section>
+{% else %}
+<p style="text-align: center;  padding-top: 15px; padding-bottom: 10px;">SAMPLE PREVIEW BELOW - PLEASE EDIT THE SECTION</p>
+<section class="o-featuredColl">
+  {%include 'featured-collection-sample' %}
+  {%include 'featured-collection-sample' %}
+</section>
+{% endif %}
+
+{% schema %}
+{
+"name": "Featured collections",
+"blocks": [
+{
+"type": "featured_collections",
+"name": "Featured collections",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Title",
+"default": "Popular MTG Singles"
+},
+{
+"type": "text",
+"id": "button_text",
+"label": "Button text",
+"default": "View collection"
+},
+{
+"type": "url",
+"id": "button_url",
+"label": "Button URL"
+},
+{
+"type": "text",
+"id": "paragraph",
+"label": "Paragraph",
+"default": "A paragraph about my collection"
+},
+{
+"type": "collection",
+"id": "collection",
+"label": "Collection"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Featured Collections",
+"category": "Premium Theme 1 Modules"
+}
+]
+}
+{% endschema %}

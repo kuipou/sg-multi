@@ -1,0 +1,231 @@
+{%- capture section_settings -%}
+{
+"productOptions": {{ product.options | json | escape }}
+}
+{%- endcapture -%}
+
+{% style %}
+.large-featured-product {
+background-color: {{ section.settings.background_color }};
+color: {{ sections.settings.text_color }};
+}
+.large-featured-product__product-type {
+color: var(--color-primary);
+}
+.large-featured-product {
+display: flex;
+margin: 24px 0;
+}
+
+.large-featured-product__image {
+margin: 0.5em;
+padding: 2.5em 2em;
+flex-basis: 40%;
+text-align: center;
+}
+
+.large-featured-product__description {
+padding: 2em;
+padding-top: 3em;
+}
+
+.large-featured-product__product-name,
+.large-featured-product__product-type {
+margin-top: 0;
+margin-bottom: 0.25em;
+text-transform: uppercase;
+font-size: 2em;
+}
+
+.large-featured-product__product-type {
+font-size: 1em;
+font-weight: normal;
+letter-spacing: 1px;
+}
+
+.large-featured-product__price-stock {
+margin-top: 1em;
+margin-bottom: 1em;
+}
+
+.large-featured-product__price {
+margin-top: 1em;
+margin-bottom: 1em;
+font-size: 2em;
+}
+
+.large-featured-product__quantity {
+width: 5em;
+border: 1px solid var(--border-color);
+padding: 0.5em;
+padding-left: 2em;
+border-radius: var(--border-radius);
+}
+
+.large-featured-product__button {
+background-image: var(--color-gradient);
+font-size: 0.8em;
+text-transform: uppercase;
+color: #fff;
+font-weight: bold;
+padding: 0.5em 2.5em;
+border-radius: var(--border-radius);
+}
+
+.large-featured-product__link {
+display: block;
+margin-top: 1em;
+}
+
+.large-featured-product__link a {
+color: var(--color-primary);
+text-decoration: underline;
+}
+
+.large-featured-product__out-of-stock {
+display: inline-block;
+background-color: #d84444;
+color: white;
+padding: 0.5em;
+font-weight: bold;
+text-transform: uppercase;
+margin-right: 1em;
+}
+
+.large-featured-product__controls > * {
+margin-right: 0.5em;
+box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.15);
+}
+
+@media only screen and (max-width: 768px) {
+.large-featured-product {
+flex-direction: column;
+}
+
+.large-featured-product__image {
+text-align: center;
+}
+}
+
+@media only screen and (max-width: 500px) {
+.large-featured-product__image > img {
+width: 100%;
+}
+.large-featured-product__product-name {
+font-size: 1.5em;
+line-height: 1.4;
+}
+}
+
+{% endstyle %}
+
+<script>
+  function updateQuantity(event) {
+    quantity = event.value;
+  }
+
+  function putThatInCart(target, variantId, title, maxStock, variantTitle) {
+    const quantity = target.closest("div").getElementsByTagName("input")[0].value;
+    addToCart(variantId, title, maxStock, quantity, variantTitle);
+  }
+</script>
+{% assign product = all_products[section.settings.product] %}
+{% assign variant = product.selected_or_first_available_variant %}
+{% if product.title != "" %}
+<section class="large-featured-product">
+  <div class="large-featured-product__image">
+    <img alt="{{ product.title | escape }}" loading="lazy" src="{{ product.featured_image | img_url: '300x300' }}" />
+  </div>
+  <div class="large-featured-product__description">
+    <h5 class="large-featured-product__product-type">
+      {{ product.type }}
+    </h5>
+    <h2 class="large-featured-product__product-name">
+      {{ product.title }}
+    </h2>
+    <hr />
+    <div class="large-featured-product__details">
+      <div class="large-featured-product__price-stock">
+        <p class="large-featured-product__price">
+          {{product.selected_or_first_available_variant.price | money_with_currency }}
+        </p>
+      </div>
+      <div class="large-featured-product__controls">
+        {% if variant.inventory_quantity > 0%}
+        <input name="quantity" class="large-featured-product__quantity" type="number" value=1 min=1 max={{ variant.inventory_quantity }} onchange="updateQuantity(this)" />
+        <button aria-label="Add to Cart" title="Add to Cart" class="large-featured-product__button" onClick="putThatInCart(
+                this,
+                '{{ variant.id }}',
+                '{{ product.title | escape }}',
+                {{ variant.inventory_quantity }},
+                '{{ variant.title | escape }}'
+              )">
+          Add to cart
+        </button>
+        {% else %}
+        <span class="large-featured-product__out-of-stock">
+          Out of stock
+        </span>
+        {% endif %}
+        {% include "add-to-wishlist-button" %}
+      </div>
+      <div class="large-featured-product__link">
+        <span>
+          <a href="{{ product.url }}">View more info</a>
+        </span>
+      </div>
+    </div>
+  </div>
+  {% for block in section.blocks %}
+  {% case block.type %}
+  {% when "@app" %}
+  {% render block %}
+  {% endcase %}
+  {% endfor %}
+</section>
+{% else %}
+{% include "large-featured-product-sample" %}
+{% endif %}
+
+{% schema %}
+{
+"name": "Large Featured Product",
+"blocks": [
+{
+"type": "@app"
+}
+],
+"settings": [
+{
+"type": "product",
+"id": "product",
+"label": "Product"
+},
+{
+"type": "header",
+"content": "Section styling",
+"info": "Set the text and background colors for this section"
+},
+{
+"type": "color",
+"id": "text_color",
+"label": "Text color",
+"info": "Text color for featured product section.",
+"default": "#000000"
+},
+{
+"type": "color",
+"id": "background_color",
+"label": "Background color",
+"info": "Background color for the featured product section.",
+"default": "#f4f4f4"
+}
+],
+"presets": [
+{
+"name": "Large Featured Product",
+"category": "Premium Theme 2 Modules"
+}
+]
+}
+{% endschema %}

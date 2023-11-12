@@ -1,0 +1,1 @@
+window.addEventListener("DOMContentLoaded",(function(){document.querySelectorAll("main .shopify-section").forEach((function(e){e.id.includes("productDescription")||e.remove()}))}));

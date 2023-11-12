@@ -1,0 +1,338 @@
+{% for block in section.blocks %}
+<div class="sidebar-item">
+  {% case block.type %}
+  {% when 'calendar' %}
+  <h4 style="color: {{ block.settings.section_color}}">{{ block.settings.title }}</h4>
+  {% include 'small-Calendar' %}
+  {% when 'text' %}
+  {{ block.settings.html }}
+  {% when 'textarea' %}
+  {{ block.settings.richtext }}
+  {% when 'image' %}
+  <a class="sidebar_banner--panel" href="{{ block.settings.banner_url}}" style="min-height: {{ block.settings.banner_height}}px;background-size: cover;background-image: URL('{{ block.settings.background | img_url: 'master' }}');">
+    <div {% if block.settings.sub_heading !="" and block.settings.heading !="" and block.settings.btn_text !="" %}class="sidebar_banner--wrapper" {% endif %}>
+      {% if block.settings.sub_heading != "" %}<p class="sidebar_banner--subHeading">{{ block.settings.sub_heading }}</p>{% endif %}
+      {% if block.settings.heading != "" %}<p class="sidebar_banner--heading">{{ block.settings.heading }}</p>{% endif %}
+      {% if block.settings.btn_text != "" %}<span class="sidebar_banner--btn">{{ block.settings.btn_text }}</span>{% endif %}
+    </div>
+  </a>
+  {% when 'slidehow' %}
+  <a href="{{ collections[block.settings.collection].url }}">
+    <h4 style="color: {{ block.settings.section_color}}">{{ block.settings.title }}</h4>
+  </a>
+  <div class="slider-nav__slider">
+    <div class="carousel" data-flickity='{ "setGallerySize": false, "autoPlay": true, "pauseAutoPlayOnHover": true, "wrapAround": true }'>
+      {% for product in collections[block.settings.collection].products limit:10 %}
+      <div class="carousel-cell">
+        <img alt="{{ product.featured_image.alt | escape }}" loading="lazy" src="{{product.featured_image | img_url: '400x' }}'}}">
+        <a href="{{ product.url }}">
+          <p style="color: {{ block.settings.product_text_color}}; margin: 10px 0;">{{ product.title }}</p>
+        </a>
+        {% if product.compare_at_price_min > 0 %}
+        <p style="color: {{ block.settings.price_text_color}}" class="sidebar_slider--price">{{product.price | money_with_currency }} {% if product.compare_at_price > product.selected_or_first_available_variant.price %}<span class="sidebar_slider--oldPrice">{{ product.compare_at_price | money}}</span>{% endif %}</p>
+        {% else %}
+        <p style="color: {{ block.settings.price_text_color}}" class="sidebar_slider--price">{{product.selected_or_first_available_variant.price | money_with_currency }}</p>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endcase %}
+</div>
+{% endfor %}
+
+{% schema %}
+{
+"name": "Sidebar Setup",
+"settings": [
+{
+"type": "header",
+"content": "Sidebar Modules",
+"info": "Please select the modules you would like. Default is 320px"
+},
+{
+"type": "select",
+"id": "sidebar_text_align",
+"label": "Header text alignment",
+"default" : "center",
+"options": [
+{
+"value": "left",
+"label": "Left Aligned"
+},
+{
+"value": "center",
+"label": "Center Aligned"
+},
+{
+"value": "right",
+"label": "Right Aligned"
+}
+]
+},
+{
+"type": "range",
+"id": "sidebar_width",
+"label": "Width of Sidebar",
+"default": 320,
+"min": 180,
+"max": 500,
+"step": 20,
+"unit": "px"
+}
+],
+"blocks": [
+{
+"type": "calendar",
+"name": "Mini Calendar",
+"settings": [
+{
+"type": "header",
+"content": "Calendar Mini Module",
+"info": "Events will feed in from the portal"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Add Calendar Title"
+},
+{
+"type": "color",
+"id": "section_color",
+"label": "Section title color",
+"default": "#150433"
+},
+{
+"type": "color",
+"id": "section_date",
+"label": "Date color",
+"default": "#8bdbd6"
+},
+{
+"type": "color",
+"id": "section_price",
+"label": "Event price color",
+"default": "#150433"
+},
+{
+"type": "range",
+"id": "height",
+"label": "Height of Calendar",
+"default": 340,
+"min": 200,
+"max": 800,
+"step": 20,
+"unit": "px"
+}
+]
+},
+{
+"type": "text",
+"name": "HTML",
+"settings": [
+{
+"type": "html",
+"id": "html",
+"label": "Add HTML"
+}
+]
+},
+{
+"type": "image",
+"name": "Banner w/Link",
+"settings": [
+{
+"type": "image_picker",
+"id": "background",
+"label": "Banner Image"
+},
+{
+"type": "range",
+"id": "banner_height",
+"label": "Min Banner Height",
+"default": 280,
+"min": 40,
+"max": 900,
+"step": 10,
+"unit": "px"
+},
+{
+"type": "text",
+"id": "sub_heading",
+"label": "Sub Heading"
+},
+{
+"type": "text",
+"id": "heading",
+"label": "Heading"
+},
+{
+"type": "text",
+"id": "btn_text",
+"label": "Button Text"
+},
+{
+"type": "url",
+"id": "banner_url",
+"label": "Banner Link"
+}
+]
+},
+{
+"type": "textarea",
+"name": "Rich Text",
+"settings": [
+{
+"type": "richtext",
+"id": "richtext",
+"label": "Add Richtext"
+}
+]
+},
+{
+"type": "slidehow",
+"name": "Featured Product Carousel",
+"settings": [
+{
+"type": "collection",
+"id": "collection",
+"label": "Select a collection"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Section Title",
+"default": "Deals and Sales"
+},
+{
+"type": "color",
+"id": "section_color",
+"label": "Section title color",
+"default": "#150433"
+},
+{
+"type": "color",
+"id": "product_text_color",
+"label": "Product text color",
+"info": "Text color for product title.",
+"default": "#150433"
+},
+{
+"type": "color",
+"id": "price_text_color",
+"label": "Price text color",
+"info": "Text color for price.",
+"default": "#8484ff"
+}
+]
+}
+]
+}
+{% endschema %}
+
+<style>
+  a.sidebar_banner--panel {
+    width: 100%;
+    display: block;
+  }
+
+  .content_wrapper-sidebar {
+    padding-top: 23px;
+    padding-bottom: 15px;
+    width: {{ section.settings.sidebar_width }}px;
+  }
+
+  .sidebar-item .slider-nav__slider {
+    height: 305px;
+    text-align: center;
+  }
+
+  .sidebar-item .slider-nav__slider .carousel-cell {
+    justify-content: center;
+    align-items: center;
+    padding-right: 0;
+  }
+
+  .sidebar-item .slider-nav__slider img {
+    max-width: 130px;
+    width: unset;
+    max-height: 180px;
+  }
+
+  .sidebar-item ol.flickity-page-dots {
+    display: none;
+  }
+
+  .sidebar-item .slider-nav__slider .flickity-prev-next-button {
+    display: unset;
+  }
+
+  span.sidebar_banner--btn {
+    display: block;
+    background-image: var(--color-gradient);
+    border-radius: var(--border-radius);
+    padding: 0.5em 2em;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: white;
+    width: max-content;
+    line-height: 35px;
+  }
+
+  p.sidebar_banner--heading {
+    color: white;
+    text-transform: uppercase;
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 40px;
+    padding-bottom: 12px;
+  }
+
+  p.sidebar_banner--subHeading {
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 14px;
+    margin-bottom: 9px;
+  }
+
+  div.sidebar_banner--wrapper {
+    padding: 121px 30px 40px;
+  }
+
+  p.sidebar_slider--price {
+    font-size: 24px;
+  }
+
+  span.sidebar_slider--oldPrice {
+    text-decoration: line-through;
+    color: #f99494;
+    font-size: 14px;
+    position: absolute;
+    margin-left: 8px;
+    margin-top: -6px;
+  }
+
+  .sidebar-item h4 {
+    text-align: {{ section.settings.sidebar_text_align }};
+  }
+
+  @media only screen and (max-width: 1440px) {
+    .content_wrapper {
+      flex-direction: column-reverse !important;
+    }
+
+    div#shopify-section-sidebar {
+      display: flex;
+      flex-direction: row;
+    }
+
+    a.sidebar_banner--panel {
+      width: 300px;
+    }
+
+    .content_wrapper-sidebar {
+      display: none;
+    }
+  }
+</style>

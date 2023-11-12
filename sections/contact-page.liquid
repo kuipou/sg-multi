@@ -1,0 +1,312 @@
+<div class="pageTemplate__wrap">
+  <div class="pageTemplate pageTemplate--contact">
+    <div class="pageContent">
+      <div class="contactForm">
+        {%- form 'contact', class: 'form' -%}
+        {%- if section.settings.show_store_info -%}
+        <div class="form__header">
+          <h2 class="heading h3">{{ section.settings.form_heading | escape }}</h2>
+        </div>
+        {%- endif -%}
+
+        {%- if form.posted_successfully? -%}
+        <p class="alert alert--success">{{ 'contact.form.successfully_sent' | t }}</p>
+        {%- endif -%}
+
+        {%- if form.errors -%}
+        <div class="alert alert--error" id="contact-form-error">
+          <ul class="alert__error-list" role="list">
+            {%- for field in form.errors -%}
+            {%- if field == 'form' -%}
+            <li class="alert__error-item">{{ form.errors.messages[field] }}</li>
+            {%- else -%}
+            <li class="alert__error-item">{{ form.errors.translated_fields[field] | capitalize }} {{ form.errors.messages[field] }}</li>
+            {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+        {%- endif -%}
+
+        <div class="form__input-row">
+          <div class="form__input-wrapper form__input-wrapper--labelled">
+            <input id="contact-form-name" type="text" class="form__field form__field--text {% if customer.name != blank %}is-filled{% endif %}" name="contact[name]" aria-label="{{ 'contact.form.name' | t }}" required {% if customer %}value="{{ customer.name }}" {% endif %}>
+            <label for="contact-form-name" class="form__floating-label">{{ 'contact.form.name' | t }}</label>
+          </div>
+
+          <div class="form__input-wrapper form__input-wrapper--labelled">
+            <input id="contact-form-email" type="email" class="form__field form__field--text {% if customer.email != blank %}is-filled{% endif %}" name="contact[email]" aria-label="{{ 'contact.form.email' | t }}" required {% if customer %}value="{{ customer.email }}" {% endif %} {% if form.errors contains 'email' %}aria-invalid="true" aria-describedby="contact-form-error" {% endif %}>
+            <label for="contact-form-email" class="form__floating-label">{{ 'contact.form.email' | t }}</label>
+          </div>
+        </div>
+
+        <div class="form__input-wrapper form__input-wrapper--labelled">
+          <div id="contact-form-contact-reason" class="select-wrapper select-wrapper--primary"><svg class="icon icon--arrow-bottom" viewBox="0 0 12 8" role="presentation">
+              <path stroke="currentColor" stroke-width="2" d="M10 2L6 6 2 2" fill="none" stroke-linecap="square"></path>
+            </svg><select name="contact[Contact Reason]" title="Contact Reason" required="">
+              <option value="" disabled="" selected=""></option>
+              <option value="Product Enquiry">Product Enquiry</option>
+              <option value="Order Issue">Order Issue</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <label for="contact-form-contact-reason" class="form__floating-label">Contact Reason</label>
+        </div>
+
+        {%- for block in section.blocks -%}
+        {%- assign field_title = block.settings.title -%}
+
+        {%- if field_title == blank -%}
+        {%- capture field_title -%}Custom field {% increment custom_field %}{%- endcapture -%}
+        {%- endif -%}
+
+        {%- if block.type == 'text' -%}
+        <div class="form__input-wrapper form__input-wrapper--labelled">
+          {%- if block.settings.use_long_text -%}
+          <textarea id="contact-form-{{ field_title | handle }}" name="contact[{{ field_title | escape }}]" rows="7" class="form__field form__field--textarea" aria-label="{{ block.settings.title | escape }}" {% if block.settings.is_required %}required{% endif %}></textarea>
+          <label for="contact-form-{{ field_title | handle }}" class="form__floating-label">{{ block.settings.title | escape }}</label>
+          {%- else -%}
+          <input id="contact-form-{{ field_title | handle }}" type="text" class="form__field form__field--text" name="contact[{{ field_title | escape }}]" aria-label="{{ block.settings.title | escape }}" {% if block.settings.is_required %}required{% endif %}>
+          <label for="contact-form-{{ field_title | handle }}" class="form__floating-label">{{ block.settings.title | escape }}</label>
+          {%- endif -%}
+        </div>
+        {%- elsif block.type == 'dropdown' -%}
+        {%- assign values = block.settings.values | split: ',' -%}
+
+        {%- if values == empty -%}
+        {%- continue -%}
+        {%- endif -%}
+
+        <div class="form__input-wrapper form__input-wrapper--labelled">
+          <div id="contact-form-{{ field_title | handle }}" class="select-wrapper select-wrapper--primary">
+            {%- render 'icon', icon: 'arrow-bottom' -%}
+
+            <select name="contact[{{ field_title | escape }}]" title="{{ block.settings.title | escape }}" required>
+              <option value="" disabled selected></option>
+
+              {%- for value in values -%}
+              {%- assign trim_value = value | strip -%}
+
+              <option value="{{ trim_value | escape }}">{{ trim_value | escape }}</option>
+              {%- endfor -%}
+            </select>
+          </div>
+
+          <label for="contact-form-{{ field_title | handle }}" class="form__floating-label">{{ block.settings.title | escape }}</label>
+        </div>
+        {%- endif -%}
+        {%- endfor -%}
+
+        <div class="form__input-wrapper form__input-wrapper--labelled">
+          <textarea id="contact-form-message" name="contact[body]" rows="8" class="form__field form__field--textarea" aria-label="{{ 'contact.form.message' | t }}" required></textarea>
+          <label for="contact-form-message" class="form__floating-label">{{ 'contact.form.message' | t }}</label>
+        </div>
+        <button aria-label="Submit Contact Form" title="Submit Contact Form" type="submit" class="form__submit {% unless section.settings.show_store_info %}form__submit--centered{% endunless %} button button--primary button--min-width">{{ 'contact.form.submit' | t }}</button>
+        {%- endform -%}
+      </div>
+    </div>
+    <div class="pageSidebar">
+      <div class="pageSidebar__top pageSidebar__top--account">
+        <h3 class="h--noMargin">{{ 'contact.sidebar.title' | t }}</h3>
+      </div>
+      <div class="pageSidebar__bottom pageSidebar__bottom--contact">
+        <ul class="pageSidebar__ul">
+          {% for block in section.blocks %}
+          {% case block.type %}
+          {% when "@app" %}
+          {% render block %}
+          {% endcase %}
+          {% endfor %}
+          <li class="pageSidebar__heading">
+            <i class="fad fa-envelope"></i>Emails
+          </li>
+          {% if section.blocks.size == 0 %}
+          <li class="pageSidebar__email">
+            <strong>Direct Order Inquiries</strong>
+            <a href="mailto:{{ shop.email }}">{{ shop.email }}</a>
+          </li>
+          {% else %}
+          {% for block in section.blocks %}
+          <li class="pageSidebar__email">
+            <strong>{{ block.settings.title }} </strong>
+            <a href="mailto:{{ block.settings.email }}">{{ block.settings.email }}</a>
+          </li>
+          {% endfor %}
+          {% endif %}
+        </ul>
+        <hr class="hr--w100pct">
+        {% if section.settings.enable_phone %}
+        <ul class="pageSidebar__ul">
+          <li class="pageSidebar__heading">
+            <i class="fad fa-phone"></i>Phone Us
+          </li>
+          <li class="pageSidebar__phone">
+            <a href="tel:{{ shop.phone }}">{{ shop.phone }}<a>
+          </li>
+        </ul>
+        <hr class="hr--w100pct">
+        {% endif %}
+        {% if section.settings.enable_mailing %}
+        <ul class="pageSidebar__ul">
+          <li class="pageSidebar__heading">
+            <i class="fad fa-envelope-open-text"></i>Mailing Address
+          </li>
+          {% if section.settings.address == "" %}
+          <li class="pageSidebar__address">
+            {{ shop.address.address1 }}<br>
+            {{ shop.address.city }}<br>
+            {{ shop.address.province_code}}, {{ shop.address.country}}, {{ shop.address.zip}}
+          </li>
+          {% else %}
+          <li class="pageSidebar__address">
+            {{ section.settings.address }}
+          </li>
+          {% endif %}
+        </ul>
+        <hr class="hr--w100pct">
+        {% endif %}
+        {% if section.settings.enable_hours %}
+        <ul class="pageSidebar__ul">
+          <li class="pageSidebar__heading">
+            <i class="fad fa-clock"></i>Business Hours
+          </li>
+          <li class="pageSidebar__hours">
+            <p><strong>Monday:</strong></p>
+            <p>{% if section.settings.monday != "" %}{{ section.settings.monday }}{% else %}Please configure opening hours{% endif %}</p>
+          </li>
+          <li class="pageSidebar__hours">
+            <p><strong>Tuesday:</strong></p>
+            <p>{% if section.settings.tuesday != "" %}{{ section.settings.tuesday }}{% else %}Please configure opening hours{% endif %}</p>
+          </li>
+          <li class="pageSidebar__hours">
+            <p><strong>Wednesday:</strong></p>
+            <p>{% if section.settings.wednesday != "" %}{{ section.settings.wednesday}}{% else %}Please configure opening hours{% endif %}</p>
+          </li>
+          <li class="pageSidebar__hours">
+            <p><strong>Thursday:</strong></p>
+            <p>{% if section.settings.thursday != "" %}{{ section.settings.thursday }}{% else %}Please configure opening hours{% endif %}</p>
+          </li>
+          <li class="pageSidebar__hours">
+            <p><strong>Friday:</strong></p>
+            <p>{% if section.settings.friday != "" %}{{ section.settings.friday }}{% else %}Please configure opening hours{% endif %}</p>
+          </li>
+          <li class="pageSidebar__hours">
+            <p><strong>Saturday:</strong></p>
+            <p>{% if section.settings.saturday != "" %}{{ section.settings.saturday }}{% else %}Please configure opening hours{% endif %}</p>
+          </li>
+          <li class="pageSidebar__hours">
+            <p><strong>Sunday:</strong></p>
+            <p>{% if section.settings.sunday != "" %}{{ section.settings.sunday }}{% else %}Please configure opening hours{% endif %}</p>
+          </li>
+        </ul>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+"name": "Contact Page",
+"settings": [
+{
+"type": "header",
+"content": "Mailing Details",
+"info": "The colors for this section."
+},
+{
+"type": "checkbox",
+"id": "enable_mailing",
+"label": "Show Mailing Address",
+"default": true
+},
+{
+"type": "checkbox",
+"id": "enable_phone",
+"label": "Show Phone Number",
+"default": true
+},
+{
+"type": "textarea",
+"id": "address",
+"label": "Mailing Address"
+},
+{
+"type": "header",
+"content": "Business Hours"
+},
+{
+"type": "checkbox",
+"id": "enable_hours",
+"label": "Show Business Hours",
+"default": true
+},
+{
+"type": "text",
+"id": "monday",
+"label": "Monday",
+"info": "9:00 AM to 5:00 PM"
+},
+{
+"type": "text",
+"id": "tuesday",
+"label": "Tuesday",
+"info": "9:00 AM to 5:00 PM"
+},
+{
+"type": "text",
+"id": "wednesday",
+"label": "Wednesday",
+"info": "9:00 AM to 5:00 PM"
+},
+{
+"type": "text",
+"id": "thursday",
+"label": "Thursday",
+"info": "9:00 AM to 5:00 PM"
+},
+{
+"type": "text",
+"id": "friday",
+"label": "Friday",
+"info": "9:00 AM to 5:00 PM"
+},
+{
+"type": "text",
+"id": "saturday",
+"label": "Saturday",
+"info": "9:00 AM to 5:00 PM"
+},
+{
+"type": "text",
+"id": "sunday",
+"label": "Sunday",
+"info": "9:00 AM to 5:00 PM"
+}
+
+],
+"blocks": [
+{
+"type": "@app"
+},
+{
+"type": "email",
+"name": "email",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Title",
+"info": "Eg: Direct Order Inquiries"
+},
+{
+"type": "text",
+"id": "email",
+"label": "Email address",
+"info": "Eg: support@binderpos.com"
+}
+]
+}
+]
+}
+{% endschema %}

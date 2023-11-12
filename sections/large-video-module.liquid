@@ -1,0 +1,62 @@
+{% if section.settings.enable_video_ad %}  
+  {{ 'large-video-module.css' | asset_url | stylesheet_tag }}
+  <div style="background: {{ section.settings.background_color }}">
+      <div class="container">
+          <div class="row">
+              <div class="col-sm-12">
+                  <div class="aspect-ratio">
+                      <iframe 
+                        width="420"
+                        height="315"
+                        src="https://www.youtube.com/embed/{{ section.settings.youtube_url }}{% if section.settings.enable_autoplay %}?autoplay=1{% endif %}"
+                      >
+                      </iframe>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Large Video Module",
+    "class": "index-section",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_video_ad",
+        "label": "Enable this module",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#202020"
+      },
+      {
+        "type": "header",
+        "content": "Video Settings"
+      },
+      {
+        "type": "text",
+        "id": "youtube_url",
+        "label": "Youtube URL",
+        "info": "Just the video ID. Ie https:\/\/www.youtube.com\/watch?v=dQw4w9WgXcQ would be dQw4w9WgXcQ"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_autoplay",
+        "label": "Autoplay",
+        "default": false
+      }
+    ],
+    "presets": [
+      {
+        "name": "Large Video Module",
+        "category": "BinderPOS"
+      }
+    ]
+  }
+{% endschema %}

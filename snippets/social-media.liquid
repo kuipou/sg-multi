@@ -1,0 +1,51 @@
+<ul class="m-socialIcons">
+    {% if settings.facebook_url %}
+        <li class="a-socialIcons">
+            <a href="{{settings.facebook_url}}">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+        </li>
+    {% endif %}
+    {% if settings.twitter_url %}
+        <li class="a-socialIcons">
+            <a href="{{settings.twitter_url}}">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </li>
+    {% endif %}
+    {% if settings.youtube_url %}
+        <li class="a-socialIcons">
+            <a href="{{settings.youtube_url}}">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </li>
+    {% endif %}
+    {% if settings.twitch_url %}
+        <li class="a-socialIcons">
+            <a href="{{settings.twitch_url}}">
+                <i class="fab fa-twitch"></i>
+            </a>
+        </li>
+    {% endif %}
+    {% if settings.discord_url %}
+        <li class="a-socialIcons">
+            <a href="{{settings.discord_url}}">
+                <i class="fab fa-discord"></i>
+            </a>
+        </li>
+    {% endif %}
+    {% if settings.instagram_url %}
+        <li class="a-socialIcons">
+            <a href="{{settings.instagram_url}}">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </li>
+    {% endif %}
+    {% if settings.tiktok_url %}
+    <li class="a-socialIcons">
+        <a href="{{settings.tiktok_url}}">
+          <i class="fab fa-tiktok"></i>
+        </a>
+    </li>
+{% endif %}
+  </ul>

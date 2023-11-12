@@ -1,0 +1,59 @@
+{{ 'notify-me.css' | asset_url | stylesheet_tag }}
+
+{% assign sendText = 'products.product.send' | t %}
+{% if sendText contains 'products.product.send' %}
+{% assign sendText = 'Send' %}
+{% endif %}
+
+{% assign notifyMessage = 'products.product.notify-message' | t: title: product.title %}
+
+{% assign notifyMessage2 = 'products.product.notify-message2' | t %}
+{% if notifyMessage2 contains 'products.product.notify-message2' %}
+{% assign notifyMessage2 = "Want to be notified when it becomes available again? Simply register your interest and we'll send you a message when it does." %}
+{% endif %}
+
+{% assign successMessage = 'products.product.success-message' | t %}
+{% if successMessage contains 'products.product.success-message' %}
+{% assign successMessage = 'Thanks! We will notify you when this product becomes available!' %}
+{% endif %}
+
+{% assign errorMessage = 'products.product.error-message' | t %}
+{% if errorMessage contains 'products.product.error-message' %}
+{% assign errorMessage = 'Please provide a valid email address.' %}
+{% endif %}
+
+{% unless product.available %}
+  {% if section.settings.outOfStockView == "default" %}
+  <div id="sold-out">
+    {% form 'contact' %}
+    {% if form.posted_successfully? %}
+    <p class="accent-text alert alert-success">{{ successMessage }}</p>
+    {% else %}
+    <p class="notify-msg first">Sorry! Our {{ product.title }} is currently <span class="sold-msg">sold out.</span>
+    </p>
+    {% endif %}
+    {% if form.errors %}
+    <div class="error feedback accent-text">
+      <p>{{ errorMessage }}</p>
+    </div>
+    {% endif %}
+    {% unless form.posted_successfully? %}
+    <div class="notify-price">
+      <div id="notify-me-wrapper" class="clearfix">
+        {% if customer %}
+        <input type="hidden" name="contact[email]" value="{{ customer.email }}" />
+        {% else %}
+        <input required="required" type="email" name="contact[email]" placeholder="your@email.com" class="styled-input{% if form.errors contains 'email' %} error{% endif %}" value="{{ contact.fields.email }}" />
+        {% endif %}
+        <input type="hidden" name="contact[body]" value="{% if notifyMessage contains 'products.product.notify-message' %}Please notify me when {{ product.title | escape }} becomes available.{% else %}{{notifyMessage}}{% endif %}" />
+        <input class="btn styled-submit" type="submit" value="{{ sendText }}" />
+      </div>
+    </div>
+    <p class="notify-msg">
+      {{ notifyMessage2}}
+    </p>
+    {% endunless %}
+    {% endform %}
+  </div>
+  {% endif %}
+{% endunless %}

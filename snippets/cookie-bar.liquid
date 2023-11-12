@@ -1,0 +1,88 @@
+<aside class="cookie-bar" aria-hidden="true">
+  <div class="container">
+    <div class="cookie-bar__inner">
+      <div class="cookie-bar__text rte" aria-label="cookie consent description">
+        {{- text -}}
+      </div>
+      {%- if accept_button == blank -%}
+        {% assign accept_button_text = "Accept" %}
+      {%- else -%}
+        {% assign accept_button_text = accept_button | escape %}      
+      {%- endif -%}
+      <button aria-label="Accept the Cookies" title="Accept the Cookies" type="button" class="cookie-bar__button button button--secondary" data-action="accept-terms">
+        {{ accept_button_text }}
+      </button>
+    </div>
+  </div>
+</aside>
+
+<style>
+.cookie-bar {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(100%);
+  width: 100%;
+  z-index: 3;
+  font-size: calc(var(--base-text-font-size) - (var(--default-text-font-size) - 11px));
+  transition: transform 0.35s ease-in-out, opacity 0.35s ease-in-out, visibility 0.35s ease-in-out;
+}
+
+.cookie-bar[aria-hidden=false] {
+  visibility: visible;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.cookie-bar__inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 15px;
+  z-index: 4;
+  border-radius: 3px;
+  background: {{- background_color -}};
+  box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.1);
+  border: 1px solid {{- border_color -}};
+}
+
+.cookie-bar__text {
+  line-height: 1.45;
+  color: {{- text_color -}};
+}
+
+.cookie-bar__button {
+  margin-top: 12px;
+  padding: 0 16px;
+  line-height: 30px;
+  font-size: calc(var(--base-text-font-size) - (var(--default-text-font-size) - 12px));
+}
+
+@media screen and (min-width: 641px) {
+  .cookie-bar {
+    bottom: 25px;
+    font-size: 13px;
+  }
+
+  .cookie-bar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 30px 20px 25px;
+  }
+
+  .cookie-bar__text {
+    line-height: 1.25;
+  }
+
+  .cookie-bar__button {
+    flex: none;
+    margin-left: 25px;
+    margin-top: 0;
+    padding: 0 18px;
+    line-height: 36px;
+    font-size: 13px;
+  }
+}
+</style>

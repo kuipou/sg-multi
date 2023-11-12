@@ -1,0 +1,48 @@
+<div class="pageTemplate">
+  {% if settings.enable_manage_comics_2 %}
+    {% include 'conditional-snippet', value: 'manage-comics-2-page' %}
+    <div class="pageContent" id="managecomics">
+  {% else %}
+  <div class="pageContent">
+  {% endif %}
+    {{ page.content }}
+  </div>
+  {% if linklists.pagelinks.links.size > 0 %}
+  <div class="pageSidebar">
+    <div class="pageSidebar__bottom">
+      <ul class="pageSidebar__menu">
+        {% for link in linklists.pagelinks.links %}
+        {% if link.url == '#decklist' %}
+        <a href="#decklist" class="button button--fullWidth">{{ link.title }} &nbsp;<i class="far fa-chevron-right"></i></a>
+        {% elsif link.url == '#buylist' %}
+        <a href="#buylist" class="button button--fullWidth button--secondary button--dark">{{ link.title }} &nbsp;<i class="far fa-chevron-right"></i></a>
+        {% else %}
+        {% assign page_link = link.title | handleize %}
+        <li class="pageSidebar__menuItem">
+          <a href="{{ link.url }}" class="pageSidebar__link" {% if page.handle==page_link %} aria-current="page" {% endif %}>{{ link.title }} <i class="fal fa-long-arrow-right hvr-icon"></i></a>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  {% endif %}
+  {% for block in section.blocks %}
+  {% case block.type %}
+  {% when "@app" %}
+  {% render block %}
+  {% endcase %}
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+"name": "Page",
+"blocks": [
+{
+"type": "@app"
+}
+],
+"templates": ["page"]
+}
+{% endschema %}

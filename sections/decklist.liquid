@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="{{ 'Decklist.css' | asset_url }}">
+
+<div id="decklist-render-container" class="page-width container"> </div>
+
+<script>
+  window.decklist = {
+    permanentDomain: "{{ shop.permanent_domain }}",
+    backgroundImage: "{% if section.settings.background_image %}{{ section.settings.background_image | img_url: 'master' }}{%endif%}",
+    backgroundColor: "{{ '#fff' | color_modify: 'alpha', section.settings.background_opacity }}",
+    filterTitleColor: "{{ section.settings.filter_title_color}}"
+  }
+</script>
+<script src="{{ 'Decklist.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+"name": "Multi-Card Search",
+"settings": [
+{
+"type": "image_picker",
+"id": "background_image",
+"label": "Background Image",
+"info" : "Preferred image size is: 1140px X 660px"
+},
+{
+"type": "range",
+"id": "background_opacity",
+"min": 0.5,
+"max": 1,
+"step": 0.1,
+"label": "Background Opacity",
+"default": 1
+},
+{
+"type": "color",
+"id": "filter_title_color",
+"label": "Filter title color",
+"default": "#000000"
+}
+],
+"presets": [
+{
+"name": "Multi-Card Search"
+}
+]
+}
+{% endschema %}

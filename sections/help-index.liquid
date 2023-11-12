@@ -1,0 +1,42 @@
+<ul class="helpIndex">
+    {% for link in linklists[section.settings.menu].links %}
+        <li class="helpIndex__link">
+            <a class="helpIndex__a" href="{{ link.url }}">{{ link.title }} <i class="fal fa-long-arrow-right"></i></a>
+        </li>
+    {% endfor %}
+</ul>
+
+<style>
+
+
+</style>
+
+{% schema %}
+{
+    "name": "Help Index",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Colors",
+        "info": "The colors for this section."
+      },
+      {
+        "type": "color",
+        "id": "color_header_bg",
+        "label": "Header Background",
+        "default": "#003049"
+      }, 
+      {
+        "type": "header",
+        "content": "Settings",
+        "info": "The settings for this section."
+      },
+      {
+        "type": "link_list",
+        "id": "menu",
+        "label": "Menu",
+        "info": "The menu to display on this page."
+      }
+    ]
+}
+{% endschema %}

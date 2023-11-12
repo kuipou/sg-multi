@@ -1,0 +1,84 @@
+{% if search.results_count == 0 %}
+  <div class="emptyCart">
+    <div class="emptyCart__icon">
+      <i class="fad fa-search"></i>
+    </div>
+    <h3 class="emptyCart_title">Search</h3>
+    {% if search.performed %}
+    <p class="emptyCart_subTitle">No search results for "{{ search.terms }}".</p>
+    {% else %}
+    <p class="emptyCart_subTitle">Enter something below to search our store.</p>
+    {% endif %}
+
+    <form action="/search" class="o-siteSearch o-siteSearch--border mb16 mt16" onsubmit="return processSearch(event)" style="max-width:400px;">
+      <div class="m-siteSearch__input">
+        <input autocomplete="off" type="text" placeholder="{{section.settings.search_placeholder}}" name="q" value="" class="input--siteSearch" />
+      </div>
+      <button aria-label="Search" title="Search" class="m-siteSearch__button" type="submit">
+        <i class="fad fa-search"></i>
+      </button>
+    </form>
+    <div class="emptyCart_button">
+      <a href="/">or click here to go to the home page&nbsp;<i class="fal fa-long-arrow-right"></i></a>
+    </div>
+  </div>
+{% else %}
+  <section class="collectionTemplate" data-section-id="collection-template" data-section-type="collection" data-section-settings='{	
+      "currentSortBy": "manual",	
+      "currentTags": [],	
+      "filterType": "group",	
+      "defaultLayout": "grid",	
+      "defaultProductsPerPage": 24,	
+      "isAutomatic": false,	
+      "gridClasses": "1\/3--tablet-and-up 1\/4--desk"	
+    }'>
+    {%- paginate search.results by 16 -%}
+    <div class="collectionBar">
+      {% include 'collection-bar' %}
+    </div>
+    {% if search.performed %}
+    <div class="collectionGrid">
+      {% for product in search.results %}
+        {% include 'collection-grid-item' | product: product, show_oos_variant: settings.show_oos_variant %}
+      {% else %}
+      <p>No Results</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="collectionBar collectionBar--bottom">
+      {% include 'collection-bar' %}
+    </div>
+    {%- endpaginate -%}
+  </section>
+{% endif %}
+
+{% for block in section.blocks %}
+{% case block.type %}
+{% when "@app" %}
+  <div>
+    {% render block %}
+  </div>
+{% endcase %}
+{% endfor %}
+
+<div hidden id="search-template-js"
+  data-collection='{{ collection | json | escape }}'
+  data-add-to-cart="{{ 'product.form.add_to_cart' | t }}"
+  data-sold-out="{{ 'product.form.sold_out' | t }}"
+  data-preorder="{{ 'product.form.pre_order' | t }}"
+></div>
+
+{{ 'search-template.js' | asset_url | script_tag }}
+
+{% schema %}
+{
+  "name": "Search Section",
+  "settings": [],
+  "blocks":[
+     {
+        "type":"@app"
+     }
+  ]
+}
+{% endschema %}

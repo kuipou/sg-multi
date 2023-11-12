@@ -1,0 +1,289 @@
+/* Notes
+
+Blue Gradient:
+
+    background: linear-gradient(103.4deg, ##7535E5 0%, # 100%);
+
+Orange Gradient:
+
+    background: linear-gradient(103.4deg, #1DA9A1 0%, #8bdbd6 100%);
+
+*/
+
+/* _block-menu.scss */
+
+.o-blockMenu
+{
+    background-color: ;
+}
+
+/* _video-carousel.scss */
+
+.videoCarousel
+{
+    background: linear-gradient(103.4deg, #1DA9A1 0%, #8bdbd6 100%);
+}
+
+p, a, h, .productPage__breadcrumb
+{
+    color: ;
+}
+
+.m-contactRow__col, 
+.i-headerTop, 
+.i-headerBottom__link
+{
+    border-right:  1px solid;
+}
+
+.i-headerBottom {
+    border:  1px solid;
+}
+
+.m-headerTop {
+    border-bottom:  1px solid;
+}
+
+.product-page {
+    border-top:  1px solid;
+}
+
+.a-input,
+.a-select,
+.o-siteSearch
+{
+    background: ;
+}
+
+.m-collectionGrid__item
+{
+    background-color: ;
+}
+
+.m-siteSearch__select, 
+.a-sectionTitle__text,
+.m-featuredColl__title a h3
+{
+    border-right-color:  1px solid;
+}
+
+.card__heading,
+.dark,
+.qtydiv label,
+.quanity-selector .qtyminus,
+.quanity-selector .qtyplus,
+.card__heading,
+.featuredAuthor__name,
+.a-collectionItem__title,
+.a-footer__title,
+.productPage__price,
+.product-title
+{
+    color: 
+}
+
+.button secondary,
+.productCard__price,
+.productPage__tag
+{
+    color: ;
+}
+
+
+.pagination .active,
+.button formButton,
+.productPage__tags li
+{
+    border-color:  1px solid;
+}
+
+.latestArticles__isPro
+{
+    background-color: ;
+}
+
+.breadcrumbs__item:not(:last-child):after
+{
+    color: ;
+}
+
+.m-featuredColl_productRight a
+{
+    color: 
+}
+
+.m-featuredColl_productRight span
+{
+    color: 
+}
+
+.o-mainNav
+{
+    background-color: ;
+}
+
+.a-button,
+.m-siteSearch__button,
+.white,
+.latestArticles__isPro,
+.m-headerTop,
+.a-announcementBar__text, 
+.a-headerMenu__item a,
+.a-headerMenu__item select,
+.o-mainNav a,
+.i-headerTop__link li,
+.o-newsletterWrap a,
+.o-newsletterWrap h3,
+.pageIntro,
+.m-slideContents h3,
+.m-slideContents p,
+.videoCarousel__title,
+.collectionList__title,
+.product-controls form button 
+{
+    color: 
+}
+
+.cardFilter,
+.card, 
+.productCard__card,
+.o-aboutGrid__wrap,
+.o-blockMenu,
+.featuredAuthor__grid,
+.o-collectionGrid,
+.o-featuredColl,
+.lp__card,
+.collectionList__item,
+.loginForm,
+.productPage__left,
+.product-page 
+{
+    background-color: ;
+}
+
+.mainNav__children,
+#shopify-section-video-carousel
+{
+    background: ;
+}
+
+.videoCarousel__item
+{
+    border-bottom-color:  1px solid;
+}
+
+.card__title,
+.card__info,
+.productCard__lower,
+.card__title,
+.card__info,
+.productCard__lower,
+.m-blockMenu__item,
+.blogFeed,
+.o-globalFooter,
+.lp__card__title,
+.collectionList,
+.collectionTemplate,
+.loginTemplate,
+.productPage__right,
+.productPage__under,
+.card 
+{
+    background-color: ;
+}
+
+.card,
+input,
+.productCard__card,
+.cardFilter,
+.card ,
+.m-blockMenu__item,
+.featuredAuthor__grid,
+.lp__card ,
+.cardFilter ,
+.collectionList__item,
+.loginForm,
+.productPage__legalities
+{
+    border-color:  1px solid;
+}
+
+.card__title,
+.card__title ,
+.lp__card__title 
+{
+    border-top-color:  1px solid;
+}
+
+.a-sectionTitle__button,
+.a-sectionTitle__button,
+.i-slide__date,
+.i-slide__c2a,
+.videoCarousel__time
+{
+    color: ;
+}
+
+.cardFilter__item ,
+.featuredAuthor__card,
+.cardFilter__item ,
+.collectionList,
+.collectionTemplate,
+.loginTemplate,
+.productPage__left,
+.productPage__right
+{
+    border-right-color:  1px solid;
+}
+
+.i-slide__c2a,
+.collectionList,
+.collectionTemplate,
+.loginTemplate,
+.productPage__left
+{
+    border-left-color:   1px solid;
+}
+
+.m-collectionGrid__item
+{
+    border-color:  1px solid;
+}
+
+.mainNav__children a:hover
+{
+    background-color: ;
+}
+
+.a-input
+{
+    box-shadow: ;
+}
+
+.a-select,
+.o-siteSearch
+{
+    border-color:  1px solid;
+}
+
+.featuredAuthor__link,
+.m-featuredColl_productRight p
+{
+    color: ;
+}
+
+.m-footerMain
+{
+    border-top-color:  1px solid;
+}
+
+.i-headerTop,
+.i-headerBottom
+{
+    background: ;
+}
+
+.o-header
+{
+    background-color: #003049;
+}

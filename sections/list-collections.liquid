@@ -1,0 +1,169 @@
+<section class="collectionList">
+  {%- paginate collections by 12 -%}
+  {%- if paginate.pages > 1 -%}
+  <div class="collectionBar">
+    <div class="collectionBar__left">
+    </div>
+    <div class="collectionBar__middle">
+      <nav role="navigation">
+        <ol class="pagination">
+          {%- if paginate.previous-%}
+          <li>
+            <a href="{{ paginate.previous.url }}">
+              <span aria-hidden="true">&laquo;</span>
+              Previous <span class="visuallyhidden">page</span>
+            </a>
+          </li>
+          {%- else -%}
+          <li class="disabled">
+            <span aria-hidden="true">&laquo;</span>
+            Previous <span class="visuallyhidden">page</span>
+          </li>
+          {%- endif -%}
+
+          {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}
+          <li>
+            <a href="{{ part.url }}">
+              <span class="visuallyhidden">page</span> {{ part.title }}
+            </a>
+          </li>
+          {%- else -%}
+          {%- if part.title == paginate.current_page -%}
+          <li class="active" aria-current="page">
+            <span class="visuallyhidden">page</span> {{ part.title }}
+          </li>
+          {%- else -%}
+          <li>
+            <span class="visuallyhidden">page</span> {{ part.title }}
+          </li>
+          {%- endif -%}
+          {%- endif -%}
+          {%- endfor -%}
+
+          {%- if paginate.next -%}
+          <li>
+            <a href="{{ paginate.next.url }}">
+              Next <span class="visuallyhidden">page</span>
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+          {%- else -%}
+          <li class="disabled">
+            Next <span class="visuallyhidden">page</span>
+            <span aria-hidden="true">&raquo;</span>
+          </li>
+          {%- endif -%}
+        </ol>
+      </nav>
+    </div>
+    <div class="collectionBar__right">
+    </div>
+  </div>
+  {%- endif -%}
+
+  <ul class="collectionList__ul">
+    {%- for collection in collections -%}
+    <a href="{{ collection.url }}">
+      <li class="collectionList__item">
+
+        {%- if collection.image -%}
+        {%- assign collection_image = collection.image -%}
+        {%- elsif collection.products.first and collection.products.first.images != empty -%}
+        {%- assign collection_image = collection.products.first.featured_image -%}
+        {%- else -%}
+        {%- assign collection_image = settings.default_collection_list_image -%}
+        {%- endif -%}
+
+        <img loading="lazy" src="{{ collection_image | img_url: 'medium' }}" alt="{{ collection.title | escape }}" class="collectionList__img">
+        <div class="collectionList__bottom">
+          <p class="collectionList__title">{{ collection.title }}&nbsp;<i class="fal fa-long-arrow-right"></i></p>
+        </div>
+
+
+      </li>
+    </a>
+    {%- endfor -%}
+  </ul>
+
+  {%- if paginate.pages > 1 -%}
+  <div class="collectionBar collectionBar--bottom">
+    <div class="collectionBar__left">
+    </div>
+    <div class="collectionBar__middle">
+      <nav role="navigation">
+        <ol class="pagination">
+          {%- if paginate.previous-%}
+          <li>
+            <a href="{{ paginate.previous.url }}">
+              <span aria-hidden="true">&laquo;</span>
+              Previous <span class="visuallyhidden">page</span>
+            </a>
+          </li>
+          {%- else -%}
+          <li class="disabled">
+            <span aria-hidden="true">&laquo;</span>
+            Previous <span class="visuallyhidden">page</span>
+          </li>
+          {%- endif -%}
+
+          {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}
+          <li>
+            <a href="{{ part.url }}">
+              <span class="visuallyhidden">page</span> {{ part.title }}
+            </a>
+          </li>
+          {%- else -%}
+          {%- if part.title == paginate.current_page -%}
+          <li class="active" aria-current="page">
+            <span class="visuallyhidden">page</span> {{ part.title }}
+          </li>
+          {%- else -%}
+          <li>
+            <span class="visuallyhidden">page</span> {{ part.title }}
+          </li>
+          {%- endif -%}
+          {%- endif -%}
+          {%- endfor -%}
+
+          {%- if paginate.next -%}
+          <li>
+            <a href="{{ paginate.next.url }}">
+              Next <span class="visuallyhidden">page</span>
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+          {%- else -%}
+          <li class="disabled">
+            Next <span class="visuallyhidden">page</span>
+            <span aria-hidden="true">&raquo;</span>
+          </li>
+          {%- endif -%}
+        </ol>
+      </nav>
+    </div>
+    <div class="collectionBar__right">
+    </div>
+  </div>
+  {%- endif -%}
+  {%- endpaginate -%}
+  {% for block in section.blocks %}
+  {% case block.type %}
+  {% when '@app' %}
+  {% render block %}
+  {% endcase %}
+  {% endfor %}
+</section>
+
+{% schema %}
+{
+"name": "List Collections",
+"blocks": [
+{
+"type": "@app"
+}
+],
+"templates": ["index","list-collections"]
+}
+{% endschema %}

@@ -1,0 +1,193 @@
+<script>
+  function updateQuantity(event) {
+    quantity = event.value;
+  }
+
+  function putThatInCart(target, variantId, title, maxStock, variantTitle) {
+    const quantity = target.closest("div").getElementsByTagName("input")[0].value;
+    addToCart(variantId, title, maxStock, quantity, variantTitle);
+  }
+</script>
+{%- assign collection = collections[section.settings.collection] -%}
+{% if section.settings.collection != "" %}
+<section class="collection-product-cluster-2">
+  <div class="collection-product-cluster-2--header">
+    <h3 style="color: {{ section.settings.section_color }}">{{ section.settings.title}}</h3>
+    <a href="{{ collection.url }}">
+      <span class="sidebar_banner--btn">{{ section.settings.btn-title}}</span>
+    </a>
+  </div>
+  <div class="collection-product-cluster-2__wrapper">
+    {% for product in collection.products limit: 9 %}
+    {% include 'product-item-2' %}
+    {% endfor %}
+  </div>
+</section>
+{% else %}
+// Select a collection
+{% endif %}
+
+{% schema %}
+{
+"name": "Collections Display",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Collection title",
+"default": "Popular Cards"
+},
+{
+"type": "color",
+"id": "section_color",
+"label": "Section title color",
+"default": "#150433"
+},
+{
+"type": "collection",
+"id": "collection",
+"label": "Collection"
+},
+{
+"type": "text",
+"id": "btn-title",
+"label": "Button Text",
+"default": "View All"
+}
+],
+"presets": [
+{
+"name": "Collections Display",
+"category": "Premium Theme 2 Modules"
+}
+]
+}
+{% endschema %}
+
+<style>
+  .collection-product-cluster-2--header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .collection-product-cluster-2--header a {
+    justify-self: flex-end;
+  }
+
+  .collection-list-2__product {
+    display: grid;
+    grid-template-columns: 73px 1fr;
+    margin-bottom: 20px;
+  }
+
+  section.collection-product-cluster-2 button.add-to-wishlist-button {
+    position: relative;
+    top: -2em;
+    left: -1em;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.15);
+    transform: scale(0.8);
+  }
+
+  section.collection-product-cluster-2 span.sidebar_banner--btn {
+    display: block;
+    background-image: var(--color-gradient);
+    border-radius: var(--border-radius);
+    padding: 0.3em 4em;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: white;
+    width: max-content;
+    line-height: 35px;
+  }
+
+  section.collection-product-cluster-2 h3 {
+    text-transform: uppercase;
+    font-size: 30px;
+    margin-bottom: 20px !important;
+    color: var(--color-primary);
+  }
+
+  .collection-list-2__product--details {
+    padding: 0 10px;
+  }
+
+  p.collection-list-2__product--type {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 11px;
+    color: #5F5F5F;
+  }
+
+  p.collection-list-2__product--price {
+    letter-spacing: 2px;
+    font-size: 13px;
+    line-height: 19px;
+    color: #5F5F5F;
+    margin-top: 10px;
+  }
+
+  .collection-list-2__product--wrapper {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .collection-list-2__product--imgWrapper {
+    height: 105px;
+  }
+
+  p.collection-list-2__product--title {
+    line-height: 19px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .collection-product-cluster-2__wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media only screen and (max-width: 1137px) {
+    .collection-product-cluster-2__wrapper {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    .collection-product-cluster-2__wrapper {
+      grid-template-columns: 1fr;
+    }
+
+    .collection-list-2__product {
+      grid-column: unset !important;
+      justify-content: center;
+      position: relative;
+      justify-self: center;
+      text-align: center;
+      width: 100%;
+      max-width: 335px;
+    }
+
+    section.collection-product-cluster-2 button.add-to-wishlist-button {
+      left: -2em;
+    }
+  }
+
+  @media only screen and (max-width: 540px) {
+    section.collection-product-cluster-2 span.sidebar_banner--btn {
+      padding: 0.1em 2em;
+    }
+
+    .collection-product-cluster-2--header {
+      display: grid;
+      grid-template-columns: 1fr 140px;
+    }
+  }
+
+  @media only screen and (max-width: 430px) {
+    section.collection-product-cluster-2 h3 {
+      font-size: 26px;
+    }
+  }
+</style>

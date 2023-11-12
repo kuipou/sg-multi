@@ -1,0 +1,159 @@
+<script>
+  function updateQuantity(event) {
+    quantity = event.value;
+  }
+
+  function putThatInCart(target, variantId, title, maxStock, variantTitle) {
+    const quantity = target.closest("div").getElementsByTagName("input")[0].value;
+    addToCart(variantId, title, maxStock, quantity, variantTitle);
+  }
+</script>
+{% if section.blocks.size > 0 %}
+  <section class="collection-list-2">
+   {% for block in section.blocks %}
+    <div class="collection-list-2__wrapper">
+        {%- assign collection = collections[block.settings.collection] -%}
+        <a href="{{ collection.url }}"> <h3 style="color: {{ block.settings.section_color }}">{{ block.settings.title}}</h3></a>
+        <hr />        
+        {% for product in collection.products limit: 3 %}
+            {% include 'product-item-2' %}
+        {% endfor %}
+    </div>
+   {% endfor%}
+  </section>
+{% else %}
+ //todo
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Vertical List Collections",
+    "settings": [    
+    ],
+    "blocks": [
+        {
+            "type": "collection",
+            "name": "Collection List",
+            "limit": 3,
+            "settings": [                
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Collection title"
+                },
+                {
+                    "type": "color",
+                    "id": "section_color",
+                    "label": "Section title color",
+                    "default": "#150433"
+                },
+                {
+                    "type": "collection",
+                    "id": "collection",
+                    "label": "Collection"
+                }
+            ]
+        }
+    ],
+    "presets": [
+      {
+        "name": "Vertical List Collections",
+        "category": "Premium Theme 2 Modules"
+      }
+    ]
+  }
+{% endschema %}
+
+<style>
+
+    img.collection-list-2__product--img {
+        width: 100%;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    section.collection-list-2 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+        grid-gap: 34px;
+    }
+    .collection-list-2__product {
+        display: grid;
+        grid-template-columns: 73px 1fr;
+        margin-bottom: 20px;
+    }
+    section.collection-list-2 button.add-to-wishlist-button {
+        position: relative;
+        top: -2em;
+        left: -1em;
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.15);
+        transform: scale(0.8);
+    }
+    section.collection-list-2 hr {
+        border-top: 5px solid;
+        width: 75px;
+        margin: 6px 0px 18px 0;
+    }
+    section.collection-list-2 h3 {
+        text-transform: uppercase;
+        font-size: 18px;
+        margin-bottom: 0px !important;
+        color: var(--color-primary);
+    }
+    .collection-list-2__product--details {
+        padding: 0 10px;
+    }
+    p.collection-list-2__product--type {
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 11px;
+        color: #5F5F5F;
+    }
+    p.collection-list-2__product--price {
+        letter-spacing: 2px;
+        font-size: 13px;
+        line-height: 19px;
+        color: #5F5F5F;
+        margin-top: 10px;
+    }
+    .collection-list-2__product--wrapper {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .collection-list-2__product--imgWrapper {
+        height: 105px;
+    }
+    p.collection-list-2__product--title {
+        line-height: 19px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--color-primary);
+        }
+
+    @media only screen and (max-width: 1137px) {
+        .collection-list-2__wrapper:nth-child(3n) {
+            grid-column: 1 / span 2;
+            max-width: 325px;
+            justify-self: center;
+        }
+    }
+    @media only screen and (max-width: 768px) {
+        section.collection-list-2 {
+            grid-template-columns: 1fr;
+        }
+        .collection-list-2__wrapper {
+            grid-column: unset !important;
+            justify-content: center;
+            position: relative;
+            justify-self: center;
+            text-align: center;
+            width: 100%;
+            max-width: 335px;
+        }
+        section.collection-list-2 button.add-to-wishlist-button {
+            left: -2em;
+        }
+    }
+</style>

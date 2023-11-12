@@ -1,0 +1,25 @@
+{% if product.images[2] != null %}
+
+
+{% for image in product.images %}
+<div>
+
+  <img loading="lazy" src="{{ image.src | img_url: 'medium' }}" alt="{{ image.alt | escape }}">
+
+</div>
+{% endfor %}
+</div>
+
+{% else %}
+
+{% for image in product.images %}
+
+<div class="slider-container-wrap">
+
+  <img loading="lazy" src="{{ image.src | img_url: 'large' }}" alt="{{ image.alt | escape }}">
+
+</div>
+
+{% endfor %}
+
+{% endif %}

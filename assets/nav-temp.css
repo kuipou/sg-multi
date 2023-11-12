@@ -1,0 +1,248 @@
+/* Overrides to merge */
+
+.mainNav__mega {
+    padding: 0 40px;
+}
+
+.megaMenu__col {
+    padding: 24px 0px;
+    width: 100%;
+}
+
+.megaMenu__col--featured {
+    min-width: 160px;
+}
+
+/* end overrides */
+
+/* Header */
+
+#primaryHeader {
+    position: sticky;
+    position: -webkit-sticky;
+    top: -120px;
+    z-index: 5;
+}
+
+.m-headerMain__logo {
+    text-align: center;
+}
+
+.m-headerMain__logoImg {
+    max-width: 100%;
+}
+
+/* Mega Menu */
+
+.mainNav__item {
+    z-index: 100;
+}
+
+.mainNav__blackOut {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #00000064;
+    top: 0;
+    right: 0;
+    z-index: 50;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 300ms linear 300ms, opacity 300ms;
+    transition-delay: 150ms;
+}
+
+.mainNav__item:hover .mainNav__mega {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 300ms, opacity 300ms;
+}
+
+.mainNav__mega {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 300ms linear 300ms, opacity 300ms;
+    transition-delay: 150ms;
+}
+
+.mainNav__item--blackout:hover + .mainNav__blackOut {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 300ms linear 0s, opacity 300ms;
+}
+
+.mainNav__mega li {
+    margin-right: 24px;
+}
+
+.mainNav__mega li:last-child {
+    margin-right: 0;
+}
+
+.megaMenu__col--promo {
+}
+
+.megaPromo {
+    display: flex;
+    align-items: center;
+    height:100%;
+}
+
+.megaPromo__image {
+    border-radius: 4px;
+    max-width: 100%;
+    height:100%;
+}
+
+/* Main nav children */
+
+
+.mainNav__child {
+    background-color: white;
+    transition: background-color 300ms linear;
+    border-left: 2px solid transparent;
+    border-right: 2px solid transparent;
+    transition: border-left 300ms linear;
+    border-bottom: 1px solid #BDBDBD24;
+}
+
+.mainNav__child:hover {
+    background-color: #00000008;
+    transition: background-color 300ms linear;
+    border-left: 2px solid #eb7c00;
+    transition: border-left 300ms linear;
+}
+
+.mainNav__child-a {
+    padding: 12px 24px;
+    display: block;
+}
+
+.mainNav__child-a:hover {
+    background-color: transparent !important;
+}
+
+.mainNav__child:last-child {
+    margin-bottom: 0;
+}
+
+.productPage__price {
+    margin-bottom: 16px;
+}
+
+/* Main nav mega */
+
+.mainNav__mega {
+    border-top: none;
+}
+
+/* Search bar */
+
+.a-siteSearch__select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.m-siteSearch__button i {
+    font-size: 16px;
+    color: white;
+}
+
+/* Slider */
+
+.slideContents__p {
+    margin-bottom: 16px;
+}
+
+/* Temp hide collection pagination 'stock' count and view select */
+
+
+/* Search */
+
+.siteSearch__wrap {
+    display: flex;
+    width: 100%;
+}
+
+table.mtg-single-description-table tr td:first-child {
+    width: 70px;
+}
+
+/* Deckbuilder overrides */
+
+#decklistOpened #decklistWrapper #deckListBody select#gameType
+{
+    padding: 0;
+    line-height: unset;
+    border: none;
+    box-shadow: none;
+}
+
+.select2-selection .select2-selection--multiple,
+.cardFilter__item .select2-container--default {
+height: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+span.select2-dropdown.select2-dropdown--below {
+    position: relative;
+    top:0;
+}
+
+
+.select2-container
+{
+    border-top:1px solid #FEFEFE;
+}
+
+.selector-wrapper
+{
+    margin-bottom: 16px;
+}
+
+.o-siteSearch--newsletter
+{
+    border-radius: 100px;
+    overflow: hidden!important;
+}
+
+
+
+
+.productCard__card .js-tilt-glare
+{
+    /* transform: translateZ(25px);
+    width: 140px!important;
+    height: 200px!important;
+    left: 0!important;
+    right: 0!important;
+    margin-left: auto!important;
+    margin-right: auto!important;
+    margin-top: 16px!important;
+    border-radius:2px; */
+}
+
+.productCard__outOfStockWrap
+{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+}
+
+/*.productCard__card:hover .productCard__outOfStock
+{
+    top:-26px;
+    border-radius:4px 4px 0px 0px;
+    transition: all 200ms ease;
+}
+
+.productCard__outOfStock
+{
+    transition: all 200ms ease 100ms;
+} */

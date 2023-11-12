@@ -1,0 +1,105 @@
+<div class="quanity-selector">
+
+    <input type='button' value='-' class='qtyminus' field='quantity'>
+    <input type='text' name='quantity' value='1' class='qty' max="{{ product.selected_or_first_available_variant.inventory_quantity}}">
+    <input type='button' value='+' class='qtyplus' field='quantity'>
+
+</div>
+
+<script>
+    jQuery(document).ready(function(){   
+    // This button will decrement the value till 0
+    $(".qtyminus").click(function(e) {
+        // Stop acting like a button
+        e.preventDefault();
+        // Get the field name
+        fieldName = $(this).attr('field');
+        // Get its current value
+        var currentVal = parseInt($('input[name='+fieldName+']').val());
+        // If it isn't undefined or its greater than 0
+        if (!isNaN(currentVal) && currentVal > 1) {
+            // Decrement one
+            $('input[name='+fieldName+']').val(currentVal - 1);
+        } else {
+            // Otherwise put a 0 there
+            $('input[name='+fieldName+']').val(1);
+        }
+    });
+    });
+</script>
+
+<style>
+
+.quantity-selector-container {
+  display: inline-block;
+}
+
+.qtydiv label {
+  display: block;
+  margin-bottom: 12px;
+  letter-spacing: 2.8px;
+}
+
+.qtydiv .btnqty {
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  font-size: 25px;
+  padding: 5px;
+}
+
+.quanity-selector {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 16px;
+  margin-right: 16px;
+}
+
+.quanity-selector input {
+  height: 64px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 64px;
+  background-color: #FFF;
+}
+
+.quanity-selector .qtyminus {
+  border-radius: 5px 0px 0px 5px;
+  border: 1px solid #BDBDBD;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.quanity-selector .qtyplus {
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid #BDBDBD;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.quanity-selector .qty {
+  border: none;
+  border-top: 1px solid #BDBDBD;
+  border-bottom: 1px solid #BDBDBD;
+  width: 110px;
+  text-align: center;
+}
+
+.qtydiv .quantity-input {
+  border: none;
+  border: none;
+  padding: 8px;
+  text-align: center;
+  width: 50px;
+  outline: none;
+  display: inline-block;
+}
+
+.qtydiv {
+  display: inline-block;
+  padding-right: 15px;
+  padding-top: 10px;
+}
+</style>

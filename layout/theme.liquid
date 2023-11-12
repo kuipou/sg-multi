@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="{{ shop.locale }}">
+
+<head>
+    <title>{{ page_title }}</title>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="description" content="{{ page_description | escape }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    {% include 'social-meta-tags' %}
+    <meta content="width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport">
+
+    <link rel="icon" href="{{ settings.favicon | img_url }}" type="image/x-icon"> 
+
+    <!-- anti-flicker snippet (recommended)  -->
+    <style>
+        .async-hide {
+            opacity: 0 !important
+        }
+        #mobileNav {
+        display: none;
+      }
+    </style>
+        <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'vendor.js' | asset_url }}"></script><!--<![endif]-->
+    <!--[if lte IE 9]><script src="{{ 'vendor.js' | asset_url }}"></script><![endif]-->
+
+    {% if request.path contains 'box-breaks' %}
+    <link defer href="https://unpkg.com/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    {% endif %}
+
+    {%- comment -%} MMenu hamburger JS & CSS {%- endcomment -%}
+
+    <script defer
+        type="text/javascript"> (function () { var css = document.createElement('link'); css.href = '{{ 'mburger.css' | asset_url }}'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+
+    <script defer src="{{ 'mburger.js' | asset_url }}"></script>
+
+    {%- comment -%}Stylesheets{%- endcomment -%}
+
+    {% assign styleChoice = settings.theme_selection %} 
+    {% assign headerOveride = settings.header_overide%} 
+    {% assign footerOveride = settings.footer_overide %}   
+    
+    <link defer href="{{ 'reset.css' | asset_url }}" rel="stylesheet" type="text/css">
+    {% case styleChoice  %}
+                {% when 'Theme_One' %}               
+                {% case headerOveride %}
+                    {% when 'default' or 'Theme_One' %}
+                     {{ 'theme1.css' | asset_url | stylesheet_tag }} 
+                    {% when 'Theme_Two' %}   
+                    {{ 'theme2.css' | asset_url | stylesheet_tag }} 
+                    {% when 'Theme_Three' %}   
+                        {{ 'theme3.css' | asset_url | stylesheet_tag }}    
+                {% endcase %}   
+            {% when 'Theme_Two' %}                                  
+                {% case headerOveride  %}
+                    {% when 'default' or 'Theme_Two' %}
+                    {{ 'theme2.css' | asset_url | stylesheet_tag }} 
+                    {% when 'Theme_One' %}     
+                     {{ 'theme1.css' | asset_url | stylesheet_tag }} 
+                    {% when 'Theme_Three' %}   
+                    {{ 'theme3.css' | asset_url | stylesheet_tag }}      
+                {% endcase %}
+                {% when 'Theme_Three' %}         
+                    {% case headerOveride  %}
+                        {% when 'default' or 'Theme_Three' %}    
+                        {{ 'theme3.css' | asset_url | stylesheet_tag }}  
+                        {% when 'Theme_One' %}
+                        {{ 'theme1.css' | asset_url | stylesheet_tag }} 
+                        {% when 'Theme_Two' %}   
+                        {{ 'theme2.css' | asset_url | stylesheet_tag }}  
+                        {% section 'header-2' %}         
+                    {% endcase %} 
+            {% endcase %}   
+            <link href="{{ 'generic.css' | asset_url }}" rel="stylesheet" type="text/css" />
+    <script defer
+        type="text/javascript"> (function () { var css = document.createElement('link'); css.href = '{{ 'variables.css' | asset_url }}'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+    <script defer
+        type="text/javascript"> (function () { var css = document.createElement('link'); css.href = '{{ 'advanced-search.scss.css' | asset_url }}'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+        <script defer
+        type="text/javascript"> (function () { var css = document.createElement('link'); css.href = 'https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+
+
+    {%- comment -%}Google Fonts{%- endcomment -%}
+    <script defer
+        type="text/javascript"> (function () { var css = document.createElement('link'); css.href = 'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400&display=swap'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+
+
+
+    {%- comment -%}Font Awesome{%- endcomment -%}
+    <script defer
+        type="text/javascript"> (function () { var css = document.createElement('link'); css.href = 'https://pro.fontawesome.com/releases/v5.14.0/css/all.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+
+
+
+    {%- comment -%} MMenu JS & CSS {%- endcomment -%}
+
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/8.5.20/mmenu.js"></script>
+
+    <script defer
+        type="text/javascript"> (function () { var css = document.createElement('link'); css.href = 'https://cdnjs.cloudflare.com/ajax/libs/jQuery.mmenu/8.5.14/mmenu.min.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+
+    {%- comment -%} Content for Header {%- endcomment -%}
+
+    {% if settings.enable_meteor %}
+      {% include 'meteor-attachment-fix' %}
+      {% include 'meteor-menu', load: 'head' %}
+    {% endif %}
+    
+    {{ content_for_header }}
+
+    <!-- Header hook for plugins -->
+   
+   
+
+    {%- comment -%} jQuery {%- endcomment -%}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    {%- comment -%} Select2 {%- endcomment -%}
+
+    {% if request.path contains 'collections' or  request.path contains 'pages' %}
+    <link defer href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    {% endif %}
+
+    {{ 'api.jquery.js' | shopify_asset_url | script_tag }}
+    {{ "//cdn.shopify.com/s/javascripts/currencies.js" | script_tag }}
+
+    {%- comment -%} Flickity {%- endcomment -%}
+
+    <link defer rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    {{ 'option_selection.js' | shopify_asset_url | script_tag }}
+
+    <script defer
+        type="text/javascript"> (function () { var css = document.createElement('link'); css.href = '{{ 'animations.css' | asset_url }}'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+    <script defer
+        type="text/javascript"> (function () { var css = document.createElement('link'); css.href = '{{ 'loader.css' | asset_url }}'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    {% render 'microdata-schema' %}
+            
+    {%- if request.page_type == 'customers/addresses' -%}
+        <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer></script>
+        <script src="{{ 'customer_area.js' | shopify_asset_url }}" defer></script>
+      {%- endif -%}
+      <script>
+        // This allows to expose several variables to the global scope, to be used in scripts
+        window.theme = {
+          pageType: {{ request.page_type | json }},
+          cartCount: {{ cart.item_count | json }},
+          moneyFormat: {{ shop.money_format | json }},
+          moneyWithCurrencyFormat: {{ shop.money_with_currency_format | json }},
+          showDiscount: {% if settings.show_discount %}true{% else %}false{% endif %},
+          discountMode: {{ settings.discount_mode | json }},
+          searchMode: {{ settings.search_mode | json }},
+          cartType: "message",
+          permanentDomain: "{{ shop.permanent_domain }}",
+          themeChoice: "{{ settings.theme_selection }}"
+        };
+  
+        window.routes = {
+          rootUrl: {{ routes.root_url | json }},
+          rootUrlWithoutSlash: {% if routes.root_url == '/' %}''{% else %}{{ routes.root_url | json }}{% endif %},
+          cartUrl: {{ routes.cart_url | json }},
+          cartAddUrl: {{ routes.cart_add_url | json }},
+          cartChangeUrl: {{ routes.cart_change_url | json }},
+          searchUrl: {{ routes.search_url | json }},
+          productRecommendationsUrl: {{ routes.product_recommendations_url | json }}
+        };
+  
+        window.languages = {
+          productRegularPrice: {{ 'product.general.regular_price' | t | json }},
+          productSalePrice: {{ 'product.general.sale_price' | t | json }},
+          collectionOnSaleLabel: {{ 'collection.product.discount_html' | t | json }},
+          productFormUnavailable: {{ 'product.form.unavailable' | t | json }},
+          productFormAddToCart: {% if product.template_suffix == 'pre-order' %}{{ 'product.form.pre_order' | t | json }}{% else %}{{ 'product.form.add_to_cart' | t | json }}{% endif %},
+          productFormSoldOut: {{ 'product.form.sold_out' | t | json }},
+          productAdded: {{ 'product.form.added' | t | json }},
+          productAddedShort: {{ 'product.form.added_short' | t | json }},
+          shippingEstimatorNoResults: {{ 'cart.shipping_estimator.no_results_title' | t | json }},
+          shippingEstimatorOneResult: {{ 'cart.shipping_estimator.one_result_title' | t | json }},
+          shippingEstimatorMultipleResults: {{ 'cart.shipping_estimator.multiple_results_title' | t | json }},
+          shippingEstimatorErrors: {{ 'cart.shipping_estimator.errors' | t | json }}
+        };
+  
+        window.lazySizesConfig = {
+          loadHidden: false,
+          hFac: 0.8,
+          expFactor: 3,
+          customMedia: {
+            '--phone': '(max-width: 640px)',
+            '--tablet': '(min-width: 641px) and (max-width: 1023px)',
+            '--lap': '(min-width: 1024px)'
+          }
+        };
+  
+        document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      </script>
+       <script src="{{ 'application.js' | asset_url }}"></script>
+    {%- comment -%} Binder Wishlist Globals {%- endcomment -%}
+    <script>
+        let binderWishlist = null;
+    </script>
+    <link defer href="{{ 'predictive.css' | asset_url }}" rel="stylesheet" type="text/css">
+    {{ 'predictiveSearch.js' | asset_url | script_tag }}
+    {{ 'custom.js' | asset_url | script_tag }}
+    </head>
+
+    <div hidden id="predictiveSearch-js"
+      data-show-prices={{ settings.search_preview_pricing }}
+      data-show-price-range={{ settings.search_show_price_range }}
+    ></div>
+  
+<body class="bodyScroll {% if settings.animation_image_zoom %}features--animate-zoom{% endif%} template-{{ request.page_type | handle }} {% if request.page_type contains '/' %}template-{{ request.page_type | split: '/' | last | handle }}{% endif %}" data-instant-intensity="viewport">
+    
+    {% case styleChoice  %}
+                {% when 'Theme_One' %}               
+                {% case headerOveride %}
+                    {% when 'default' or 'Theme_One' %}
+                        {% render 'theme-1-header.liquid' %}
+                    {% when 'Theme_Two' %}   
+                        {% render 'theme-2-header.liquid'%}
+                    {% when 'Theme_Three' %}   
+                        {% render 'theme-3-header.liquid'%}   
+                {% endcase %}   
+            {% when 'Theme_Two' %}                                  
+                {% case headerOveride  %}
+                    {% when 'default' or 'Theme_Two' %}
+                        {% render 'theme-2-header.liquid' %}
+                    {% when 'Theme_One' %}     
+                        {% render 'theme-1-header.liquid' %} 
+                    {% when 'Theme_Three' %}   
+                    {% render 'theme-3-header.liquid'%}         
+                {% endcase %}
+                {% when 'Theme_Three' %}         
+                    {% case headerOveride  %}
+                        {% when 'default' or 'Theme_Three' %}     
+                        {% render 'theme-3-header.liquid' %}   
+                        {% when 'Theme_One' %}
+                            {% render 'theme-1-header.liquid' %}   
+                        {% when 'Theme_Two' %}   
+                            {% render 'theme-2-header.liquid' %}   
+                        {% section 'header-2' %}         
+                    {% endcase %} 
+            {% endcase %}   
+            {% if template == 'index' and settings.enable_default_nav %}
+            {% case styleChoice  %}
+                {% when 'Theme_One' or 'Theme_Three' %}
+                    {% case headerOveride  %}
+                        {% when 'default' or 'Theme_One' or 'Theme_Three' %}
+                            {% section 'slider-1' %}
+                        {% when 'Theme_Two' %}
+                            {% section 'slider-2' %}
+                    {% endcase %}   
+                {% when 'Theme_Two' %}                    
+                    {% case headerOveride  %}
+                        {% when 'default' or 'Theme_Two'%}
+                            {% section 'slider-2' %}
+                        {% when 'Theme_One' %}        
+                            {% section 'slider-1' %}                        
+                    {% endcase %}   
+                {% endcase %}       
+            {% endif %}         
+            <main role="main" {% if request.path == '/challenge' %} style="padding: 40px 0px;" {% endif %}>
+              {% if template.name == 'blog' or template.name == 'article' %}
+                <div class="container">
+                  <div class="blog-container">
+                    {{ content_for_layout }}
+                    {% section 'blog-sidebar'%}
+                  </div>
+                </div>
+                {% else %}
+
+                  {% unless settings.enable_sidebar %}
+                    {{ content_for_layout }}
+                  {% else %}
+                    <div class="content_wrapper" {%if settings.sidebar_location == "right" %}style="flex-direction: row-reverse;"{% endif %}>
+                      <div class="content_wrapper-sidebar">
+                        {% section "sidebar" %}
+                      </div>
+                      <div class="content_wrapper-main">      
+                        {{ content_for_layout }}
+                      </div>
+                    </div>
+                  {% endunless %}
+
+              {% endif %}
+            </main>
+            {% render 'decklist.liquid' %}
+            {% case styleChoice  %}
+            {% when 'Theme_One' %}
+                {% case footerOveride  %}
+                    {% when 'default' or 'Theme_One' %}
+                        {% section 'footer' %}
+                    {% when 'Theme_Two' %}
+                       {% section 'footer-2' %}
+                    {% when 'Theme_Three' %}        
+                    {% section 'footer-3' %}
+                {% endcase %}                       
+                </div>
+            </div>
+            {% when 'Theme_Two' %}                    
+                {% case footerOveride  %}
+                    {% when 'default' or 'Theme_Two' %}
+                        {% section 'footer-2' %}
+                    {% when 'Theme_One' %}        
+                        {% section 'footer' %}   
+                    {% when 'Theme_Three' %}        
+                    {% section 'footer-3' %}                    
+                {% endcase %}                      
+                </div>
+            </div> 
+            {% when 'Theme_Three' %}                    
+                {% case footerOveride  %}
+                    {% when 'default' or 'Theme_Three' %}
+                        {% section 'footer-3' %}
+                    {% when 'Theme_One' %}        
+                        {% section 'footer' %}       
+                    {% when 'Theme_Two' %}        
+                        {% section 'footer-2' %}                  
+                {% endcase %}                      
+                </div>
+            </div> 
+            {% endcase %}      
+    
+  {{ 'responsive.css' | asset_url | stylesheet_tag }}
+  {{ 'css-variables.css' | asset_url | stylesheet_tag }}
+  {{ 'custom.css' | asset_url | stylesheet_tag }}
+
+  <script defer src="https://cdn.jsdelivr.net/npm/toastify-js" type="text/javascript"></script>
+  <script defer src="https://unpkg.com/tilt.js@1.2.1/dest/tilt.jquery.min.js" type="text/javascript"></script>
+  
+  {% if settings.enable_iwish %}
+    {% include 'iwish_v2' with 'iwishfooter' %}
+  {%endif %}
+
+  {% if settings.enable_flitz %}
+    {% include 'conditional-snippet', value: 'flits_snippet' %}
+  {% endif %}
+
+  {% if settings.enable_smile %}
+    {% include 'conditional-snippet', value: 'smile-initializer' %}
+  {% endif %}
+
+  {% if settings.enable_preorder_manager %}
+    {% include 'conditional-snippet', value: 'spurit_po2_theme_snippet' %}
+    <script>
+      Spurit.globalSnippet.checkoutDefaultHandlers = [
+        {event: 'submit', selector: 'form[action^="/cart"]:not([action^="/cart/add"]):not(.spurit-checkout)'},
+        {event: 'click', selector: '[name="checkout"]:not(.spurit-checkout)'},
+        {event: 'click', selector: '[name="goto_pp"]'},
+        {event: 'click', selector: '[name="goto_amazon_payments"]'},
+      ];
+    </script>
+  {%endif %}
+
+  {% if settings.enable_bookthatapp %}
+    {% include 'conditional-snippet', value: 'bookthatapp-widgets' %}
+  {%endif %}
+
+  {% render 'buylist' %}
+</body>
+</html>
+{% if settings.afterpay_enabled %}
+<!-- Begin Shopify-Afterpay JavaScript Snippet (v1.0.10) -->
+<script type="text/javascript">
+
+    // Editable fields (remove "//" from the start of each line to activate):
+    var afterpay_min = 0.04;  // As per your Afterpay contract.
+    var afterpay_max = 2000.00;  // As per your Afterpay contract.
+    
+    var afterpay_product_selector = '.price-list';  // The selector used to identify the price on the Product pages.
+    var afterpay_product_css = {'margin-top': '15px'};  // The CSS styling of the Afterpay assets on the Product pages.
+    // var afterpay_logo_theme = 'colour';  // The Afterpay logo colour. Can be 'colour' (default), 'black' or 'white'.
+    // var afterpay_modal_open_icon = true;	// If enabled, an "ⓘ" icon is displayed next to the Afterpay logo in place of the "More info" text.
+    
+    // var afterpay_cbt_enabled = false;  // As per your Afterpay contract. Change to true to display Cross Border Trade artwork (for AU/NZ).
+    
+    // var afterpay_variable_price_fallback_selector = '.product-price-selector';  // The selector used to identify the price on the Product pages if the Afterpay assets are disappearing after page-load or price is incorrect when a variant is selected.
+    // var afterpay_variable_price_fallback_method = "interval";  // Ensures the instalment price updates when the price changes. Can be "mutation" (default) or "interval".
+    
+    var afterpay_cart_integration_enabled = true;  // Enables/disables the Cart page display. Can be true or false (default).
+    var afterpay_cart_static_selector = '#cartform > div > div.card > div > div.cart-recap__price-line.text--pull';  // The selector used to identify the price on the Cart page.
+    var afterpay_cart_static_css = {'margin-top': '15px'};  // The CSS styling of the Afterpay assets on the Cart page.
+    // var afterpay_cart_static_logo_theme = 'colour';  // The Afterpay logo colour. Can be 'colour' (default), 'black' or 'white'.
+    
+    // var afterpay_variable_subtotal_fallback_selector = '.cart-subtotal-selector';  // The selector used to identify the price on the Cart page if the Afterpay assets are disappearing after page-load.
+    // var afterpay_variable_subtotal_fallback_method = "interval";  // Ensures the instalment price updates when the price changes. Can be "mutation" (default) or "interval".
+    
+    var afterpay_footer_logo_enabled = true;  // Enables/disables the footer payment icon. Can be true (default) or false.
+    var afterpay_footer_logo_container = '#cartform > div > div.cart-recap__secure-payment > div';  // The selector used to identify the payment icons in the footer.
+    // var afterpay_footer_logo_format = 'icon';  // The Afterpay payment icon style. Can be 'icon' (default), 'stacked' or 'logo'.
+    // var afterpay_footer_logo_theme = 'colour';  // The Afterpay payment icon colour. Can be 'colour' (default), 'black' or 'white'.
+    // var afterpay_footer_logo_background = 'border';  // The Afterpay payment icon border style. Can be 'border' (default) or 'transparent'.
+    // var afterpay_footer_logo_css = {'width': '38px', 'height': '22px', 'vertical-align': 'baseline'};  // The CSS styling of the Afterpay payment icon in the footer.
+    
+    // Non-editable fields:
+    var afterpay_shop_currency = {{ shop.currency | json }};
+    var afterpay_cart_currency = {{ cart.currency.iso_code | json }};
+    var afterpay_shop_money_format = {{ shop.money_format | json }};
+    var afterpay_shop_permanent_domain = {{ shop.permanent_domain | json }};
+    var afterpay_theme_name = {{ theme.name | json }};
+    var afterpay_product = {{ product | json }};
+    var afterpay_current_variant = {{ product.selected_or_first_available_variant | json }};
+    var afterpay_cart_total_price = {{ cart.total_price | json }};
+    var afterpay_js_snippet_version = '1.0.10';
+    </script>
+    <script type="text/javascript" src="https://static.afterpay.com/shopify-afterpay-javascript.js"></script>
+    <!-- End Shopify-Afterpay JavaScript Snippet (v1.0.10) -->  
+{% endif %}

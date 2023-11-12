@@ -1,0 +1,74 @@
+<div class="collectionBar__left">
+    <p>
+        {% if template contains 'search' %}
+        {{ 'collection.general.results_count.other' | t: count: search.results_count}}
+        {% else %}
+        {{ 'collection.general.products_count.other' | t: count: collection.products_count  }}
+        {% endif %}
+    </p>
+</div>
+<div class="collectionBar__middle">
+    {%- if paginate.pages > 1 -%}
+    <nav role="navigation">
+        <button aria-label="Filter Results" title="Filter Results" class="button cardFilterMobile__trigger button--margin0auto button--advancedSearch">Filter
+            results&nbsp;<i class="fal fa-long-arrow-right"></i>
+        </button>
+        <ol class="pagination">
+            {%- if paginate.previous-%}
+            <li>
+                <a href="{{ paginate.previous.url }}">
+                    <span aria-hidden="true">&laquo;</span>
+                    {{ 'general.accessibility.previous' | t }}
+                    <span class="visuallyhidden">page</span>
+                </a>
+            </li>
+            {%- else -%}
+            <li class="disabled">
+                <span aria-hidden="true">&laquo;</span>
+                {{ 'general.accessibility.previous' | t }}
+                <span class="visuallyhidden">page</span>
+            </li>
+            {%- endif -%}
+
+            {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}
+            <li>
+                <a href="{{ part.url }}">
+                    <span class="visuallyhidden">page</span>
+                    {{ part.title }}
+                </a>
+            </li>
+            {%- else -%}
+            {%- if part.title == paginate.current_page -%}
+            <li aria-current="page" class="active">
+                <span class="visuallyhidden">page</span>
+                {{ part.title }}
+            </li>
+            {%- else -%}
+            <li>
+                <span class="visuallyhidden">page</span>
+                {{ part.title }}
+            </li>
+            {%- endif -%}
+            {%- endif -%}
+            {%- endfor -%}
+
+            {%- if paginate.next -%}
+            <li>
+                <a href="{{ paginate.next.url }}">
+                    {{ 'general.accessibility.next' | t }}
+                    <span class="visuallyhidden">page</span>
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {%- else -%}
+            <li class="disabled">
+                {{ 'general.accessibility.next' | t }}
+                <span class="visuallyhidden">page</span>
+                <span aria-hidden="true">&raquo;</span>
+            </li>
+            {%- endif -%}
+        </ol>
+    </nav>
+    {%- endif -%}
+</div>

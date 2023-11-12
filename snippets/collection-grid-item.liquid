@@ -1,0 +1,152 @@
+
+{% comment %}
+------------------------------------------------------------------------------
+The selected_or_first_available_variant is sometimes not the best condition; this ensures it is
+------------------------------------------------------------------------------
+{% endcomment %}
+{% assign selected_variant = product.selected_or_first_available_variant %}
+{% if product.available == true %}
+  {% for variant in product.variants %}
+    {% if variant.available == true %}
+      {% assign selected_variant = variant %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% comment %}
+------------------------------------------------------------------------------
+The incorrect variant is sometimes assigned in search results; removing it entirely ensures the product page renders properly
+------------------------------------------------------------------------------
+{% endcomment %}
+{% assign product_url_array = product.url | split: "&variant" %}
+{% assign product_url = product_url_array[0] %}
+
+<div 
+  class="productCard__card {% if selected_variant.title contains " Foil" %}foiled{% endif %}"
+  data-productid="{{product.id}}"
+  data-productCollectionsTitles='{{ product.collections | map: 'title' | json | escape }}'
+  data-productTags='{{ product.tags| json | escape  }}'
+  data-productType="{{ product.type }}"
+>
+  <div class="productCard__upper">
+    <a href="{{ product_url | within: collection }}" class="productCard__a">
+      <div class="productCard__imageWrap{% if product.type == 'MTG Single' %} productCard__imageWrapTarget{% endif %}">
+        <img
+          loading="lazy" 
+          data-src="{{ product.featured_image.src | img_url: 'large' }}"
+          alt="{{ product.featured_image.alt | escape }}"
+          class="productCard__img lazy{% if product.available != true %} productCard__img--outOfStock{% endif %}"
+        >
+      </div>
+    </a>
+  </div>
+  <div class="productCard__lower">
+    {% if product.type contains 'Single' and product.title contains '[' %}
+      {% assign prodTitle = product.title | split: '[' %}
+      {% assign prodTitleCard = prodTitle[0] %}
+      {% assign setName = prodTitle[1] | remove: ']' %}
+    {% else %}
+      {% assign prodTitleCard = product.title %}
+      {% assign setName = "" %}
+    {% endif %}
+    
+    {% if setName != ""%}
+      <p class="productCard__setName">{{ setName }}</p>
+    {% endif%}
+
+    <p class="productCard__title">
+      <a href="{{ product_url | within: collection }}">{{ prodTitleCard }}</a>
+    </p>
+    
+    <ul class="productChip__grid">
+
+      {% for variant in product.variants %}
+        <li
+          onClick="variantSelect('{{ product.id}}', '{{ variant.id}}')"
+          class="productChip{% if selected_variant.title == variant.title %} productChip__active {% endif %}{% if variant.title == "Default Title" %} hidden {% endif %}{% if variant.available == false and show_oos_variant == false %} hidden {% endif %}"
+          data-variantAvailable="{{variant.available}}"
+          data-variantQty="{{variant.inventory_quantity }}"
+          data-variantPolicy="{{variant.inventory_policy}}"
+          data-variantId="{{ variant.id }}"
+          data-variantPrice="{{variant.price}}"
+          data-variantTitle="{{ variant.title }}"
+          {% if variant.title contains "Foil" %} style=" background-image:url('{{ 'product-card-bg-holo.png' | asset_img_url: 'master' }}'); background-size: cover; " {% endif %}
+        >
+          {% assign variantTitle = variant.title | downcase %}
+          {% case variantTitle %}
+          {% when 'heavily played' or 'heavily played foil' %}
+            HP
+          {% when 'moderately played' or 'moderately played foil' %}
+            MP
+          {% when 'lightly played' or 'lightly played foil' %}
+            LP
+          {% when 'played' or 'played foil' %}
+            PL
+          {% when 'near mint' or 'near mint foil' %}
+            NM
+          {% when 'damaged' or 'damaged foil' %}
+            DM
+          {% else %}
+            {{ variant.title}}
+          {% endcase %}
+        </li>
+      {% endfor %}
+
+    </ul>
+    {% if product.price_varies %}
+      <p class=" productCard__price">{{ selected_variant.price | money_with_currency }}</li>
+      </p>
+    {% else %}                  
+      <p class="productCard__price">
+        <strong>{{ selected_variant.price | money_with_currency }}</strong>
+        {% if product.compare_at_price > selected_variant.price %}
+          <p style="text-decoration: line-through;color:red;">{{ product.compare_at_price | money }}</p>
+        {% endif %}
+      </p>
+    {% endif %}
+  </div>
+
+  {% if product.available %}
+    {% if product.type == "Event Ticket" %}
+      <a href="{{ product_url | within: collection }}">
+        <button aria-label="Buy Ticket" title="Buy Ticket" type="button" class="product-item__action-button productCard__button button--primary">Buy Ticket</button>
+      </a>
+    {% else %}
+      <form method="post" action="/cart/add" id="product_form_id_{{product.id}}_collection-template" accept-charset="UTF-8" class="product-item__action-list button-stack" enctype="multipart/form-data">
+      <input type="hidden" name="form_type" value="product">
+      <input type="hidden" name="utf8" value="✓">
+      <input type="hidden" name="quantity" value="1">
+      <input type="hidden" name="id" value="{{selected_variant.id }}">
+      <!-- custom preorder button -->
+      {%- if product.tags contains 'preorder' -%}
+        <button aria-label="Add Pre-Order to Cart" title="Add Pre-Order to Cart" type="submit" class="product-item__action-button productCard__button button--primary" data-action="add-to-cart">{{ 'product.form.pre_order' | t }}</button>
+      {%- else -%}
+        <button aria-label="Add to Cart" title="Add to Cart" type="submit" class="product-item__action-button productCard__button button--primary" data-action="add-to-cart">{{ 'product.form.add_to_cart' | t }}</button>
+      {% endif %}
+      </form>
+    {% endif %}
+  {% else %}
+    <div class="productCard__button productCard__button--outOfStock">
+      Out of Stock
+    </div>
+  {% endif %}
+  
+  {% if settings.enable_preorder_manager %}
+    <script>
+      if (typeof (Spurit) === 'undefined') {
+        var Spurit = {};
+      }
+      if (!Spurit.Preorder2) {
+        Spurit.Preorder2 = {};
+      }
+      if (!Spurit.Preorder2.snippet) {
+        Spurit.Preorder2.snippet = {};
+      }
+      if (!Spurit.Preorder2.snippet.products) {
+        Spurit.Preorder2.snippet.products = {};
+      }
+      {% render 'spurit_po2_product_details_snippet', product: product %}
+    </script>
+  {% endif %}
+</div>

@@ -1,0 +1,210 @@
+<div class="v2" data-section-type="footer">
+    <div class="footer__wrapperContainer">
+        <div class="footer__about">
+            <div class="footer__logo">
+              {% if section.settings.logo.alt != blank %}
+              {% assign image_tag = section.settings.logo.alt %}
+              {% else %}
+              {% assign image_tag = 'Footer Logo' %}
+              {% endif %}
+              {{ section.settings.logo | img_url: 'large' | img_tag: image_tag }}
+            </div>
+            <p>{{section.settings.about_text}}</p>
+        </div>
+        <div class="footer__wrapper">        
+            {% if section.blocks.size > 0 %}
+                {% for block in section.blocks %}
+                {% case block.type %}
+                {% when 'menu' %}
+                {% assign menuLinks = block.settings.link_list %}
+                    <div class="footer__menuCol">
+                        {% if block.settings.title == "" %}
+                            {% assign title = linklists[menuLinks].title %}
+                        {% else %}
+                            {% assign title = block.settings.title %}
+                        {% endif %}
+                        <div class="footerMenu__title">{{ title}}</div>
+                        <hr class="footerMenu__hr">                       
+                        <ul class="footerMenu__ul">
+                            {% for link in linklists[menuLinks].links %}
+                                <li><a href="{{link.url}}" class="footerMenu__link">{{link.title}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% when 'richtext' %}
+                <div class="footer__menuCol">
+                    <div class="footerMenu__title">{{ block.settings.title}}</div>
+                    <hr class="footerMenu__hr">
+                    <ul class="footerMenu__ul">
+                        {{ block.settings.richtext}}
+                    </ul>
+                </div>
+                {% endcase %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="copyright">
+        {%- capture copyright_info -%}© {{ 'now' | date: '%Y' }}{%- endcapture -%}
+        <p>{{ copyright_info }} {{ shop.domain }}, All Rights Reserved
+          <span class="powered-by-binderpos">
+            - Integrated with
+            <a href="https://binderpos.com">BinderPOS</a>
+          </span>
+        </p>
+    </div>
+
+    {%- if section.settings.show_cookie_bar -%}
+      {% include 'cookie-bar',
+        text: section.settings.text,
+        accept_button: section.settings.accept_button,
+        background_color: section.settings.cookie_bar_background_color,
+        border_color: section.settings.cookie_bar_border_color,
+        text_color: section.settings.cookie_bar_text_color
+      %}
+    {%- endif -%}
+</div>
+
+<style>
+     .v2 .footer__about {
+  padding: var(--page-padding-y) var(--page-padding-x);
+}
+.v2 .footer__wrapperContainer {
+  display: grid;
+  grid-template-columns: 415px 1fr;
+  padding: 55px var(--page-padding-x);
+  color:white;
+}
+.v2 .footer__wrapper {
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  display: grid;
+  grid-gap: 40px;
+  color: white;
+  padding: var(--page-padding-y) var(--page-padding-x);
+}
+.v2 .footer__menuCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.v2 .footerMenu__title {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.v2 .footer__logo {
+  margin-bottom: var(--page-padding-y);
+}
+.v2 .copyright {
+  padding: var(--page-padding-y) var(--page-padding-x);
+  text-align: center;
+  background: white;
+}
+    .v2 .footer__wrapperContainer {
+  background: {{ section.settings.background_color }}
+}
+
+.v2 .footer__logo img {
+    width: 100%;
+}
+</style>
+
+{% schema %}
+{
+   "name":"Footer",
+   "tag":"footer",
+   "max_blocks":4,
+   "blocks":[
+      {
+         "type":"menu",
+         "name":"Menu Links",
+         "settings":[
+            {
+               "type":"text",
+               "id":"title",
+               "label":"Menu Title"
+            },
+            {
+               "type":"link_list",
+               "id":"link_list",
+               "label":"Menu"
+            }
+         ]
+      },
+      {
+         "type":"richtext",
+         "name":"Rich Text",
+         "settings":[
+            {
+               "type":"text",
+               "id":"title",
+               "label":"Block Title"
+            },
+            {
+               "type":"richtext",
+               "id":"richtext",
+               "label":"Rich Text (Inc HTML)"
+            }
+         ]
+      }
+   ],
+   "settings":[
+      {
+         "type":"image_picker",
+         "id":"logo",
+         "label":"Logo"
+      },
+      {
+         "type":"textarea",
+         "id":"about_text",
+         "label":"About Text",
+         "info":"The about text contained within the footer"
+      },
+      {
+         "type":"color",
+         "id":"background_color",
+         "label":"Section title color",
+         "default":"#150433"
+      },
+      {
+         "type":"header",
+         "content":"Cookie bar"
+      },
+      {
+         "type":"checkbox",
+         "id":"show_cookie_bar",
+         "label":"Show cookie bar",
+         "default":false
+      },
+      {
+         "type":"richtext",
+         "id":"text",
+         "label":"Text",
+         "default":"<p>Replace this text with information about your cookie policy.</p>"
+      },
+      {
+         "type":"text",
+         "id":"accept_button",
+         "label":"Accept button",
+         "default":"Accept"
+      },
+      {
+         "type":"color",
+         "id":"cookie_bar_background_color",
+         "label":"Cookie Bar Background Color",
+         "default":"#ffffff"
+      },
+      {
+         "type":"color",
+         "id":"cookie_bar_border_color",
+         "label":"Cookie Bar Border Color",
+         "default":"#ffffff"
+      },
+      {
+         "type":"color",
+         "id":"cookie_bar_text_color",
+         "label":"Cookie Bar Text Color",
+         "default":"#000000"
+      }
+   ]
+}
+{% endschema %}

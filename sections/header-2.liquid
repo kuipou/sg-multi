@@ -1,0 +1,413 @@
+{% if settings.enable_sticky_sidebar == true %}
+<style>
+div#shopify-section-sidebar {
+    position: sticky;
+    top: 22px;
+}
+</style>
+{% endif %}
+<style>
+
+    .v2 .topBar__links {
+  display: flex;
+  justify-content: flex-end;
+}
+.v2 .topBar {
+  display: flex;
+  justify-content: flex-end;
+  background: var(--color-gradient);
+  padding: 12px var(--page-padding-x);
+  min-height: 46px;
+}
+.v2 .topBar__cart {
+  display: flex;
+  justify-content: flex-end;
+  padding-left: var(--page-padding-y);
+}
+.v2 .header {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--page-padding-y) var(--page-padding-x);
+  background: white;
+  align-items: center;
+  border-bottom: 1px solid #BDBDBD;
+}
+.v2 .navLinks {
+  display: flex;
+  align-items: center;
+}
+.v2 .navLink {
+  margin-right: 16px;
+}
+.v2 .navLink:last-child {
+  margin-right: 0;
+}
+.v2 .topBar__link {
+  color: white;
+  padding: 0 24px;
+  border-right: 1px solid white;
+}
+.v2 .topBar__cart > div {
+  color: white;
+}
+.v2 .topBar__cartText {
+  font-weight: 700;
+  margin-right: 8px;
+}
+.v2 .topBar__cartQuantity {
+  opacity: 0.5;
+}
+.v2 .searchBar__form {
+  display: flex;
+  align-items: center;
+  flex-basis: auto
+}
+.v2 .searchBar__inputWrapper {
+  align-items: center;
+  flex-basis: auto
+}
+.v2 .searchBar__input {
+  border-radius: 0;
+  width: 100%;
+}
+.v2 .searchBar__selectWrapper select {
+  border-radius: 100px 0 0 100px;
+  border-right: none;
+}
+.v2 .searchBar__submit {
+  border-radius: 0 100px 100px 0;
+  padding: 17px 32px;
+}
+.mobileMenu__iconMenu {
+    display: none !important;
+}
+
+ul.m-socialIcons {
+    display: inline-flex;
+}
+li.a-socialIcons {
+    padding: 0 6px;
+    color: white;
+}
+
+.sd_dropdown {
+top: 86px!important;
+right: -119px;
+}
+
+.sd_tab {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.sd_tab button {
+    padding: 6px 0;
+    margin: 0;
+    border-radius: 0;
+    font-size: 10px;
+}
+
+.sd_product-search input.sd_pro-search {
+    background: url(https://storage.googleapis.com/binderpos-libraries/pre-search-new.png) 12px 23px / 15px 15px no-repeat !important;
+}
+.searchBar__wrapper.mobile {
+        display: none;
+    }
+    
+ @media screen and (max-width: 1400px){
+        .sd_dropdown {
+        top: 56px!important;
+        right: 12px;
+    }
+    .searchBar__wrapper.mobile{
+        display: block !important;
+        padding: 10px 0px 10px 26px;
+        background-color: white;
+    }
+    .searchBar__wrapper.mobile .searchBar__submit {
+    background: var(--color-gradient);
+    text-transform: uppercase;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 0 100px 100px 0;
+    padding: 17px 32px;
+    }
+
+    .searchBar__wrapper.mobile input {
+        width: calc(100% - 150px);
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        margin-right: -4px;
+        height: 56px;
+    }
+
+    
+    .searchBar__wrapper.desktop {
+        display: none;
+    }
+    .sd_dropdown {
+        top: 39px!important;
+        right: -120px;
+    }    
+}
+
+@media screen and (max-width: 1024px){    
+    .sd_dropdown {
+        top: 56px!important;
+        right: 10px;
+    }
+    .v2 .header {
+        padding: 1px 25px;
+        min-height: 82px;
+    }
+    #primaryHeader {
+    top: -44px !important;
+    }   
+    .header__logo img {
+        max-width: 100%;
+        padding-right: 15px;
+    }
+}
+
+@media screen and (max-width: 830px){
+    nav.nav {
+    display: none;
+    }
+    .mobileMenu__iconMenu{
+        display: block !important;
+        font-size: 40px;
+        margin: auto 0;
+    }
+    .header__logo {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 39px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    ul.topBar__links, a.topBar__cart {
+    display: none !important;
+    }
+    .sd_dropdown {
+    top: 7px!important;
+    right: 1px;
+    }
+}
+
+@media screen and (max-width: 395px){
+    ul.topBar__links, a.topBar__cart {
+    display: none !important;
+    }
+}
+</style>
+<div class="v2">
+    <div class="topBar">
+        {% render 'social-media' %}
+        {%- if shop.customer_accounts_enabled -%}
+            <ul class="topBar__links">
+            {%- if customer -%}
+                <li class="topBar__link">
+                <a href="/account" aria-label="Account page">Account</a>
+                </li>
+                <li class="topBar__link">
+                {{ 'Log out' | customer_logout_link }}
+                </li>
+            {%- else -%}
+                <li class="topBar__link">
+                {{ 'Log in' | customer_login_link }}
+                </li>
+                <li class="topBar__link">
+                {{ 'Create account' | customer_register_link }}
+                </li>
+            {%- endif -%}
+            </ul>
+        {%- endif -%}
+        <a href="/cart" class="topBar__cart">
+            <div class="topBar__cartIcon"></div>
+            <div class="topBar__cartText">My cart</div>
+            {% if cart.item_count > 0 %}
+                <div class="topBar__cartQuantity">
+                    <div class="cart-icon-count" style="display: initial;">({{ cart.item_count }})</div>
+                </div>
+            {% endif %}
+        </a>
+    </div>
+    <div class="header">
+        <div class="header__logo">
+            <a href="/">
+              {% if section.settings.logo.alt != blank %}
+              {% assign image_tag = section.settings.logo.alt %}
+              {% else %}
+              {% assign image_tag = 'Store Logo' %}
+              {% endif %}
+              {{ section.settings.logo | img_url: 'large' | img_tag: image_tag }}
+            </a>            
+            <a id="#mobileMenu" class="mobileMenu__iconMenu mobileMenu__iconMenu--burger" href="#mobileNav">
+                <i class="fad fa-bars"></i>
+            </a>
+        </div>
+        <nav class="nav">
+            <ul class="navLinks">
+                {%if section.settings.link_list != blank %}
+                {% assign menu = section.settings.link_list %}
+                {% else %}
+                {% assign menu = 'main-menu' %}
+                {% endif %}
+                {% for link in linklists[menu].links %}
+                <li class="navLink">                    
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        </nav>
+        <nav aria-labelledby="mobileNavigation" id="mobileNav" role="navigation">
+            <ul>
+                {% if customer %}
+                    <li>
+                        <a href="/account/logout">
+                            Logout
+                        </a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="/account/login">
+                            Login
+                        </a>
+                    </li>
+                {% endif %}
+                {%- for link in linklists.main-menu.links -%}
+                    <li>
+                        <a href="{{ link.url }}" {% if link.active %} aria-current="page" {% endif %}>
+                            {{ link.title }}
+                        </a>
+                        {%- if link.links != blank -%}
+                            <ul>
+                                {%- for child_link in link.links -%}
+                                    <li>
+                                        <a href="{{ child_link.url }}" {% if child_link.active %} aria-current="page" {% endif %}>
+                                            {{ child_link.title }}
+                                        </a>
+        
+                                        {%- if child_link.links != blank -%}
+                                            <ul>
+                                                {%- for grandchild_link in child_link.links -%}
+                                                    <li>
+                                                        <a href="{{ grandchild_link.url }}" {% if grandchild_link.active %} aria-current="page" {% endif %}>
+                                                            {{ grandchild_link.title }}
+                                                        </a>
+                                                    </li>
+                                                {%- endfor -%}
+                                            </ul>
+                                        {%- endif -%}
+        
+                                    </li>
+                                {%- endfor -%}
+                            </ul>
+                        {%- endif -%}
+        
+                    </li>
+                {%- endfor -%}
+            </ul>
+        </nav>
+        <div class="searchBar__wrapper desktop">
+            <div class="searchBar__inputWrapper sd_product-search manual_sd_search">
+                <input type="search" name="q" class="search1 searchBar__input sd_pro-search" placeholder="Search here" autocomplete="off">
+                <div class="sd_dropdown"></div>
+            </div>
+            <button aria-label="Search" title="Search" class="searchBar__submit" onClick="search()">
+                Search
+            </button>
+        </div>
+    </div>
+</div>
+<div class="searchBar__wrapper mobile">
+    <div class="searchBar__inputWrapper sd_product-search manual_sd_search">
+        <input type="search" name="q" class="search2 searchBar__input sd_pro-search" placeholder="Search here" autocomplete="off">        
+    <button aria-label="Search" title="Search" class="searchBar__submit" onClick="search1()">
+        Search
+    </button>
+        <div class="sd_dropdown"></div>
+    </div>
+</div>
+<script>
+    function search() {
+        var q = document.querySelector('.search1').value;
+        window.location = "/search?page=1&q=%2A"+ q +"%2A"
+    }
+    function search1() {
+        var q = document.querySelector('.search2').value;
+        window.location = "/search?page=1&q=%2A"+ q +"%2A"
+    }
+    var input = document.querySelector('.search1')
+// Execute a function when the user releases a key on the keyboard
+input.addEventListener("keyup", function(event) {
+  // Number 13 is the "Enter" key on the keyboard
+  if (event.keyCode === 13) {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    search()
+  }
+});
+var input2 = document.querySelector('.search2')
+// Execute a function when the user releases a key on the keyboard
+input2.addEventListener("keyup", function(event) {
+  // Number 13 is the "Enter" key on the keyboard
+  if (event.keyCode === 13) {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    search1()
+  }
+});
+    document.addEventListener(
+        "DOMContentLoaded", () => {
+            new Mmenu( "#mobileNav", {
+               "counters": true,
+               "navbars": [
+                  {
+                     "position": "top",
+                     "type": "tabs",
+                     "content": [
+                        "<div><a href='/cart'>Cart&nbsp;<i class='fad fa-shopping-cart'></i></a></div>",
+                        "<div><a href='/account'>Account&nbsp;<i class='fad fa-user-circle'></i></a></div>"
+                     ]
+                  },
+               ],
+               "extensions": [
+                  "pagedim-black",
+                  "theme-dark",
+                  "position-right",
+                  "border-full"
+               ]
+            }, {
+                offCanvas: {
+                    page: {
+                        selector: "#pageBackground"
+                    }
+                }
+            });
+        }
+    );
+</script>
+{% schema %}
+  {
+    "name": "Header",
+    "tag": "header",
+    "settings":
+    [
+        {
+            "type": "image_picker",
+            "id": "logo",
+            "label": "Logo"
+        },
+        {
+            "type": "link_list",
+            "id": "link_list",
+            "label": "Primary Menu",
+            "info": "Will just show main-menu if nothing assigned"
+        }
+    ]
+  }
+{% endschema %}

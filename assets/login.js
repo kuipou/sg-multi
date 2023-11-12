@@ -1,0 +1,1 @@
+(()=>{"use strict";var e=function(e){var r=sessionStorage.getItem(e);if(!r)return{};try{return JSON.parse(r)}catch(r){try{sessionStorage.removeItem(e)}catch(e){}return{}}},r=e("loginRedirect");r.url&&document.querySelectorAll(".login-redirect").forEach((function(e){return e.setAttribute("value",r.url)}))})();

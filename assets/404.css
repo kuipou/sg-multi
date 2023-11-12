@@ -1,0 +1,41 @@
+.page-404 {
+  padding: 40px 0;
+  background: #fff;
+  font-family: 'Arvo', serif;
+}
+
+.page-404 img {
+  width: 100%;
+}
+
+.page-404__wrapper {
+  max-width: 695px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.page-404__bg-container {
+  background-image: url('./404.gif');
+  height: 400px;
+  background-position: center;
+}
+
+.page-404__bg-container h1 {
+  font-size: 80px;
+}
+
+.page-404__bg-container h3 {
+  font-size: 80px;
+}
+
+.page-404__link {
+  color: #fff !important;
+  padding: 10px 20px;
+  background: var(--color-primary);
+  margin: 20px 0;
+  display: inline-block;
+}
+
+.page-404__details {
+  margin-top: -50px;
+}
